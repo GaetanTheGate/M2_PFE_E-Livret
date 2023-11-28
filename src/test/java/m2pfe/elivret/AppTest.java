@@ -3,10 +3,12 @@ package m2pfe.elivret;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Unit test for simple App.
  */
+@SpringBootApplication
 public class AppTest 
 {
     /**
@@ -15,6 +17,6 @@ public class AppTest
     @Test
     public void shouldAnswerWithTrue()
     {
-        assertTrue( true );
+        assertTrue(true);
     }
 }
