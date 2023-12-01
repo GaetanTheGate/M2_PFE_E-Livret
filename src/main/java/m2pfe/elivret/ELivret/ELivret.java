@@ -29,6 +29,6 @@ public class ELivret {
     @JoinColumn(name = "master_id", referencedColumnName = "id")
     private EUser master;
 
-    @OneToMany(mappedBy = "eLivret")
+    @OneToMany(mappedBy = "livret")
     private List<ESection> sections;
 }
