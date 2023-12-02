@@ -1,5 +1,7 @@
 package m2pfe.elivret.EUser;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,10 +35,10 @@ public interface EUserRepository extends JpaRepository<EUser, Integer> {
      * 
      * @param email The email associated with the user you wish to find.
      * @return <ul>
-     *  <li>The <i>EUser</i> found.</li>
+     *  <li>An optional of the <i>EUser</i> found.</li>
      *  <li><i>null</i> if nothing was found</li>
      * </ul>
      */
     @Query("SELECT u FROM EUser u WHERE u.email = :email")
-    public EUser findByEmail(String email); 
+    public Optional<EUser> findByEmail(String email); 
 }

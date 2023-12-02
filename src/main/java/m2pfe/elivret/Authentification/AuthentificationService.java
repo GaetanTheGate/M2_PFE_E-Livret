@@ -2,6 +2,8 @@ package m2pfe.elivret.Authentification;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import m2pfe.elivret.EUser.EUser;
@@ -20,6 +22,10 @@ import m2pfe.elivret.EUser.EUserRepository;
  */
 @Service
 public class AuthentificationService {
+    // TODO: Comment.
+    @Autowired
+    AuthenticationManager authentication;
+
     /**
      * Attribute used to handle the tokens (JWT).
      * 
@@ -55,8 +61,12 @@ public class AuthentificationService {
      */
     public String login(String email, String password) throws AuthentificationException {
         try {
+            authentication.authenticate(new UsernamePasswordAuthenticationToken(email, password));
             // TODO: check the authentification to see if email and password are correct.
-            EUser user = ur.findByEmail(email);
+
+            EUser user = ur.findByEmail(email)
+                .orElseThrow(Exception::new); // TODO : Une vrai exception
+
             return jwt.createToken(user);
         } catch (Exception e) {
             throw new AuthentificationException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);

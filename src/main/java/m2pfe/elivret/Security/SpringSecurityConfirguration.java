@@ -3,11 +3,17 @@ package m2pfe.elivret.Security;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import io.jsonwebtoken.JwtHandler;
 import m2pfe.elivret.Authentification.JwtAuthorizationFilter;
@@ -77,5 +83,32 @@ public class SpringSecurityConfirguration extends WebSecurityConfigurerAdapter {
             .apply(new JwtFiltrerConfigurer(jwt));
 
         //return http.build();
+    }
+
+    // // TODO: comment.
+    // @Override
+	// @Bean
+	// public AuthenticationManager authenticationManagerBean() throws Exception {
+	// 	return super.authenticationManagerBean();
+	// }
+
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder(12);
+	}
+
+
+    @Autowired
+    UserDetailsService userDetailsService;
+
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder encoder)
+        throws Exception {
+        AuthenticationManagerBuilder builder = http
+            .getSharedObject(AuthenticationManagerBuilder.class);
+        builder.userDetailsService(userDetailsService).passwordEncoder(encoder);
+
+        return builder.build();
     }
 }
