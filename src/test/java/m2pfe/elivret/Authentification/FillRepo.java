@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import m2pfe.elivret.EUser.EUser;
 import m2pfe.elivret.EUser.EUserRepository;
@@ -14,6 +15,9 @@ import m2pfe.elivret.EUser.EUserRepository;
 public class FillRepo {
     @Autowired
     private EUserRepository ur;
+
+    @Autowired
+    PasswordEncoder encoder;
     
     @PostConstruct
     public void initTest(){
@@ -30,7 +34,7 @@ public class FillRepo {
     private EUser createAndSaveUser(String mail, String password) {
         EUser user = new EUser();
         user.setEmail(mail);
-        user.setPassword(password);
+        user.setPassword(encoder.encode(password));
         return ur.save(user);
     }
 }
