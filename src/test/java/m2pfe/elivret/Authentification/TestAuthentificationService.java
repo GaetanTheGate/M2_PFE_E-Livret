@@ -14,13 +14,15 @@ public class TestAuthentificationService {
     @Autowired
     private AuthentificationService service;
 
+    private String validLogin(){
+        return service.login("email", "password");
+    }
+
     @Test
-    public String testLogin(){
+    public void testLogin(){
         String token = service.login("email", "password");
 
         assertNotNull(token);
-
-        return token;
     }
 
     @Test
@@ -35,7 +37,7 @@ public class TestAuthentificationService {
 
     @Test
     public void testLogout(){
-        String token = testLogin();
+        String token = validLogin();
 
         // TODO: quand sera possible, ajouter une opération demandant un token
 
