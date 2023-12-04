@@ -1,5 +1,7 @@
 package m2pfe.elivret.Authentification;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -72,7 +74,7 @@ public class AuthentificationService {
 
             return jwt.createToken(user);
         } catch (Exception e) {
-            throw new AuthentificationException("Invalid username/password supplied", HttpStatus.FORBIDDEN);
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Invalid username/password supplied");
         }
     }
 
@@ -92,5 +94,27 @@ public class AuthentificationService {
      */
     public void logout(String token) throws AuthentificationException {
         jwt.forgetToken(token);
+    }
+
+    // TODO: COMMENTS.
+    public void logout(HttpServletRequest req){
+        String token = jwt.resolveToken(req);
+
+        logout(token);
+    }
+
+    // TODO: Comments.
+    public EUser whoAmI(String token) {
+        String myEmail = jwt.resolveEmail(token);
+
+        return ur.findByEmail(myEmail)
+            .orElseThrow(() -> new AuthentificationException(HttpStatus.INTERNAL_SERVER_ERROR, "Token's email unknown."));
+    }
+
+    // TODO: Comments.
+    public EUser whoAmI(HttpServletRequest req){
+        String token = jwt.resolveToken(req);
+
+        return whoAmI(token);
     }
 }

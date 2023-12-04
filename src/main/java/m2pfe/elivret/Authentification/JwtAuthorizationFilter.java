@@ -85,7 +85,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             SecurityContextHolder.clearContext();
 
             response.setStatus(HttpStatus.FORBIDDEN.value());
-            response.sendError(e.getHttpStatus().value(), e.getMessage());
+            response.sendError(e.getStatusCode().value(), e.getMessage());
 
             return;
         }

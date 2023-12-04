@@ -39,14 +39,6 @@ public class AuthentificationController {
      */
     @Autowired
     private AuthentificationService service;
-
-    /**
-     * Handler used for JWT manipulation.
-     * 
-     * @see JwtManager
-     */
-    @Autowired
-    private JwtManager jwt;
     
     /**
      * <p>
@@ -76,7 +68,7 @@ public class AuthentificationController {
 
             return ResponseEntity.ok(token);
         } catch (AuthentificationException e) {
-            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
@@ -101,14 +93,12 @@ public class AuthentificationController {
      */
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest req) {
-        String token = jwt.resolveToken(req);
-
         try {
-            service.logout(token);
+            service.logout(req);
 
             return ResponseEntity.ok(null);
         } catch (AuthentificationException e) {
-            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 }

@@ -127,7 +127,7 @@ public class JwtManager {
      */
     public void forgetToken(String token) throws AuthentificationException {
         if(! authorizedTokens.remove(token))
-            throw new AuthentificationException("Unknown token to forget", HttpStatus.NO_CONTENT);
+            throw new AuthentificationException(HttpStatus.NO_CONTENT, "Unknown token to forget");
     }
 
     /**
@@ -172,15 +172,15 @@ public class JwtManager {
             if(token == null || !authorizedTokens.contains(token))
                 return false;
 
-            parser.setSigningKey(secretKey).parseClaimsJws(token);
+            parser.parseClaimsJws(token);
             return true;
         }
         catch (ExpiredJwtException e) {
             forgetToken(token);
-            throw new AuthentificationException("Expired token", HttpStatus.FORBIDDEN);
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Expired token");
         }
         catch (Exception e) {
-            throw new AuthentificationException("Invalid token", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new AuthentificationException(HttpStatus.INTERNAL_SERVER_ERROR, "Invalid token");
         }
     }
 
@@ -205,5 +205,13 @@ public class JwtManager {
             return bearer.substring(TOK_PREFIX.length());
 
         return null;
+    }
+
+    // TODO: Comments.
+    public String resolveEmail(String token) throws AuthentificationException {
+        if(!validateToken(token))
+            throw new AuthentificationException(HttpStatus.NO_CONTENT, "Unknown token to process.");
+
+        return parser.parseClaimsJws(token).getBody().getSubject();
     }
 }
