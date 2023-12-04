@@ -1,5 +1,6 @@
 package m2pfe.elivret.ELivret;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.modelmapper.ModelMapper;
@@ -10,6 +11,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/livrets")
 public class ELivretController {
+
+    @Autowired
     ELivretRepository l_repo;
 
     private ModelMapper mapper = new ModelMapper();
@@ -18,7 +21,8 @@ public class ELivretController {
 
     @GetMapping("")
     public List<ELivret> getLivrets() {
-        return l_repo.findAll().stream().map(l -> mapper.map(l, ELivret.class)).toList();
+        return l_repo.findAll();
+        // return l_repo.findAll().stream().map(l -> mapper.map(l, ELivret.class)).toList();
     }
 
     @GetMapping("/{id}")

@@ -8,6 +8,10 @@ import m2pfe.elivret.EUser.EUser;
 
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 
 @Entity
@@ -20,15 +24,20 @@ public class ELivret {
     private Integer id;
 
     @OneToOne(cascade = CascadeType.PERSIST)
+    @JsonBackReference
     private EUser student;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tutor_id", referencedColumnName = "id")
+    @JoinColumn(referencedColumnName = "id")
+    @JsonBackReference
     private EUser tutor;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "master_id", referencedColumnName = "id")
+    @JoinColumn(referencedColumnName = "id")
+    @JsonBackReference
     private EUser master;
 
     @OneToMany(mappedBy = "livret")
+    @JsonManagedReference
     private List<ESection> sections;
 }

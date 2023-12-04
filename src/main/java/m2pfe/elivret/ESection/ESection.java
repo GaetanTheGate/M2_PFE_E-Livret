@@ -7,6 +7,8 @@ import m2pfe.elivret.ELivret.ELivret;
 import m2pfe.elivret.EUser.EUser;
 import org.springframework.data.util.Pair;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class ESection {
     private Integer id;
 
     @OneToOne(cascade = CascadeType.PERSIST)
+    @JsonBackReference
     private EUser owner;
 
     @Basic
@@ -35,5 +38,6 @@ public class ESection {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "livret_id", referencedColumnName = "id")
+    @JsonBackReference
     private ELivret livret;
 }

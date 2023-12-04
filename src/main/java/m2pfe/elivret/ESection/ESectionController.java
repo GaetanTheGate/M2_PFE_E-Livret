@@ -1,6 +1,7 @@
 package m2pfe.elivret.ESection;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
 @RequestMapping("/api/sections")
 public class ESectionController {
 
+    @Autowired
     ESectionRepository s_repo;
 
     private ModelMapper mapper = new ModelMapper();
