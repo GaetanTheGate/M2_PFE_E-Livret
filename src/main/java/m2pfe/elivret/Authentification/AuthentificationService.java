@@ -22,7 +22,11 @@ import m2pfe.elivret.EUser.EUserRepository;
  */
 @Service
 public class AuthentificationService {
-    // TODO: Comment.
+    /**
+     * Attribute used to check the validity of an authentification attempt.
+     * 
+     * @see AuthenticationManager
+     */
     @Autowired
     AuthenticationManager authentication;
 
@@ -62,14 +66,13 @@ public class AuthentificationService {
     public String login(String email, String password) throws AuthentificationException {
         try {
             authentication.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-            // TODO: check the authentification to see if email and password are correct.
 
             EUser user = ur.findByEmail(email)
-                .orElseThrow(Exception::new); // TODO : Une vrai exception
+                .orElseThrow(Exception::new);
 
             return jwt.createToken(user);
         } catch (Exception e) {
-            throw new AuthentificationException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+            throw new AuthentificationException("Invalid username/password supplied", HttpStatus.FORBIDDEN);
         }
     }
 
@@ -85,8 +88,9 @@ public class AuthentificationService {
      * @see #JwtManager.forgetToken(String)
      * 
      * @param token The token to forget.
+     * @throws AuthentificationException
      */
-    public void logout(String token) {
+    public void logout(String token) throws AuthentificationException {
         jwt.forgetToken(token);
     }
 }
