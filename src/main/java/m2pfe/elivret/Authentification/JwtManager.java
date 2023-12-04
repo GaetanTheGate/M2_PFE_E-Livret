@@ -123,8 +123,9 @@ public class JwtManager {
      * @see #createToken(EUser)
      * 
      * @param token The token to forget.
+     * @throws AuthentificationException
      */
-    public void forgetToken(String token){
+    public void forgetToken(String token) throws AuthentificationException {
         if(! authorizedTokens.remove(token))
             throw new AuthentificationException("Unknown token to forget", HttpStatus.NO_CONTENT);
     }
