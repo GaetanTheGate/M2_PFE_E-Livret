@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import m2pfe.elivret.ELivret.ELivret;
+import m2pfe.elivret.ELivret.ELivret.UserRole;
 import m2pfe.elivret.ELivret.ELivretRepository;
 import m2pfe.elivret.ESection.ESection;
 import m2pfe.elivret.ESection.ESectionRepository;
@@ -63,12 +64,12 @@ public class PopulateTesting {
 
         ELivret livret = createAndSaveElivret(student, tutor, master);
 
-        createAndSaveEsESection(livret, student, "student Visible", true);
-        createAndSaveEsESection(livret, student, "student Invisible", false);
-        createAndSaveEsESection(livret, tutor, "tutor Visible", true);
-        createAndSaveEsESection(livret, tutor, "tutor Invisible", false);
-        createAndSaveEsESection(livret, master, "master Visible", true);
-        createAndSaveEsESection(livret, master, "master Invisible", false);
+        createAndSaveEsESection(livret, UserRole.STUDENT, "student Visible", true);
+        createAndSaveEsESection(livret, UserRole.STUDENT, "student Invisible", false);
+        createAndSaveEsESection(livret, UserRole.TUTOR, "tutor Visible", true);
+        createAndSaveEsESection(livret, UserRole.TUTOR, "tutor Invisible", false);
+        createAndSaveEsESection(livret, UserRole.MASTER, "master Visible", true);
+        createAndSaveEsESection(livret, UserRole.MASTER, "master Invisible", false);
     }
 
     private ELivret createAndSaveElivret(EUser student, EUser tutor, EUser master){
@@ -77,7 +78,7 @@ public class PopulateTesting {
         return lr.save(livret);
     }
 
-    private ESection createAndSaveEsESection(ELivret livret, EUser owner, String title, boolean visibility){
+    private ESection createAndSaveEsESection(ELivret livret, UserRole owner, String title, boolean visibility){
         List<String> questions = List.of("q1", "q2");
         List<String> answers = List.of("a1", "a2");
         

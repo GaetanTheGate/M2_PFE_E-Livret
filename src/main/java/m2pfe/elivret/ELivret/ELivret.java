@@ -40,4 +40,22 @@ public class ELivret {
     @OneToMany(mappedBy = "livret")
     @JsonManagedReference
     private List<ESection> sections;
+
+    
+    public EUser getUserFromRole(UserRole role){
+        switch (role) {
+            case STUDENT:
+                return this.student;
+            case TUTOR:
+                return this.tutor;
+            case MASTER:
+                return this.master;
+        }
+
+        return null;
+    }
+
+    public static enum UserRole {
+        STUDENT, TUTOR, MASTER
+    }
 }

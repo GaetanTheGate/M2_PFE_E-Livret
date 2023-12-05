@@ -4,6 +4,7 @@ package m2pfe.elivret.ESection;
 
 import lombok.*;
 import m2pfe.elivret.ELivret.ELivret;
+import m2pfe.elivret.ELivret.ELivret.UserRole;
 import m2pfe.elivret.EUser.EUser;
 import org.springframework.data.util.Pair;
 
@@ -21,9 +22,11 @@ public class ESection {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JsonBackReference
-    private EUser owner;
+    // @OneToOne(cascade = CascadeType.PERSIST)
+    // @JsonBackReference
+    // private EUser owner;
+
+    private UserRole owner;
 
     @Basic
     private Boolean visibility;
