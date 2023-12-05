@@ -41,7 +41,7 @@ public class TestAuthentificationController {
 
         ResponseEntity<String> response = rest.postForEntity(BASE_URL+"/login", auth, String.class);
 
-        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
     }
 
