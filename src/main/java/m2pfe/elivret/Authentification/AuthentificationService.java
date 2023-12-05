@@ -104,7 +104,7 @@ public class AuthentificationService {
     }
 
     // TODO: Comments.
-    public EUser whoAmI(String token) {
+    public EUser whoAmI(String token) throws AuthentificationException {
         String myEmail = jwt.resolveEmail(token);
 
         return ur.findByEmail(myEmail)
@@ -112,7 +112,7 @@ public class AuthentificationService {
     }
 
     // TODO: Comments.
-    public EUser whoAmI(HttpServletRequest req){
+    public EUser whoAmI(HttpServletRequest req) throws AuthentificationException {
         String token = jwt.resolveToken(req);
 
         return whoAmI(token);
