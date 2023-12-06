@@ -7,7 +7,11 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
@@ -16,6 +20,7 @@ import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import m2pfe.elivret.EUser.EUser;
+import m2pfe.elivret.Security.MyUserDetailsService;
 
 /**
  * <p>
@@ -61,6 +66,10 @@ public class JwtManager {
      * The list of all the created tokens, thus which are allowed to be validated.
      */
     private List<String> authorizedTokens = new ArrayList<>();
+
+    // TODO: COMMENTS
+    @Autowired
+    private MyUserDetailsService userService;
 
     /**
      * <p>
@@ -213,5 +222,11 @@ public class JwtManager {
             throw new AuthentificationException(HttpStatus.NO_CONTENT, "Unknown token to process.");
 
         return parser.parseClaimsJws(token).getBody().getSubject();
+    }
+
+    // TODO: Comments.
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = userService.loadUserByUsername(resolveEmail(token));
+		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 }
