@@ -65,30 +65,32 @@ public class PopulateTesting {
     }
 
     private void createUsers(){
-        createAndSaveUser("email", "password");
+        createAndSaveUser("email", "password" , UserRole.RESPONSABLE);
 
-        createAndSaveUser("responsable@mail.com", "responsable");
+        createAndSaveUser("responsable@mail.com", "responsable" , UserRole.RESPONSABLE);
 
     }
 
-    private EUser createAndSaveUser(String mail, String password) {
+    private EUser createAndSaveUser(String mail, String password, ELivret.UserRole role) {
         EUser user = new EUser();
         user.setEmail(mail);
         user.setPassword(encoder.encode(password));
+        user.setRole(role);
         return ur.save(user);
     }
 
     private void createELivrets(){
 
-        EUser student = createAndSaveUser("etudiant@mail.com", "etudiant");
-        EUser tutor = createAndSaveUser("tuteur@mail.com", "tuteur");
-        EUser master = createAndSaveUser("maitre@mail.com", "maitre");
+        EUser student = createAndSaveUser("etudiant@mail.com", "etudiant", UserRole.STUDENT);
+        EUser tutor = createAndSaveUser("tuteur@mail.com", "tuteur", UserRole.TUTOR);
+        EUser master = createAndSaveUser("maitre@mail.com", "maitre", UserRole.MASTER);
+        EUser responsable = createAndSaveUser("responsable@mail.com", "responsable", UserRole.RESPONSABLE);
 
-        createAndSaveElivret(student, tutor, master);
+        createAndSaveElivret(student, tutor, master, responsable);
     }
 
-    private ELivret createAndSaveElivret(EUser student, EUser tutor, EUser master){
-        ELivret livret = new ELivret(0, student, tutor, master, null);
+    private ELivret createAndSaveElivret(EUser student, EUser tutor, EUser master , EUser responsable){
+        ELivret livret = new ELivret(0, student, tutor, master, responsable, null);
 
         livret = lr.save(livret);
 
