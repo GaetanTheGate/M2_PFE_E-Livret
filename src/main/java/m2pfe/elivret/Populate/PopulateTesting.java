@@ -16,7 +16,7 @@ import m2pfe.elivret.ELivret.ELivret.UserRole;
 import m2pfe.elivret.EQuestion.AbstractEQuestion;
 import m2pfe.elivret.EQuestion.EQestionRepository;
 import m2pfe.elivret.EQuestion.AbstractEQuestion.QuestionType;
-import m2pfe.elivret.EQuestion.QuestionType.LabelQuestion;
+import m2pfe.elivret.EQuestion.QuestionType.NoChoiceQuestion;
 import m2pfe.elivret.EQuestion.QuestionType.MultipleChoiceQuestion;
 import m2pfe.elivret.EQuestion.QuestionType.SingleChoiceQuestion;
 import m2pfe.elivret.ELivret.ELivretRepository;
@@ -175,7 +175,7 @@ public class PopulateTesting {
         return new MultipleChoiceQuestion();
     }
 
-    private LabelQuestion labelQuestion(){
-        return new LabelQuestion();
+    private NoChoiceQuestion labelQuestion(){
+        return new NoChoiceQuestion();
     }
 }
