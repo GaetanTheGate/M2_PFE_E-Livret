@@ -54,6 +54,9 @@ public class JwtManager {
     
     /**
      * The parser which to parse the JWT.
+     * 
+     * @see Jwts
+     * @see JwtParser
      */
     private JwtParser parser;
 
@@ -67,7 +70,11 @@ public class JwtManager {
      */
     private List<String> authorizedTokens = new ArrayList<>();
 
-    // TODO: COMMENTS
+    /**
+     * The userService to loard user.
+     * 
+     * @see MyUserDetailsService
+     */
     @Autowired
     private MyUserDetailsService userService;
 
@@ -216,7 +223,18 @@ public class JwtManager {
         return null;
     }
 
-    // TODO: Comments.
+    /**
+     * <p>
+     * Process a token to determine the email it contains. 
+     * </p>
+     * 
+     * @see Jwts
+     * @see #validateToken(String)
+     * 
+     * @param token The token to process.
+     * @return The email fournd.
+     * @throws AuthentificationException
+     */
     public String resolveEmail(String token) throws AuthentificationException {
         if(!validateToken(token))
             throw new AuthentificationException(HttpStatus.NO_CONTENT, "Unknown token to process.");
@@ -224,7 +242,20 @@ public class JwtManager {
         return parser.parseClaimsJws(token).getBody().getSubject();
     }
 
-    // TODO: Comments.
+    /**
+     * <p>
+     * Process an Authentication from a token.
+     * </p>
+     * <p>
+     * The authentication contains the user's details.
+     * </p>
+     * 
+     * @see Authentication
+     * @see MyUserDetailsService
+     * 
+     * @param token
+     * @return The created Authentication.
+     */
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userService.loadUserByUsername(resolveEmail(token));
 		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());

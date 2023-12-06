@@ -20,7 +20,7 @@ import m2pfe.elivret.EUser.EUserRepository;
  * @see EUserRepository
  * 
  * @author Gaëtan PUPET
- * @version 1.0
+ * @version 1.1
  */
 @Service
 public class AuthentificationService {
@@ -95,15 +95,40 @@ public class AuthentificationService {
     public void logout(String token) throws AuthentificationException {
         jwt.forgetToken(token);
     }
-
-    // TODO: COMMENTS.
-    public void logout(HttpServletRequest req){
+    
+    /**
+     * <p>
+     * Log out an user from the application using its token from the HttpRequest.
+     * </p>
+     * <p>
+     * Makes the application forget the token.
+     * </p>
+     * 
+     * @see #logout(String)
+     * @see HttpServletRequest
+     * @see JwtManager
+     * @see #JwtManager.forgetToken(String)
+     * 
+     * @param req The request where the token is.
+     * @throws AuthentificationException
+     */
+    public void logout(HttpServletRequest req) throws AuthentificationException {
         String token = jwt.resolveToken(req);
 
         logout(token);
     }
 
-    // TODO: Comments.
+    /**
+     * <p>
+     * Fetch the user linked to the token.
+     * </p>
+     * 
+     * @see JwtManager
+     * 
+     * @param token The token associated with the user.
+     * @return The current user if found.
+     * @throws AuthentificationException
+     */
     public EUser whoAmI(String token) throws AuthentificationException {
         String myEmail = jwt.resolveEmail(token);
 
@@ -111,7 +136,18 @@ public class AuthentificationService {
             .orElseThrow(() -> new AuthentificationException(HttpStatus.INTERNAL_SERVER_ERROR, "Token's email unknown."));
     }
 
-    // TODO: Comments.
+    /**
+     * <p>
+     * Fetch the user linked to the token in the request.
+     * </p>
+     * 
+     * @see #whoAmI(String)
+     * @see JwtManager
+     * 
+     * @param req The request where the token associated with the user is.
+     * @return The current user if found.
+     * @throws AuthentificationException
+     */
     public EUser whoAmI(HttpServletRequest req) throws AuthentificationException {
         String token = jwt.resolveToken(req);
 

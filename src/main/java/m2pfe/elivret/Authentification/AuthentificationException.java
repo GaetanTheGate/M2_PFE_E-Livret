@@ -19,9 +19,18 @@ import org.springframework.web.client.HttpStatusCodeException;
  */
 public class AuthentificationException extends HttpStatusCodeException {
 
-    // TODO: COMMENTs.
+    /**
+     * <p>
+     * Constructor of the AuthentificationException class.
+     * </p>
+     * <p>
+     * Calls the super constructor
+     * </p>
+     * 
+     * @param statusCode
+     * @param statusText
+     */
     public AuthentificationException(HttpStatus statusCode, String statusText) {
         super(statusCode, statusText);
     }
-
 }

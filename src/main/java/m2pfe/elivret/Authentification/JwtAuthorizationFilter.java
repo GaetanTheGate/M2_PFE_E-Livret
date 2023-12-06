@@ -27,7 +27,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
  * @see FilterChain
  * 
  * @author Gaëtan PUPET
- * @version 1.0
+ * @version 1.1
  */
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
     /**
@@ -49,7 +49,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     public JwtAuthorizationFilter(JwtManager manager) {
 		this.jwt = manager;
 	}
-
     
     /**
      * <p>
