@@ -18,8 +18,17 @@ import org.springframework.web.client.HttpStatusCodeException;
  * @version 1.0
  */
 public class ELivretException extends HttpStatusCodeException {
-
-    // TODO: COMMENTS.
+    /**
+     * <p>
+     * Constructor of the ELivretException class.
+     * </p>
+     * <p>
+     * Calls the super constructor
+     * </p>
+     * 
+     * @param statusCode
+     * @param statusText
+     */
     public ELivretException(HttpStatus statusCode, String statusText) {
         super(statusCode, statusText);
     }

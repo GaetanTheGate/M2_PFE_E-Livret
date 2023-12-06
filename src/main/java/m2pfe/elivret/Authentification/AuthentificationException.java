@@ -15,10 +15,9 @@ import org.springframework.web.client.HttpStatusCodeException;
  * @see HttpStatusCodeException
  * 
  * @author Gaëtan PUPET
- * @version 1.0
+ * @version 2.0
  */
 public class AuthentificationException extends HttpStatusCodeException {
-
     /**
      * <p>
      * Constructor of the AuthentificationException class.

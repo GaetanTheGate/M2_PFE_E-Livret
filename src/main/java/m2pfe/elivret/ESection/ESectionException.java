@@ -18,8 +18,17 @@ import org.springframework.web.client.HttpStatusCodeException;
  * @version 1.0
  */
 public class ESectionException extends HttpStatusCodeException {
-
-    // TODO : Comments
+    /**
+     * <p>
+     * Constructor of the ESectionException class.
+     * </p>
+     * <p>
+     * Calls the super constructor
+     * </p>
+     * 
+     * @param statusCode
+     * @param statusText
+     */
     public ESectionException(HttpStatus statusCode, String statusText) {
         super(statusCode, statusText);
     }

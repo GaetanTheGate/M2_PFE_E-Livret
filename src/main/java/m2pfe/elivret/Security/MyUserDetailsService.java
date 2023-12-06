@@ -14,12 +14,29 @@ import org.springframework.transaction.annotation.Transactional;
 import m2pfe.elivret.EUser.EUser;
 import m2pfe.elivret.EUser.EUserRepository;
 
+/**
+ * <p>
+ * Service to configure represents an 'UserDetailsService' with our users.
+ * </p>
+ * 
+ * @see UserDetailsService
+ * @see EUser
+ * 
+ * @author Gaëtan PUPET
+ * @version 1.0
+ */
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
+    /**
+     * Repository for the user entities.
+     */
     @Autowired
     private EUserRepository ur;
 
+    /**
+     * @see EUser
+     */
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

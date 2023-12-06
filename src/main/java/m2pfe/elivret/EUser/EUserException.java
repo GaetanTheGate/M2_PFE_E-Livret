@@ -18,8 +18,17 @@ import org.springframework.web.client.HttpStatusCodeException;
  * @version 1.0
  */
 public class EUserException extends HttpStatusCodeException {
-
-    // TODO: Comment
+    /**
+     * <p>
+     * Constructor of the EUserException class.
+     * </p>
+     * <p>
+     * Calls the super constructor
+     * </p>
+     * 
+     * @param statusCode
+     * @param statusText
+     */
     public EUserException(HttpStatus statusCode, String statusText) {
         super(statusCode, statusText);
     }

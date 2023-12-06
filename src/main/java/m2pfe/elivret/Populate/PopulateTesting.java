@@ -25,6 +25,14 @@ import m2pfe.elivret.ESection.ESectionRepository;
 import m2pfe.elivret.EUser.EUser;
 import m2pfe.elivret.EUser.EUserRepository;
 
+/**
+ * <p>
+ * Service used to populate the repositories for <b>testing purpose only</b>.
+ * </p>
+ * 
+ * @author Gaëtan PUPET
+ * @version 1.0
+ */
 @Profile("testing")
 @Configuration
 public class PopulateTesting {
@@ -99,11 +107,11 @@ public class PopulateTesting {
 
         section = sr.save(section);
 
-        // createAndSaveEQuestion(section, "Texte a caractere informatif :", QuestionType.LABEL);
+        createAndSaveEQuestion(section, "Texte a caractere informatif :", QuestionType.LABEL);
         createAndSaveEQuestion(section, "Question 1 :", QuestionType.TEXT);
-        // createAndSaveEQuestion(section, "Question 2 :", QuestionType.SINGLE_CHECKBOX);
-        // createAndSaveEQuestion(section, "Question 3 :", QuestionType.MULTI_CHECKBOX);
-        // createAndSaveEQuestion(section, "Question 4 :", QuestionType.RATIOBUTTON);
+        createAndSaveEQuestion(section, "Question 2 :", QuestionType.SINGLE_CHECKBOX);
+        createAndSaveEQuestion(section, "Question 3 :", QuestionType.MULTI_CHECKBOX);
+        createAndSaveEQuestion(section, "Question 4 :", QuestionType.RATIOBUTTON);
 
         return section;
     }

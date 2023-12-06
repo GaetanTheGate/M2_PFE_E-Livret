@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import io.jsonwebtoken.JwtHandler;
 import m2pfe.elivret.Authentification.JwtAuthorizationFilter;
 import m2pfe.elivret.Authentification.JwtManager;
 
@@ -27,13 +26,12 @@ import m2pfe.elivret.Authentification.JwtManager;
  * Configure the security to filter the request with JWT.
  * </p>
  * 
- * @see JwtHandler
+ * @see JwtManager
  * @see WebSecurityConfigurerAdapter
  * 
  * @author Gaëtan PUPET
- * @version 1.0
+ * @version 1.1
  */
-// @Profile("usejwt")
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfirguration extends WebSecurityConfigurerAdapter {
@@ -52,6 +50,12 @@ public class SpringSecurityConfirguration extends WebSecurityConfigurerAdapter {
     public void init(){
 
     }
+
+    /**
+     * The service used to Authenticate an user.
+     */
+    @Autowired
+    UserDetailsService userDetailsService;
 
     /**
      * <p>
@@ -81,30 +85,42 @@ public class SpringSecurityConfirguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 )
             .apply(new JwtFiltrerConfigurer(jwt));
-
-        //return http.build();
     }
 
-    // // TODO: comment.
-    // @Override
-	// @Bean
-	// public AuthenticationManager authenticationManagerBean() throws Exception {
-	// 	return super.authenticationManagerBean();
-	// }
-
-
+    /**
+     * <p>
+     * Bean for creating a password encoder.
+     * </p>
+     * 
+     * @see PassWordEncoder
+     * 
+     * @return The password encoder created.
+     */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder(12);
 	}
 
-
-    @Autowired
-    UserDetailsService userDetailsService;
-
+    /**
+     * <p>
+     * Bean for creating an authentication manager from an HttpSecurity.
+     * </p>
+     * <p>
+     * The manager has its userDetailsService and passwordEncoder already set.
+     * </p>
+     * 
+     * @see AuthenticationManager
+     * @see UserDetailsService
+     * @see PasswordEncoder
+     * @see HttpSecurity
+     * 
+     * @param http The HttpSecurity to base the AuthenticationManager from.
+     * @param encoder The passwordEncoder to use.
+     * @return The created authentcation manager.
+     * @throws Exception
+     */
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder encoder)
-        throws Exception {
+    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder encoder) throws Exception {
         AuthenticationManagerBuilder builder = http
             .getSharedObject(AuthenticationManagerBuilder.class);
         builder.userDetailsService(userDetailsService).passwordEncoder(encoder);

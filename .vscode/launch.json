@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Starter<M2_PFE-E_LIVRET>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "m2pfe.elivret.Starter",
+            "projectName": "M2_PFE-E_LIVRET",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
