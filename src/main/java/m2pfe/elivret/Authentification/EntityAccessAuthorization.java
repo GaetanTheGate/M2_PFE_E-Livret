@@ -138,6 +138,7 @@ public class EntityAccessAuthorization {
             .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret's id not found."));
 
         int exception_counter = UserRole.values().length;
+        /** Loop for no more useful when we add role in EUser **/
         for(UserRole role : UserRole.values()){
 
             try {

@@ -41,14 +41,15 @@ public class ELivretController {
     @GetMapping("")
     public List<ELivret> getMyLivrets(HttpServletRequest req) throws AuthentificationException, ELivretException {
         EUser me = service.whoAmI(req);
-        
-        return null;
+        return l_repo.findByUser(me).stream().map(l -> mapper.map(l, ELivret.class)).toList();
+
     }
 
     @GetMapping("/{id}")
     public ELivret getLivret(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, ELivretException {
-        if(!authorization.isMeFromLivret(req, id))
+        if(!authorization.isMeFromLivret(req, id)) {
             throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
 
         Optional<ELivret> l = l_repo.findById(id);
         l.orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found."));
@@ -62,6 +63,13 @@ public class ELivretController {
 
     @PostMapping("")
     public ELivret postLivret(@RequestBody ELivret livret, HttpServletRequest req) throws AuthentificationException, ELivretException {
+        if(!authorization.isMeFromLivret(req, livret.getId())) {
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        EUser me = service.whoAmI(req);
+        if(me.getRole() != ELivret.UserRole.RESPONSABLE){
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
         ELivret l = mapper.map(livret, ELivret.class);
 
         Optional.ofNullable(l_repo.findById(l.getId()).isPresent() ? null : l)
@@ -75,7 +83,13 @@ public class ELivretController {
 
     @PutMapping("")
     public ELivret putLivret(@RequestBody ELivret livret, HttpServletRequest req) throws AuthentificationException, ELivretException {
-
+        if(!authorization.isMeFromLivret(req, livret.getId())) {
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        EUser me = service.whoAmI(req);
+        if(me.getRole() != ELivret.UserRole.RESPONSABLE){
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
         ELivret l = mapper.map(livret, ELivret.class);
 
         l_repo.findById(l.getId())
@@ -90,6 +104,13 @@ public class ELivretController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLivret(@PathVariable int id, HttpServletRequest req) throws AuthentificationException {
+        if(!authorization.isMeFromLivret(req,id)) {
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        EUser me = service.whoAmI(req);
+        if(me.getRole() != ELivret.UserRole.RESPONSABLE){
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
         l_repo.deleteById(id);
     }
 }

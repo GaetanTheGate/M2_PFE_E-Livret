@@ -37,6 +37,11 @@ public class ELivret {
     @JsonBackReference
     private EUser master;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(referencedColumnName = "id")
+    @JsonBackReference
+    private EUser responsable;
+
     @OneToMany(mappedBy = "livret")
     @JsonManagedReference
     private List<ESection> sections;
@@ -50,12 +55,14 @@ public class ELivret {
                 return this.tutor;
             case MASTER:
                 return this.master;
+            case RESPONSABLE:
+                return this.responsable;
         }
 
         return null;
     }
 
     public static enum UserRole {
-        STUDENT, TUTOR, MASTER
+        STUDENT, TUTOR, MASTER , RESPONSABLE
     }
 }

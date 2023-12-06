@@ -1,15 +1,12 @@
 package m2pfe.elivret.EUser;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import m2pfe.elivret.ELivret.ELivret;
 
 /**
  * <p>
@@ -50,4 +47,10 @@ public class EUser {
     @Basic
     @NotBlank
     private String password;
+
+    @Basic
+    @Enumerated(EnumType.STRING)
+    private ELivret.UserRole role;
+
+
 }
