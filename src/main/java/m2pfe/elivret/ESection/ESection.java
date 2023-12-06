@@ -1,14 +1,12 @@
 package m2pfe.elivret.ESection;
 
-
-
 import lombok.*;
 import m2pfe.elivret.ELivret.ELivret;
 import m2pfe.elivret.ELivret.ELivret.UserRole;
-import m2pfe.elivret.EUser.EUser;
-import org.springframework.data.util.Pair;
+import m2pfe.elivret.EQuestion.AbstractEQuestion;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
@@ -26,6 +24,7 @@ public class ESection {
     // @JsonBackReference
     // private EUser owner;
 
+    @Basic
     private UserRole owner;
 
     @Basic
@@ -34,13 +33,18 @@ public class ESection {
     @Basic
     private String title;
 
-    @ElementCollection
-    private List<String> listQuestion;
-    @ElementCollection
-    private List<String> listReponse;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "livret_id", referencedColumnName = "id")
     @JsonBackReference
     private ELivret livret;
+
+    // @ElementCollection
+    // private List<String> listQuestion;
+    // @ElementCollection
+    // private List<String> listReponse;
+
+    @OneToMany(mappedBy = "section")
+    @JsonManagedReference
+    private List<AbstractEQuestion> questions;
 }

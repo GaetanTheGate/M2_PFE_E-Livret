@@ -33,7 +33,7 @@ public class ESectionController {
     @Deprecated
     @GetMapping("/getAll")
     public List<ESection> getSections() {
-        return s_repo.findAll().stream().map(p -> mapper.map(p, ESection.class))
+        return s_repo.findAll().stream().map(s -> mapper.map(s, ESection.class))
                 .toList();
     }
 
