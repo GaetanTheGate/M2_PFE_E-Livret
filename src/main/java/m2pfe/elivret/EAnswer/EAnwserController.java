@@ -97,13 +97,10 @@ public class EAnwserController {
 
     @PutMapping("")
     public EAnswer putAnswer(@RequestBody EAnswer answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
-        if(!authorization.isMeFromLivret(req, answer.getQuestion().getSection().getLivret().getId())) {
+        if(!authorization.isAnswerMine(req, answer)) {
             throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
         }
 
-        if(!authorization.isSectionMine(req,answer.getQuestion().getSection().getId())){
-            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
-        }
         EAnswer a = mapper.map(answer, EAnswer.class);
 
         a_repo.findById(a.getId())
