@@ -1,6 +1,7 @@
 package m2pfe.elivret.ESection;
 
 import m2pfe.elivret.ELivret.ELivret;
+import m2pfe.elivret.EQuestion.AbstractEQuestion;
 import m2pfe.elivret.EUser.EUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +16,40 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
-
+/**
+ * <p>
+ * Rest controller for the ESection entity.
+ * </p>
+ * <p>
+ * API that manages the request from the path "/api/sections".
+ * </p>
+ *
+ * @see ESection
+ *
+ * @author Gaëtan PUPET
+ * @version 1.0
+ */
 @RestController
 @RequestMapping("/api/sections")
 public class ESectionController {
+    /**
+     * The service used to check the authenticated user's rights.
+     */
     @Autowired
     private EntityAccessAuthorization authorization;
-
+    /**
+     * The service to authenticate the user.
+     */
     @Autowired
     private AuthentificationService service;
-
+    /**
+     * Respository for the ESections.
+     */
     @Autowired
     private ESectionRepository s_repo;
-
+    /**
+     * Mapper for mapping an object to another.
+     */
     private ModelMapper mapper = new ModelMapper();
 
     /// GetMapping

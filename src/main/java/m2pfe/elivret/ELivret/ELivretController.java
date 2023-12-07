@@ -1,5 +1,6 @@
 package m2pfe.elivret.ELivret;
 
+import m2pfe.elivret.ESection.ESection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,19 +16,40 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
-
+/**
+ * <p>
+ * Rest controller for the ELivret entity.
+ * </p>
+ * <p>
+ * API that manages the request from the path "/api/livrets".
+ * </p>
+ *
+ * @see ELivret
+ *
+ * @author Gaëtan PUPET
+ * @version 1.0
+ */
 @RestController
 @RequestMapping("/api/livrets")
 public class ELivretController {
+    /**
+     * The service used to check the authenticated user's rights.
+     */
     @Autowired
     private EntityAccessAuthorization authorization;
-
+    /**
+     * The service to authenticate the user.
+     */
     @Autowired
     private AuthentificationService service;
-
+    /**
+     * Respository for the ELivrets.
+     */
     @Autowired
     private ELivretRepository l_repo;
-
+    /**
+     * Mapper for mapping an object to another.
+     */
     private ModelMapper mapper = new ModelMapper();
 
     /// GetMapping

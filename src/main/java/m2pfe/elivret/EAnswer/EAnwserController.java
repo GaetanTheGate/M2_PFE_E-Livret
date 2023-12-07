@@ -1,12 +1,22 @@
 package m2pfe.elivret.EAnswer;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import m2pfe.elivret.Authentification.AuthentificationException;
+import m2pfe.elivret.Authentification.AuthentificationService;
+import m2pfe.elivret.Authentification.EntityAccessAuthorization;
+import m2pfe.elivret.ELivret.ELivret;
+import m2pfe.elivret.EQuestion.AbstractEQuestion;
+import m2pfe.elivret.EQuestion.AbstractEQuestionException;
+import m2pfe.elivret.EUser.EUser;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -24,16 +34,101 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 @RequestMapping("/api/answers")
 public class EAnwserController {
-    /*
-     * Repository fir the EAnswer entities.
+    /**
+     * The service used to check the authenticated user's rights.
      */
     @Autowired
-    private EAnswerRepository ar;
+    private EntityAccessAuthorization authorization;
+
+    /**
+     * The service to authenticate the user.
+     */
+    @Autowired
+    private AuthentificationService service;
+    /**
+     * Repository for the EAnswer entities.
+     **/
+    @Autowired
+    private EAnswerRepository a_repo;
+    /**
+     * Mapper for mapping an object to another.
+     */
+    private ModelMapper mapper = new ModelMapper();
+
+
+    ///GetMapping
 
     // TODO: COMMENTS.
     @GetMapping("/getAll")
-    public List<EAnswer> getAllAnswer() {
-        return ar.findAll();
+    public List<EAnswer> getAnswers() {
+        return a_repo.findAll().stream().map(a -> mapper.map(a, EAnswer.class))
+                .toList();
+    }
+
+    @GetMapping("/{id}")
+    public EAnswer getAnswer(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, EAnswerException {
+        if(!authorization.isMeFromLivret(req, a_repo.getById(id).getQuestion().getSection().getLivret().getId())) {
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        Optional<EAnswer> a = a_repo.findById(id);
+        a.orElseThrow(() -> new EAnswerException(HttpStatus.NO_CONTENT, "EAnswer not found."));
+
+        return mapper.map(a.get(), EAnswer.class);
+    }
+
+
+    /// PostMapping
+
+    @PostMapping("")
+    public EAnswer postAnswer(@RequestBody EAnswer answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
+        if(!authorization.isMeFromLivret(req, answer.getQuestion().getSection().getLivret().getId())) {
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+
+        if(!authorization.isSectionMine(req,answer.getQuestion().getSection().getId())){
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        EAnswer a = mapper.map(answer, EAnswer.class);
+
+        Optional.ofNullable(a_repo.findById(a.getId()).isPresent() ? null : a)
+                .orElseThrow(() -> new EAnswerException(HttpStatus.NO_CONTENT, "EAnswer already exist."));
+
+        return a_repo.save(a);
+    }
+
+
+    /// PutMapping
+
+    @PutMapping("")
+    public EAnswer putAnswer(@RequestBody EAnswer answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
+        if(!authorization.isMeFromLivret(req, answer.getQuestion().getSection().getLivret().getId())) {
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+
+        if(!authorization.isSectionMine(req,answer.getQuestion().getSection().getId())){
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        EAnswer a = mapper.map(answer, EAnswer.class);
+
+        a_repo.findById(a.getId())
+                .orElseThrow(() -> new EAnswerException(HttpStatus.NO_CONTENT, "EAnswer not found."));
+
+        return a_repo.save(a);
+    }
+
+
+    /// DeleteMapping
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAnswer(@PathVariable int id, HttpServletRequest req) throws AuthentificationException {
+        if(!authorization.isMeFromLivret(req, a_repo.getById(id).getQuestion().getSection().getLivret().getId())) {
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        if(!authorization.isSectionMine(req,a_repo.getById(id).getQuestion().getSection().getId())){
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        a_repo.deleteById(id);
     }
     
 }

@@ -1,16 +1,22 @@
 package m2pfe.elivret.EQuestion;
 
 import java.util.List;
+import java.util.Optional;
 
+import m2pfe.elivret.Authentification.AuthentificationException;
+import m2pfe.elivret.ELivret.ELivret;
+
+import m2pfe.elivret.EUser.EUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import m2pfe.elivret.Authentification.AuthentificationService;
 import m2pfe.elivret.Authentification.EntityAccessAuthorization;
-import m2pfe.elivret.EAnswer.EAnswer;
+
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -57,8 +63,77 @@ public class EQuestionController {
     // TODO: Comments.
     @Deprecated
     @GetMapping("/getAll")
-    public List<AbstractEQuestion> getSections() {
+    public List<AbstractEQuestion> getQuestions() {
         return q_repo.findAll().stream().map(q -> mapper.map(q, AbstractEQuestion.class))
                 .toList();
     }
+
+    @GetMapping("/{id}")
+    public AbstractEQuestion getQuestion(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, AbstractEQuestionException {
+        if(!authorization.isMeFromLivret(req, q_repo.getById(id).getSection().getLivret().getId())) {
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        Optional<AbstractEQuestion> q = q_repo.findById(id);
+        q.orElseThrow(() -> new AbstractEQuestionException(HttpStatus.NO_CONTENT, "AbstractEQuestion not found."));
+
+        return mapper.map(q.get(), AbstractEQuestion.class);
+    }
+
+
+    /// PostMapping
+
+    @PostMapping("")
+    public AbstractEQuestion postQuestion(@RequestBody AbstractEQuestion question, HttpServletRequest req) throws AuthentificationException, AbstractEQuestionException {
+        if(!authorization.isMeFromLivret(req, question.getSection().getLivret().getId())) {
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        EUser me = service.whoAmI(req);
+        if(me.getRole() != ELivret.UserRole.RESPONSABLE){
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        AbstractEQuestion q = mapper.map(question, AbstractEQuestion.class);
+
+        Optional.ofNullable(q_repo.findById(q.getId()).isPresent() ? null : q)
+                .orElseThrow(() -> new AbstractEQuestionException(HttpStatus.NO_CONTENT, "AbstractEQuestion already exist."));
+
+        return q_repo.save(q);
+    }
+
+
+    /// PutMapping
+
+    @PutMapping("")
+    public AbstractEQuestion putQuestion(@RequestBody AbstractEQuestion question, HttpServletRequest req) throws AuthentificationException, AbstractEQuestionException {
+        if(!authorization.isMeFromLivret(req, question.getSection().getLivret().getId())) {
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        EUser me = service.whoAmI(req);
+
+        if(me.getRole() != ELivret.UserRole.RESPONSABLE){
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        AbstractEQuestion q = mapper.map(question, AbstractEQuestion.class);
+
+        q_repo.findById(q.getId())
+                .orElseThrow(() -> new AbstractEQuestionException(HttpStatus.NO_CONTENT, "AbstractEQuestion not found."));
+
+        return q_repo.save(q);
+    }
+
+
+    /// DeleteMapping
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteQuestion(@PathVariable int id, HttpServletRequest req) throws AuthentificationException {
+        if(!authorization.isMeFromLivret(req, q_repo.getById(id).getSection().getLivret().getId())) {
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        EUser me = service.whoAmI(req);
+        if(me.getRole() != ELivret.UserRole.RESPONSABLE){
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+        }
+        q_repo.deleteById(id);
+    }
+
 }
