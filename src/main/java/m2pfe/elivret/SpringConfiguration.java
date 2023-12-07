@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -42,4 +43,12 @@ public class SpringConfiguration extends SpringBootServletInitializer implements
 		urlPathHelper.setRemoveSemicolonContent(false);
 		configurer.setUrlPathHelper(urlPathHelper);
 	}
+
+	// TODO : Faire dans spring security config.
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry
+			.addMapping("/**");
+	}
+
 }
