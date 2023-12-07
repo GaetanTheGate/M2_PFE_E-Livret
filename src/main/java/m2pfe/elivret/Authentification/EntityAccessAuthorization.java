@@ -6,10 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import m2pfe.elivret.EAnswer.EAnswer;
+import m2pfe.elivret.EAnswer.EAnswerException;
+import m2pfe.elivret.EAnswer.EAnswerRepository;
 import m2pfe.elivret.ELivret.ELivret;
 import m2pfe.elivret.ELivret.ELivretException;
 import m2pfe.elivret.ELivret.ELivretRepository;
 import m2pfe.elivret.ELivret.ELivret.UserRole;
+import m2pfe.elivret.EQuestion.AbstractEQuestion;
+import m2pfe.elivret.EQuestion.EQestionRepository;
+import m2pfe.elivret.EQuestion.EQuestionException;
 import m2pfe.elivret.ESection.ESection;
 import m2pfe.elivret.ESection.ESectionException;
 import m2pfe.elivret.ESection.ESectionRepository;
@@ -65,6 +71,18 @@ public class EntityAccessAuthorization {
     private ESectionRepository sr;
 
     /**
+     * Repository for the questions in a section.
+     */
+    @Autowired
+    private EQestionRepository qr;
+
+    /**
+     * Repository for the answers in a question.
+     */
+    @Autowired
+    private EAnswerRepository ar;
+
+    /**
      * <p>
      * Tells if the authenticated user matches the user's id.
      * </p>
@@ -104,17 +122,23 @@ public class EntityAccessAuthorization {
         return isUserMe(req, user.getId());
     }
 
-    // TODO: décommenter et compléter quand il y aura un owner à un livret
-    // public boolean isLivretMine(HttpServletRequest req, Integer id) throws AuthentificationException, {
-    //     EUser ru = service.whoAmI(req);
+    // TODO : COMMENT.
+    public boolean isLivretMine(HttpServletRequest req, Integer id) throws AuthentificationException, EUserException, ELivretException  {
+        EUser ru = service.whoAmI(req);
 
-    //     return ru.getId() == iu.getId();
-    // }
+        ELivret l = lr.findById(id)
+            .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret's id not found."));
 
-    // public boolean isLivretMine(HttpServletRequest req, ELivret livret) throws AuthentificationException, {
+        EUser lu = ur.findById(l.getUserFromRole(ELivret.UserRole.RESPONSABLE).getId())
+            .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Livret's owner not found."));
 
-    //     return isLivretMine(req, livret.getId());
-    // }
+        return ru.getId() == lu.getId();
+    }
+
+    // TODO : COMMENT.
+    public boolean isLivretMine(HttpServletRequest req, ELivret livret) throws AuthentificationException, EUserException, ELivretException  {
+        return isLivretMine(req, livret.getId());
+    }
 
     /**
      * <p>
@@ -229,4 +253,26 @@ public class EntityAccessAuthorization {
         return isSectionMine(req, section.getId());
     }
 
+    // TODO : COMMENTS.
+    public boolean isQuestionMine(HttpServletRequest req, Integer id) throws AuthentificationException, EUserException, ELivretException, ESectionException, EQuestionException {
+        AbstractEQuestion question = qr.findById(id)
+            .orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "Question's id not found."));
+
+        return isSectionMine(req, question.getSection());
+    }
+
+    public boolean isQuestionMine(HttpServletRequest req, AbstractEQuestion question) throws AuthentificationException, EUserException, ELivretException, ESectionException, EQuestionException {
+        return isQuestionMine(req, question.getId());
+    }
+
+    public boolean isAnswerMine(HttpServletRequest req, Integer id) throws AuthentificationException, EUserException, ELivretException, ESectionException, EQuestionException, EAnswerException {
+        EAnswer answer = ar.findById(id)
+            .orElseThrow(() -> new EAnswerException(HttpStatus.NO_CONTENT, "Answer's id not found."));
+
+        return isQuestionMine(req, answer.getQuestion());
+    }
+
+    public boolean isAnswerMine(HttpServletRequest req, EAnswer answer) throws AuthentificationException, EUserException, ELivretException, ESectionException, EQuestionException, EAnswerException {
+        return isAnswerMine(req, answer.getId());
+    }
 }

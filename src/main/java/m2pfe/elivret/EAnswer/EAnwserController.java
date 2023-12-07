@@ -3,10 +3,6 @@ package m2pfe.elivret.EAnswer;
 import m2pfe.elivret.Authentification.AuthentificationException;
 import m2pfe.elivret.Authentification.AuthentificationService;
 import m2pfe.elivret.Authentification.EntityAccessAuthorization;
-import m2pfe.elivret.ELivret.ELivret;
-import m2pfe.elivret.EQuestion.AbstractEQuestion;
-import m2pfe.elivret.EQuestion.AbstractEQuestionException;
-import m2pfe.elivret.EUser.EUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -101,13 +97,10 @@ public class EAnwserController {
 
     @PutMapping("")
     public EAnswer putAnswer(@RequestBody EAnswer answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
-        if(!authorization.isMeFromLivret(req, answer.getQuestion().getSection().getLivret().getId())) {
+        if(!authorization.isAnswerMine(req, answer)) {
             throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
         }
 
-        if(!authorization.isSectionMine(req,answer.getQuestion().getSection().getId())){
-            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
-        }
         EAnswer a = mapper.map(answer, EAnswer.class);
 
         a_repo.findById(a.getId())
