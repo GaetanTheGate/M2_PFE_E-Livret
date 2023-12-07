@@ -31,7 +31,7 @@ replay_pid*
 target/
 pom.xml.tag
 pom.xml.releaseBackup
-pom.xml.versionsBackup
+pom.xml.versionsBackup 
 pom.xml.next
 release.properties
 dependency-reduced-pom.xml
@@ -50,3 +50,4 @@ buildNumber.properties
 .vscode/
 
 # End of https://www.toptal.com/developers/gitignore/api/java,maven
+node_modules
