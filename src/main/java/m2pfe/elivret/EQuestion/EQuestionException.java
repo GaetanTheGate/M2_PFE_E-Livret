@@ -17,7 +17,7 @@ import org.springframework.web.client.HttpStatusCodeException;
  * @author Gaëtan PUPET
  * @version 1.0
  */
-public class AbstractEQuestionException extends HttpStatusCodeException {
+public class EQuestionException extends HttpStatusCodeException {
     /**
      * <p>
      * Constructor of the AbstractEQuestion class.
@@ -29,7 +29,7 @@ public class AbstractEQuestionException extends HttpStatusCodeException {
      * @param statusCode
      * @param statusText
      */
-    public AbstractEQuestionException(HttpStatus statusCode, String statusText) {
+    public EQuestionException(HttpStatus statusCode, String statusText) {
         super(statusCode, statusText);
     }
 

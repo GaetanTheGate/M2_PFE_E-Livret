@@ -69,12 +69,12 @@ public class EQuestionController {
     }
 
     @GetMapping("/{id}")
-    public AbstractEQuestion getQuestion(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, AbstractEQuestionException {
+    public AbstractEQuestion getQuestion(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, EQuestionException {
         if(!authorization.isMeFromLivret(req, q_repo.getById(id).getSection().getLivret().getId())) {
             throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
         }
         Optional<AbstractEQuestion> q = q_repo.findById(id);
-        q.orElseThrow(() -> new AbstractEQuestionException(HttpStatus.NO_CONTENT, "AbstractEQuestion not found."));
+        q.orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "AbstractEQuestion not found."));
 
         return mapper.map(q.get(), AbstractEQuestion.class);
     }
@@ -83,7 +83,7 @@ public class EQuestionController {
     /// PostMapping
 
     @PostMapping("")
-    public AbstractEQuestion postQuestion(@RequestBody AbstractEQuestion question, HttpServletRequest req) throws AuthentificationException, AbstractEQuestionException {
+    public AbstractEQuestion postQuestion(@RequestBody AbstractEQuestion question, HttpServletRequest req) throws AuthentificationException, EQuestionException {
         if(!authorization.isMeFromLivret(req, question.getSection().getLivret().getId())) {
             throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
         }
@@ -94,7 +94,7 @@ public class EQuestionController {
         AbstractEQuestion q = mapper.map(question, AbstractEQuestion.class);
 
         Optional.ofNullable(q_repo.findById(q.getId()).isPresent() ? null : q)
-                .orElseThrow(() -> new AbstractEQuestionException(HttpStatus.NO_CONTENT, "AbstractEQuestion already exist."));
+                .orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "AbstractEQuestion already exist."));
 
         return q_repo.save(q);
     }
@@ -103,7 +103,7 @@ public class EQuestionController {
     /// PutMapping
 
     @PutMapping("")
-    public AbstractEQuestion putQuestion(@RequestBody AbstractEQuestion question, HttpServletRequest req) throws AuthentificationException, AbstractEQuestionException {
+    public AbstractEQuestion putQuestion(@RequestBody AbstractEQuestion question, HttpServletRequest req) throws AuthentificationException, EQuestionException {
         if(!authorization.isMeFromLivret(req, question.getSection().getLivret().getId())) {
             throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
         }
@@ -115,7 +115,7 @@ public class EQuestionController {
         AbstractEQuestion q = mapper.map(question, AbstractEQuestion.class);
 
         q_repo.findById(q.getId())
-                .orElseThrow(() -> new AbstractEQuestionException(HttpStatus.NO_CONTENT, "AbstractEQuestion not found."));
+                .orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "AbstractEQuestion not found."));
 
         return q_repo.save(q);
     }
