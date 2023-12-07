@@ -2,6 +2,10 @@
     <div class = "container">
         <table class="table table-striped">
             <t> test</t>
+
+            <tr v-for="livret in livrets" :key="livret.id">
+                {{livret}}
+            </tr>
             <thead>
                 <th>ELivret Id</th>
                 <th>ELivret Student</th>
@@ -19,16 +23,20 @@ import ELivretService from '../services/ELivretService'
         name: 'ELivrets',
         data(){
             return {
-                result: {},
-                elivrets : {
-                    elivretid: '',
-                    elivretstudent: '',
-                    elivretmaster: '',
-                    elivrettutor: ''
-                }
+                livrets:    null,
             }
             
         },
+
+        mounted(){
+            this.axios = axios.create({
+                baseURL: 'http://localhost:8081/api/',
+                timeout: 5000,
+                headers: { 'Content-show': 'application/json' },
+            });
+            this.livretLoad();
+        },
+
         methods: {
             getLivret(){
                 ELivretService.getLivret().then((response) =>{
@@ -37,18 +45,12 @@ import ELivretService from '../services/ELivretService'
             },
 
             livretLoad(){
-                var page = "http://localhost:8081/api/livrets/getAll";
-                axios.get(page)
-                 .then(
-                    ({data})=>{
-                        console.log(data);
-                        this.result = data;
+                this.axios.get("livrets/getAll").then(list => {
+                        console.log(list);
+                        this.livrets = list.data;
                     }
                  )
             }
-        },
-        created() {
-            this.livretLoad()
         }
     }
 </script>
