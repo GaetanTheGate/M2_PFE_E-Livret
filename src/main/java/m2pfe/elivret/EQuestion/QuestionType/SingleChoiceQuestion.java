@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -34,12 +35,12 @@ public class SingleChoiceQuestion extends AbstractEQuestion {
     /**
      * The answer to the question.
      */
-    @OneToOne(mappedBy = "question", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER) // TODO : OneToMany FAUX, mais fais fonctionner les entités "MultipleChoiceQuestion". Remettre à OneToOne
     @JsonManagedReference
-    private EAnswer answer;
+    private List<EAnswer> answer;
 
     @Override
     public List<EAnswer> getAnswers() {
-        return List.of(answer);
+        return answer;
     }
 }
