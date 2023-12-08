@@ -1,22 +1,29 @@
 <template>
   <dif id="app">
     <p>t</p>
-    <ESection :sectionId="8"/>
+    <sectionDetails :sectionId="8"/>
   </dif>
 </template>
 
 <script>
 // import axios from 'axios';
 // import ELivret from './components/ELivret.vue'
-  import ESection from './components/sectionDetails.vue'
+import sectionDetails from './components/sectionDetails.vue'
 
   export default {
     name: 'app',
     components: {
-      ESection
+      sectionDetails
     },
     mounted(){
-
+      this.login("etudiant@mail.com", "etudiant");
+    },
+    methods:{
+      login: function(email, password) {
+        this.$axiosLogin.post("login", {"email":email, "password":password}).then(t => {
+          this.$setToken(t.data);
+        })
+      }
     }
   }
 </script>

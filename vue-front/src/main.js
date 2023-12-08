@@ -13,6 +13,14 @@ app.config.globalProperties.$axiosApi = axios.create({
     headers: { 'Content-show': 'application/json' },
 });
 
+app.config.globalProperties.$setToken = token => { app.config.globalProperties.$axiosApi.defaults.headers.common['Authorization'] = 'Bearer ' + token; },
+app.config.globalProperties.$unSetToken = () => { app.config.globalProperties.$axiosApi.defaults.headers.common['Authorization'] = null };
+
+app.config.globalProperties.$axiosLogin = axios.create({
+    baseURL: 'http://localhost:8081/authentification/',
+    timeout: 5000
+});
+
 
 
 app.mount('#app')

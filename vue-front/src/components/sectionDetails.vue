@@ -1,10 +1,23 @@
 <template>
-    <p>{{ section }}</p>
+    <button v-on:click="fetchSection()">CLIQUER</button>
+    <div v-if="section">
+        <ul>
+            <li>{{ section.owner }}</li>
+            <li>{{ section.title }}</li>
+        </ul>
+        <ul v-for="question in section.questions" :key="question.id">
+            <li><questionDetails :questionId="question.id" /></li>
+        </ul>
+    </div>
 </template>
 
 <script>
+    import questionDetails from './questionDetails.vue';
     export default {
-        name:"ESection",
+        name:"sectionDetails",
+        components:{
+            questionDetails
+        },
         props: {
             sectionId: Number
         },
@@ -15,14 +28,13 @@
             }
         },
         mounted(){
-            this.fetchSection();
+            //this.fetchSection();
         },
 
         methods:{
             fetchSection: function() {
                 let id = this["sectionId"]
                 this.$axiosApi.get("sections/"+ id ).then(s => {
-                    console.log("test : " + s.data);
                     this.section = s.data
                 });
             }
