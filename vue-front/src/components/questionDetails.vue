@@ -1,5 +1,5 @@
 <template>
-    <button v-on:click="fetchQuestion()">CLIQUER</button>
+    <button v-on:click="fetchQuestion()">SHOW QUESTION</button>
     <div v-if="question">
         <ul>
             <li>{{ question.type }}</li>

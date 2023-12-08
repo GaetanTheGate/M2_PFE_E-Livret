@@ -1,5 +1,5 @@
 <template>
-    <button v-on:click="fetchSection()">CLIQUER</button>
+    <button v-on:click="fetchSection()" >SHOW SECTION DETAILS</button>
     <div v-if="section">
         <ul>
             <li>{{ section.owner }}</li>

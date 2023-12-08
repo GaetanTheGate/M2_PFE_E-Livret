@@ -1,19 +1,18 @@
 <template>
   <dif id="app">
-    <p>t</p>
-    <sectionDetails :sectionId="8"/>
+    <livretDetails :livretId="7"/>
   </dif>
 </template>
 
 <script>
 // import axios from 'axios';
 // import ELivret from './components/ELivret.vue'
-import sectionDetails from './components/sectionDetails.vue'
+import livretDetails from './components/livretDetails.vue'
 
   export default {
     name: 'app',
     components: {
-      sectionDetails
+      livretDetails
     },
     mounted(){
       this.login("etudiant@mail.com", "etudiant");
