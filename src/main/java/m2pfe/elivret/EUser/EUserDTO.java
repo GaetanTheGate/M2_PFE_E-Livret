@@ -2,6 +2,7 @@ package m2pfe.elivret.EUser;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import m2pfe.elivret.ELivret.ELivret;
 
 /**
  * <p>
@@ -37,6 +38,14 @@ public class EUserDTO {
      * The DTOs the user will get from the application.
      */
     public static class Out {
-        
+        /**
+         * The DTO to give to someone.
+         */
+        @Data
+        @NoArgsConstructor
+        public static class UserInformation {
+            private String email;
+            private ELivret.UserRole role;
+        }
     }
 }
