@@ -1,19 +1,28 @@
 <template>
   <dif id="app">
-    <ELivret />
+    <p>t</p>
+    <ESection :sectionId="8"/>
   </dif>
 </template>
 
 <script>
+// import axios from 'axios';
+// import ELivret from './components/ELivret.vue'
+  import ESection from './components/sectionDetails.vue'
 
-import ELivret from './components/ELivret.vue'
+  export default {
+    name: 'app',
+    components: {
+      ESection
+    },
+    mounted(){
 
-export default {
-  name: 'App',
-  components: {
-    ELivret
+    }
   }
-}
+</script>
+  
+<script>
+
 </script>
 
 <style>
