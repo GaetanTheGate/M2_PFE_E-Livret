@@ -113,7 +113,7 @@ public class AuthentificationController {
     }
 
     // TODO : COMMENT.
-    @GetMapping("whoami")
+    @GetMapping("/whoami")
     public EUserDTO.Out.UserInformation whoAmI(HttpServletRequest req) {
         EUser me = service.whoAmI(req);
         return mapper.map(me, EUserDTO.Out.UserInformation.class);
