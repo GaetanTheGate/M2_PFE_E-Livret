@@ -28,7 +28,7 @@
             }
         },
         mounted(){
-            //this.fetchQuestion();
+            this.fetchQuestion();
         },
 
         methods:{
