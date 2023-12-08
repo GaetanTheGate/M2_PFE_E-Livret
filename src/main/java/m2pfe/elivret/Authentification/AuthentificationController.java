@@ -2,6 +2,7 @@ package m2pfe.elivret.Authentification;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import m2pfe.elivret.EUser.EUser;
 import m2pfe.elivret.EUser.EUserDTO;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 /**
  * <p>
@@ -39,6 +44,11 @@ public class AuthentificationController {
      */
     @Autowired
     private AuthentificationService service;
+
+    /**
+     * Mapper for mapping an object to another.
+     */
+    private ModelMapper mapper = new ModelMapper();
     
     /**
      * <p>
@@ -101,4 +111,12 @@ public class AuthentificationController {
             return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
+
+    // TODO : COMMENT.
+    @GetMapping("/whoami")
+    public EUserDTO.Out.UserInformation whoAmI(HttpServletRequest req) {
+        EUser me = service.whoAmI(req);
+        return mapper.map(me, EUserDTO.Out.UserInformation.class);
+    }
+    
 }
