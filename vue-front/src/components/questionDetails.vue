@@ -1,5 +1,4 @@
 <template>
-    <button v-on:click="fetchQuestion()">CLIQUER</button>
     <div v-if="question">
         <ul>
             <li>{{ question.type }}</li>
@@ -28,7 +27,7 @@
             }
         },
         mounted(){
-            //this.fetchQuestion();
+            this.fetchQuestion();
         },
 
         methods:{

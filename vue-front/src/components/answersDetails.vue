@@ -2,8 +2,6 @@
     <div v-if="answer">
         <ul>
             {{ answer.value }}
-            <!-- <li>{{ question.type }}</li>
-            <li>{{ question.title }}</li> -->
         </ul>
     </div>
 </template>
