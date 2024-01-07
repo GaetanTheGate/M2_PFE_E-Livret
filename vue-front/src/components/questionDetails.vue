@@ -1,13 +1,13 @@
 <template>
-    <button v-on:click="fetchQuestion()">SHOW QUESTION</button>
     <div v-if="question">
         <ul>
-            <li>{{ question.type }}</li>
-            <li>{{ question.title }}</li>
+            <li>Type : {{ question.type }}</li>
+            <li>Title : {{ question.title }}</li>
         </ul>
         <ul v-for="answer in question.answers" :key="answer.id">
             <li><answersDetails :answerId="answer.id" /></li>
         </ul>
+        <t>________________________________</t>
     </div>
 </template>
 

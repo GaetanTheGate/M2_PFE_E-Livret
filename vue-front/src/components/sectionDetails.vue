@@ -1,9 +1,11 @@
 <template>
-    <button v-on:click="fetchSection()" >SHOW SECTION DETAILS</button>
     <div v-if="section">
         <ul>
-            <li>{{ section.owner }}</li>
-            <li>{{ section.title }}</li>
+            <t>_________________________________________________________________</t>
+            <li>Title : {{ section.title }}</li>
+            <li>This section is owned by {{ section.owner }}</li>
+            <t>_________________________________________________________________</t>
+            
         </ul>
         <ul v-for="question in section.questions" :key="question.id">
             <li><questionDetails :questionId="question.id" /></li>
@@ -28,7 +30,7 @@
             }
         },
         mounted(){
-            //this.fetchSection();
+            this.fetchSection();
         },
 
         methods:{

@@ -2,10 +2,11 @@
     <button v-on:click="fetchLivret()">SHOW SECTIONS</button>
     <div v-if="livret">
         <ul>
-            <li>{{ livret.student }}</li>
-            <li>{{ livret.master }}</li>
-            <li>{{ livret.responsable }}</li>
-            <li>{{ livret.tutor }}</li>
+            <li>student : {{ livret.student }}</li>
+            <li>master : {{ livret.master }}</li>
+            <li>responsable : {{ livret.responsable }}</li>
+            <li>tutor : {{ livret.tutor }}</li>
+            <li>id : {{ livret.id }}</li>
         </ul>
         <ul v-for="section in livret.sections" :key="section.id">
             <li><sectionDetails :sectionId="section.id" /></li>
@@ -30,13 +31,13 @@
             }
         },
         mounted(){
-            //this.fetchLivret();
+            this.fetchLivret();
         },
 
         methods:{
             fetchLivret: function() {
-                let id = this["livretId"]
-                this.$axiosApi.get("livrets/"+ id ).then(s => {
+                //let id = this["livretId"]
+                this.$axiosApi.get("livrets/7").then(s => {
                     this.livret = s.data
                 });
             }

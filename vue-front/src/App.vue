@@ -1,19 +1,23 @@
 <template>
-  <dif id="app">
-    <livretDetails :livretId="7"/>
-  </dif>
+  <div id="nav">
+  
+  <router-link to="/">Home</router-link>
+  <router-link :to="{ name: 'About' }">About</router-link>
+  <router-link :to="{ name: 'Livret'}">Livret</router-link>
+  </div>
+  <router-view />
 </template>
 
 <script>
 // import axios from 'axios';
 // import ELivret from './components/ELivret.vue'
-import livretDetails from './components/livretDetails.vue'
+//import livretDetails from './components/livretDetails.vue'
 
   export default {
     name: 'app',
     components: {
-      livretDetails
-    },
+    //livretDetails
+},
     mounted(){
       this.login("etudiant@mail.com", "etudiant");
     },
@@ -25,10 +29,6 @@ import livretDetails from './components/livretDetails.vue'
       }
     }
   }
-</script>
-  
-<script>
-
 </script>
 
 <style>

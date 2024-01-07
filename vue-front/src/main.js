@@ -1,11 +1,11 @@
 import { createApp } from 'vue'
 import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css'
-
+import router from './router'
 import App from './App.vue'
 
 
-const app = createApp(App)
+const app = createApp(App).use(router)
 
 app.config.globalProperties.$axiosApi = axios.create({
     baseURL: 'http://localhost:8081/api/',
