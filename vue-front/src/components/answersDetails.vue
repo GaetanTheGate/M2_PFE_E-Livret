@@ -1,6 +1,6 @@
 <template>
-    <div v-if="answer">
-        <ul>
+    <div v-if="answer" >
+        <ul >
             {{ answer.value }}
         </ul>
     </div>
@@ -37,3 +37,6 @@
         }
     }
 </script>
+
+<style>
+</style>

@@ -1,13 +1,12 @@
 <template>
-    <div v-if="section">
-        <ul>
-            <t>_________________________________________________________________</t>
+    <div v-if="section" class="container">
+        <hr />
+        <ul class="myUL">
             <li>Title : {{ section.title }}</li>
             <li>This section is owned by {{ section.owner }}</li>
-            <t>_________________________________________________________________</t>
             
         </ul>
-        <ul v-for="question in section.questions" :key="question.id">
+        <ul v-for="question in section.questions" :key="question.id" class="myUL">
             <li><questionDetails :questionId="question.id" /></li>
         </ul>
     </div>
@@ -48,3 +47,7 @@
         }
     }
 </script>
+
+<style>
+
+</style>

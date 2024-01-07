@@ -1,13 +1,13 @@
 <template>
     <div v-if="question">
-        <ul>
+        
+        <ul class="myUL">
             <li>Type : {{ question.type }}</li>
             <li>Title : {{ question.title }}</li>
         </ul>
-        <ul v-for="answer in question.answers" :key="answer.id">
+        <ul v-for="answer in question.answers" :key="answer.id" class="myUL">
             <li><answersDetails :answerId="answer.id" /></li>
         </ul>
-        <t>________________________________</t>
     </div>
 </template>
 
@@ -46,3 +46,7 @@
         }
     }
 </script>
+
+<style>
+
+</style>
