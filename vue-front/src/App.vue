@@ -2,30 +2,37 @@
   <div id="nav">
     <router-link to="/">Home</router-link>
     <router-link :to="{ name: 'About' }">About</router-link>
-    <router-link :to="{ name: 'Livret'}">Livret</router-link>
-    <router-link :to="{ name: 'Login'}">Login</router-link>
-
+    <router-link :to="{ name: 'Livret' }">Livret</router-link>
+    <button type="button" v-on:click="this.logout()" class="loginButton">Logout</button>
   </div>
   <router-view />
 </template>
 
 <script>
 
-  export default {
-    name: 'app',
-    components: {
-},
-    mounted(){
-      this.login("etudiant@mail.com", "etudiant");
+export default {
+  name: 'app',
+  components: {
+  },
+  mounted() {
+    //this.login('etudiant@mail.com', 'etudiant')
+  },
+  methods: {
+    login: function (email, password) {
+      this.$axiosLogin.post("login", { "email": email, "password": password }).then(t => {
+        this.$setToken(t.data);
+        localStorage.access_token = t.data;
+      })
     },
-    methods:{
-      login: function(email, password) {
-        this.$axiosLogin.post("login", {"email":email, "password":password}).then(t => {
-          this.$setToken(t.data);
-        })
-      }
+    logout: function () {
+      this.$axiosLogin.post("logout").then(t => {
+        this.$setToken(t.data);
+        localStorage.removeItem('token');
+        this.$router.push({ path: "/Login"})
+      })
     }
   }
+}
 </script>
 
 <style>
@@ -37,7 +44,7 @@
   margin-top: 20px;
 }
 
-#nav{
+#nav {
   padding: 30px;
   text-align: center;
 }

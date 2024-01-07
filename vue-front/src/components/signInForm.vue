@@ -2,19 +2,42 @@
     <div>
    <form>
     <label>Email:</label>
-    <input type="email" required>
+    <input type="email" required v-model="email">
     
     <label>Password:</label>
-    <input type="password" required>
+    <input type="password" required v-model="password">
 
-    <button v-on:click="fetchLivret()" class="loginButton">Login</button>
+    <button type="button" v-on:click="this.login(email, password)" class="loginButton">Login</button>
+    <button type="button" v-on:click="whoami()" class="loginButton">Whoami</button>
+
    </form>
 </div>
 </template>
 
 <script>
     export default {
-        
+        data(){
+            return {
+                email: '',
+                password: ''
+            }
+        },
+        mounted() {
+            this.email = null,
+            this.password= null
+        },
+        methods: {
+            login: function(email, password) {
+                this.$axiosLogin.post("login", {"email":email, "password":password}).then(t => {
+                this.$setToken(t.data);
+                localStorage.setItem('token', t.data);
+                this.$router.push({ path: "/"})
+            })
+        },
+            whoami: function() {
+                this.$axiosLogin.get("whoAmI")
+            }
+        },
     }
 </script>
 

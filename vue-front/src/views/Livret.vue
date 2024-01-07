@@ -1,4 +1,5 @@
 <template>
+    
     <div id="livret">
         <livretDetails :livretId="7" />
     </div>
