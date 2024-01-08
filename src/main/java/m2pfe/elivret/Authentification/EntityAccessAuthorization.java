@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import m2pfe.elivret.EAnswer.EAnswer;
 import m2pfe.elivret.EAnswer.EAnswerException;
@@ -25,7 +25,7 @@ import m2pfe.elivret.EUser.EUserRepository;
 
 /**
  * <p>
- * Service for checking if an authentificated user owns an entity or not.
+ * Component for checking if an authentificated user owns an entity or not.
  * </p>
  * 
  * @see AuthentificationService
@@ -42,9 +42,9 @@ import m2pfe.elivret.EUser.EUserRepository;
  * @see EAnswerRepository
  * 
  * @author Gaëtan PUPET
- * @version 1.0
+ * @version 1.1
  */
-@Service
+@Component(value="EntityAccessAuthorization")
 public class EntityAccessAuthorization {
     /**
      * Service used to authentificate the user.
@@ -122,24 +122,6 @@ public class EntityAccessAuthorization {
         return isUserMe(req, user.getId());
     }
 
-    // TODO : COMMENT.
-    public boolean isLivretMine(HttpServletRequest req, Integer id) throws AuthentificationException, EUserException, ELivretException  {
-        EUser ru = service.whoAmI(req);
-
-        ELivret l = lr.findById(id)
-            .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret's id not found."));
-
-        EUser lu = ur.findById(l.getUserFromRole(ELivret.UserRole.RESPONSABLE).getId())
-            .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Livret's owner not found."));
-
-        return ru.getId() == lu.getId();
-    }
-
-    // TODO : COMMENT.
-    public boolean isLivretMine(HttpServletRequest req, ELivret livret) throws AuthentificationException, EUserException, ELivretException  {
-        return isLivretMine(req, livret.getId());
-    }
-
     /**
      * <p>
      * Tells if the authenticated user matches an user from a livret.
@@ -199,6 +181,54 @@ public class EntityAccessAuthorization {
      */
     public boolean isMeFromLivret(HttpServletRequest req, ELivret livret) throws AuthentificationException, EUserException, ELivretException {
         return isMeFromLivret(req, livret.getId());
+    }
+
+    // TODO : Faire et commenter
+    public boolean isMeFromLivret(HttpServletRequest req, ESection section) {
+        return isMeFromLivret(req, section.getLivret());
+    }
+
+    // TODO : Faire et commenter
+    public boolean isMeFromLivret(HttpServletRequest req, AbstractEQuestion question) {
+        return isMeFromLivret(req, question.getSection());
+    }
+
+    // TODO : Faire et commenter
+    public boolean isMeFromLivret(HttpServletRequest req, EAnswer answer) {
+        return isMeFromLivret(req, answer.getQuestion());
+    }
+
+    // TODO : COMMENT.
+    public boolean isLivretMine(HttpServletRequest req, Integer id) throws AuthentificationException, EUserException, ELivretException  {
+        EUser ru = service.whoAmI(req);
+
+        ELivret l = lr.findById(id)
+            .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret's id not found."));
+
+        EUser lu = ur.findById(l.getUserFromRole(ELivret.UserRole.RESPONSABLE).getId())
+            .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Livret's owner not found."));
+
+        return ru.getId() == lu.getId();
+    }
+
+    // TODO : COMMENT.
+    public boolean isLivretMine(HttpServletRequest req, ELivret livret) throws AuthentificationException, EUserException, ELivretException  {
+        return isLivretMine(req, livret.getId());
+    }
+
+    // TODO : Faire et commenter
+    public boolean isLivretMine(HttpServletRequest req, ESection section) {
+        return isLivretMine(req, section.getLivret());
+    }
+
+    // TODO : Faire et commenter
+    public boolean isLivretMine(HttpServletRequest req, AbstractEQuestion question) {
+        return isLivretMine(req, question.getSection());
+    }
+
+    // TODO : Faire et commenter
+    public boolean isLivretMine(HttpServletRequest req, EAnswer answer) {
+        return isLivretMine(req, answer.getQuestion());
     }
 
     /**
