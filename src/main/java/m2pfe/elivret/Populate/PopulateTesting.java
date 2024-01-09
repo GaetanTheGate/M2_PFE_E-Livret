@@ -90,7 +90,7 @@ public class PopulateTesting {
     }
 
     private ELivret createAndSaveElivret(EUser student, EUser tutor, EUser master , EUser responsable){
-        ELivret livret = new ELivret(0, student, tutor, master, responsable, null);
+        ELivret livret = new ELivret(0, "Livret_test", student, tutor, master, responsable, null);
 
         livret = lr.save(livret);
 

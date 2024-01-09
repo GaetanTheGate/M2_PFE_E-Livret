@@ -8,6 +8,7 @@ import m2pfe.elivret.EUser.EUser;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -22,6 +23,10 @@ public class ELivret {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @NotEmpty
+    @Basic
+    private String name;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JsonBackReference
