@@ -99,6 +99,38 @@ public class EAnwserController {
 
     /// PutMapping
 
+    // For the owner
+    @PutMapping("saveProposition")
+    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #answer)")
+    public EAnswer saveWholeAnswer(@RequestBody EAnswer answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
+        EAnswer a = mapper.map(answer, EAnswer.class);
+
+        EAnswer ar = a_repo.findById(a.getId())
+                .orElseThrow(() -> new EAnswerException(HttpStatus.NO_CONTENT, "EAnswer not found."));
+
+        ar.setProposition(a.getProposition());
+
+        return a_repo.save(ar);
+    }
+
+    // For the actors
+
+    @PutMapping("saveValue")
+    @PreAuthorize("@EntityAccessAuthorization.isAnswerMine(#req, #answer)")
+    public EAnswer saveValueAsActor(@RequestBody EAnswer answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
+        EAnswer a = mapper.map(answer, EAnswer.class);
+
+        EAnswer ar = a_repo.findById(a.getId())
+                .orElseThrow(() -> new EAnswerException(HttpStatus.NO_CONTENT, "EAnswer not found."));
+
+        ar.setValue(a.getValue());
+
+        return a_repo.save(ar);
+    }
+
+
+
+    @Deprecated
     @PutMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isAnswerMine(#req, #answer)")
     public EAnswer putAnswer(@RequestBody EAnswer answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
