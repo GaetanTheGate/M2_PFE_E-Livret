@@ -29,7 +29,7 @@ import m2pfe.elivret.EQuestion.AbstractEQuestion;
  * @see AbstractEQuestion
  * 
  * @author Gaëtan PUPET
- * @version 1.0
+ * @version 1.1
  */
 @Entity
 @Data
@@ -43,6 +43,12 @@ public class EAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    /**
+     * The proposition of the answer.
+     */
+    @Basic
+    private String proposition;
 
     /**
      * The value of the answer.

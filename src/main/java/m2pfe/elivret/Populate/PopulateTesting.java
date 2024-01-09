@@ -111,9 +111,8 @@ public class PopulateTesting {
 
         createAndSaveEQuestion(section, "Texte a caractere informatif :", QuestionType.LABEL);
         createAndSaveEQuestion(section, "Question 1 :", QuestionType.TEXT);
-        createAndSaveEQuestion(section, "Question 2 :", QuestionType.SINGLE_CHECKBOX);
-        createAndSaveEQuestion(section, "Question 3 :", QuestionType.MULTI_CHECKBOX);
-        createAndSaveEQuestion(section, "Question 4 :", QuestionType.RATIOBUTTON);
+        createAndSaveEQuestion(section, "Question 2 :", QuestionType.CHECKBOX);
+        createAndSaveEQuestion(section, "Question 3 :", QuestionType.RATIOBUTTON);
 
         return section;
     }
@@ -126,10 +125,9 @@ public class PopulateTesting {
                 question = labelQuestion();
                 break;
             case TEXT:
-            case SINGLE_CHECKBOX:
                 question = singleQuestion("REPONSE : " + title);
                 break;
-            case MULTI_CHECKBOX:
+            case CHECKBOX:
             case RATIOBUTTON:
                 question = multipleQuestion(List.of("Valeur 1", "Valeur 2", "Valeur 3"), List.of("Reponse 1 : " + title, "Reponse 2 : " + title, "Reponse 3 : " + title));
                 break;
@@ -147,14 +145,13 @@ public class PopulateTesting {
 
         switch (type) {
             case TEXT:
-            case SINGLE_CHECKBOX:
-                createAndSaveAnswer("REPONSE : " + title, question);
+                createAndSaveAnswer("REPONSE", "valeur", question);
                 break;
-            case MULTI_CHECKBOX:
+            case CHECKBOX:
             case RATIOBUTTON:
-                createAndSaveAnswer("REPONSE 3 : " + title, question);
-                createAndSaveAnswer("REPONSE 2 : " + title, question);
-                createAndSaveAnswer("REPONSE 1 : " + title, question);
+                createAndSaveAnswer("REPONSE 1", "false", question);
+                createAndSaveAnswer("REPONSE 2", "true", question);
+                createAndSaveAnswer("REPONSE 3", "false", question);
                 break;
             case LABEL:
             default:
@@ -164,8 +161,8 @@ public class PopulateTesting {
         return question;
     }
 
-    private EAnswer createAndSaveAnswer(String value, AbstractEQuestion question) {
-        return ar.save(new EAnswer(0, value, question));
+    private EAnswer createAndSaveAnswer(String proposition, String value, AbstractEQuestion question) {
+        return ar.save(new EAnswer(0, proposition, value, question));
     }
 
     private SingleChoiceQuestion singleQuestion(String anwser){
