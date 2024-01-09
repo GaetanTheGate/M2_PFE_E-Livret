@@ -102,7 +102,7 @@ public class EAnwserController {
     // For the owner
     @PutMapping("saveProposition")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #answer)")
-    public EAnswer saveWholeAnswer(@RequestBody EAnswer answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
+    public EAnswer saveWholeAnswer(@RequestBody EAnswerDTO.In.Proposition answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
         EAnswer a = mapper.map(answer, EAnswer.class);
 
         EAnswer ar = a_repo.findById(a.getId())
@@ -117,7 +117,7 @@ public class EAnwserController {
 
     @PutMapping("saveValue")
     @PreAuthorize("@EntityAccessAuthorization.isAnswerMine(#req, #answer)")
-    public EAnswer saveValueAsActor(@RequestBody EAnswer answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
+    public EAnswer saveValueAsActor(@RequestBody EAnswerDTO.In.Value answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
         EAnswer a = mapper.map(answer, EAnswer.class);
 
         EAnswer ar = a_repo.findById(a.getId())
