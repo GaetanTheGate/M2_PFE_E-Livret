@@ -57,20 +57,20 @@ public class ELivretController {
 
     @Deprecated
     @GetMapping("/getAll")
-    public List<ELivret> getLivrets() {
-        return l_repo.findAll().stream().map(l -> mapper.map(l, ELivret.class)).toList();
+    public List<ELivretDTO.Out.AllPublic> getLivrets() {
+        return l_repo.findAll().stream().map(l -> mapper.map(l, ELivretDTO.Out.AllPublic.class)).toList();
     }
 
     @GetMapping("")
-    public List<ELivret> getMyLivrets(HttpServletRequest req) throws AuthentificationException, ELivretException {
+    public List<ELivretDTO.Out.AllPublic> getMyLivrets(HttpServletRequest req) throws AuthentificationException, ELivretException {
         EUser me = service.whoAmI(req);
-        return l_repo.findByUser(me).stream().map(l -> mapper.map(l, ELivret.class)).toList();
+        return l_repo.findByUser(me).stream().map(l -> mapper.map(l, ELivretDTO.Out.AllPublic.class)).toList();
 
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("@EntityAccessAuthorization.isMeFromLivret(#req, #id)")
-    public ELivret getLivret(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, ELivretException {
+    public ELivretDTO.Out.AllPublic getLivret(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, ELivretException {
         // if(!authorization.isMeFromLivret(req, id)) {
         //     throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
         // }
@@ -79,7 +79,7 @@ public class ELivretController {
         l.orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found."));
 
 
-        return mapper.map(l.get(), ELivret.class);
+        return mapper.map(l.get(), ELivretDTO.Out.AllPublic.class);
     }
 
 

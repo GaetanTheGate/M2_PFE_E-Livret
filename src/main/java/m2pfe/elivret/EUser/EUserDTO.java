@@ -44,6 +44,7 @@ public class EUserDTO {
         @Data
         @NoArgsConstructor
         public static class UserInformation {
+            private Integer id;
             private String email;
             private ELivret.UserRole role;
         }

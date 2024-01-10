@@ -44,7 +44,8 @@
                     this.question = q.data
                 }).then( () => {
                     this.question.answers.forEach(answer => {
-                        document.getElementById(answer.id).value = answer.value;
+                        if(document.getElementById(answer.id))
+                            document.getElementById(answer.id).value = answer.value;
                     });
 
                     this.setupEditionMode();
@@ -55,7 +56,8 @@
                 let edit = this["editionMode"];
 
                 this.question.answers.forEach(answer => {
-                    document.getElementById(answer.id).disabled = !edit;
+                    if(document.getElementById(answer.id))
+                        document.getElementById(answer.id).disabled = !edit;
                 });
             }
         },

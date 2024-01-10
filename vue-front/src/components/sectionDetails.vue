@@ -23,7 +23,7 @@
             },
             editionMode: {
                 type: Boolean,
-                default: false,
+                default: true,
             }
         },
 
@@ -46,27 +46,47 @@
                 });
             },
 
+            // TODO : Ameliorer parce que c'est affreux !
             computeDisplaySection: function() {
-                this.displaySection = this.section.visibility;
+                let edit = this["editionMode"];
+                if(edit){
+                    this.displaySection = false;
 
-                /// En cours de création
+                    this.$axiosLogin.get("whoami").then( u => {
+                        let me = u.data;
 
-                // let edit = this["editionMode"];
-                // if(edit){
-                //     this.$axiosLogin.get("whoami").then( u => {
-                //         let me = u.data;
+                        this.$axiosApi.get("/livrets/"+this.section.livretId).then( l => {
+                            let livret = l.data;
 
-                //         this.$axiosApi.get("/livrets/"+this.section.livretId).then( l => {
-                //             let livret = l.data;
+                            if(livret.tutorId == me.id)
+                                this.displaySection = true;
+                            
+                            switch(this.section.owner){
+                                case 'STUDENT':
+                                    if(livret.studentId != me.id)
+                                        this.displaySection |= false;
+                                    else
+                                        this.displaySection = true && this.section.visibility;
+                                    break;
 
-                //             if(livret.tutor.id == me.id)
-                //                 this.displaySection = true;
+                                case 'MASTER':
+                                    if(livret.masterId != me.id)
+                                        this.displaySection |= false;
+                                    else
+                                        this.displaySection = true && this.section.visibility;
+                                    break;
 
+                                case 'TUTOR':
+                                default:
+                                    break;
+                            }
+                        })
 
-                //         })
+                    });
+                }
+                else
+                    this.displaySection = this.section.visibility;
 
-                //     });
-                // }
             }
         },
         watch:{
