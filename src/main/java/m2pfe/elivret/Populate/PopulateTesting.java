@@ -112,7 +112,7 @@ public class PopulateTesting {
         createAndSaveEQuestion(section, "Texte a caractere informatif :", QuestionType.LABEL);
         createAndSaveEQuestion(section, "Question 1 :", QuestionType.TEXT);
         createAndSaveEQuestion(section, "Question 2 :", QuestionType.CHECKBOX);
-        createAndSaveEQuestion(section, "Question 3 :", QuestionType.RATIOBUTTON);
+        createAndSaveEQuestion(section, "Question 3 :", QuestionType.RADIO);
 
         return section;
     }
@@ -128,7 +128,7 @@ public class PopulateTesting {
                 question = singleQuestion("REPONSE : " + title);
                 break;
             case CHECKBOX:
-            case RATIOBUTTON:
+            case RADIO:
                 question = multipleQuestion(List.of("Valeur 1", "Valeur 2", "Valeur 3"), List.of("Reponse 1 : " + title, "Reponse 2 : " + title, "Reponse 3 : " + title));
                 break;
             default:
@@ -148,7 +148,7 @@ public class PopulateTesting {
                 createAndSaveAnswer("REPONSE", "valeur", question);
                 break;
             case CHECKBOX:
-            case RATIOBUTTON:
+            case RADIO:
                 createAndSaveAnswer("REPONSE 1", "false", question);
                 createAndSaveAnswer("REPONSE 2", "true", question);
                 createAndSaveAnswer("REPONSE 3", "false", question);

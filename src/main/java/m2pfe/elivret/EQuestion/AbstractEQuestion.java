@@ -78,6 +78,6 @@ public abstract class AbstractEQuestion {
      * Define the type of question that can exist.
      */
     public static enum QuestionType {
-        LABEL, TEXT, CHECKBOX, RATIOBUTTON
+        LABEL, TEXT, CHECKBOX, RADIO
     }
 }
