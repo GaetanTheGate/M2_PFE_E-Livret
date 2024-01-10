@@ -1,10 +1,9 @@
 <template>
     <div v-if="section" class="container">
         <hr />
+        <h2>{{ section.title }}</h2>
         <ul class="myUL">
-            <li>Title : {{ section.title }}</li>
             <li>This section is owned by {{ section.owner }}</li>
-            
         </ul>
         <ul v-for="question in section.questions" :key="question.id" class="myUL">
             <li><questionDetails :questionId="question.id" /></li>
