@@ -31,7 +31,7 @@
             }
         },
         watch:{
-            sectionId() {
+            answerId() {
                 this.fetchAnswer();
             }
         }

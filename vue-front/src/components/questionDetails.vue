@@ -40,7 +40,7 @@
             }
         },
         watch:{
-            sectionId() {
+            questionId() {
                 this.fetchQuestion();
             }
         }
