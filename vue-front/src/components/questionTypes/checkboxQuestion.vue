@@ -19,7 +19,14 @@
         components:{
         },
         props: {
-            questionId: Number
+            questionId: {
+                type: Number,
+                required: true,  
+            },
+            editionMode: {
+                type: Boolean,
+                default: false,
+            }
         },
 
         data(){
@@ -33,20 +40,33 @@
 
         methods:{
             fetchQuestion: function() {
-                let id = this["questionId"]
+                let id = this["questionId"];
+                
                 this.$axiosApi.get("questions/"+ id ).then(q => {
                     this.question = q.data;
                 }).then( () => {
                     this.question.answers.forEach(answer => {
                         document.getElementById(answer.id).checked = answer.value == 'true';
-                        document.getElementById(answer.id).disabled = true; // enable quand on est en mode édition 
                     });
+
+                    this.setupEditionMode();
+                });
+            },
+
+            setupEditionMode: function() {
+                let edit = this["editionMode"];
+
+                this.question.answers.forEach(answer => {
+                    document.getElementById(answer.id).disabled = !edit;
                 });
             }
         },
         watch:{
             questionId() {
                 this.fetchQuestion();
+            },
+            editionMode() {
+                this.setupEditionMode();
             }
         }
     }

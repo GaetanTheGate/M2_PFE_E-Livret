@@ -8,12 +8,8 @@
             <li>tutor : {{ livret.tutor }}</li>
             <li>id : {{ livret.id }}</li>
         </ul>
-        <div >
-            <ul v-for="section in livret.sections" :key="section.id" class="myUL">
-                <li>
-                    <sectionDetails :sectionId="section.id" />
-                </li>
-            </ul>
+        <div v-for="section in livret.sections" :key="section.id" class="myUL">
+            <sectionDetails :sectionId="section.id" />
         </div>
     </div>
 </template>
@@ -26,7 +22,10 @@ export default {
         sectionDetails
     },
     props: {
-        livretId: Number
+        livretId: {
+            type: Number,
+            required: true,  
+        },
     },
 
     data() {

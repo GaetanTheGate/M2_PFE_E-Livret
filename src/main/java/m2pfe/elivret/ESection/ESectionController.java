@@ -58,8 +58,8 @@ public class ESectionController {
 
     @Deprecated
     @GetMapping("/getAll")
-    public List<ESection> getSections() {
-        return s_repo.findAll().stream().map(s -> mapper.map(s, ESection.class))
+    public List<ESectionDTO.Out.AllPublic> getSections() {
+        return s_repo.findAll().stream().map(s -> mapper.map(s, ESectionDTO.Out.AllPublic.class))
                 .toList();
     }
 
@@ -73,21 +73,21 @@ public class ESectionController {
     // TODO : supprimer
     @Deprecated
     @GetMapping("")
-    public List<ESection> getMySections(HttpServletRequest req) throws AuthentificationException, ESectionException {
+    public List<ESectionDTO.Out.AllPublic> getMySections(HttpServletRequest req) throws AuthentificationException, ESectionException {
         EUser me = service.whoAmI(req);
-        return s_repo.findByUser(me).stream().map(s -> mapper.map(s, ESection.class)).toList();
+        return s_repo.findByUser(me).stream().map(s -> mapper.map(s, ESectionDTO.Out.AllPublic.class)).toList();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("@EntityAccessAuthorization.isMeFromLivret(#req, @SectionRepository.getById(#id))")
-    public ESection getSection(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, ESectionException {
+    public ESectionDTO.Out.AllPublic getSection(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, ESectionException {
         // if(!authorization.isMeFromLivret(req, s_repo.getById(id).getLivret().getId())) {
         //     throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
         // }
         Optional<ESection> s = s_repo.findById(id);
         s.orElseThrow(() -> new ESectionException(HttpStatus.NO_CONTENT, "Section not found."));
 
-        return mapper.map(s.get(), ESection.class);
+        return mapper.map(s.get(), ESectionDTO.Out.AllPublic.class);
     }
 
 

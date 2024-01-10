@@ -10,7 +10,10 @@
     export default {
         name:"answerDetails",
         props: {
-            answerId: Number
+            answerId: {
+                type: Number,
+                required: true,  
+            },
         },
 
         data(){

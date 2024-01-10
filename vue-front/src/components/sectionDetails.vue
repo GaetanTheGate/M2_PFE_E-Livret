@@ -1,13 +1,11 @@
 <template>
-    <div v-if="section" class="container">
+    <div v-if="section && displaySection" class="container">
         <hr />
         <h2>{{ section.title }}</h2>
-        <ul class="myUL">
-            <li>This section is owned by {{ section.owner }}</li>
-        </ul>
-        <ul v-for="question in section.questions" :key="question.id" class="myUL">
-            <li><questionDetails :questionId="question.id" /></li>
-        </ul>
+        <p>This section is owned by {{ section.owner }}</p>
+        <div v-for="question in section.questions" :key="question.id" class="myUL">
+            <questionDetails :questionId="question.id" :editionMode="editionMode"/>
+        </div>
     </div>
 </template>
 
@@ -19,12 +17,20 @@
             questionDetails
         },
         props: {
-            sectionId: Number
+            sectionId: {
+                type: Number,
+                required: true,  
+            },
+            editionMode: {
+                type: Boolean,
+                default: false,
+            }
         },
 
         data(){
             return {
-                section:    null,
+                section:            null,
+                displaySection:     null,
             }
         },
         mounted(){
@@ -36,12 +42,39 @@
                 let id = this["sectionId"]
                 this.$axiosApi.get("sections/"+ id ).then(s => {
                     this.section = s.data
+                    this.computeDisplaySection();
                 });
+            },
+
+            computeDisplaySection: function() {
+                this.displaySection = this.section.visibility;
+
+                /// En cours de création
+
+                // let edit = this["editionMode"];
+                // if(edit){
+                //     this.$axiosLogin.get("whoami").then( u => {
+                //         let me = u.data;
+
+                //         this.$axiosApi.get("/livrets/"+this.section.livretId).then( l => {
+                //             let livret = l.data;
+
+                //             if(livret.tutor.id == me.id)
+                //                 this.displaySection = true;
+
+
+                //         })
+
+                //     });
+                // }
             }
         },
         watch:{
             sectionId() {
                 this.fetchSection();
+            },
+            editionMode() {
+                this.computeDisplaySection();
             }
         }
     }

@@ -13,7 +13,14 @@
         components:{
         },
         props: {
-            questionId: Number
+            questionId: {
+                type: Number,
+                required: true,  
+            },
+            editionMode: {
+                type: Boolean,
+                default: false,
+            }
         },
 
         data(){
@@ -27,7 +34,8 @@
 
         methods:{
             fetchQuestion: function() {
-                let id = this["questionId"]
+                let id = this["questionId"];
+                
                 this.$axiosApi.get("questions/"+ id ).then(q => {
                     this.question = q.data
                 });
