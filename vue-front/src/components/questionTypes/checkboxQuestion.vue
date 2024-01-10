@@ -3,10 +3,12 @@
         <p>
             {{ question.title }}
         </p>
-        <div v-for="answer in question.answers" :key="answer.id">
-            <input type="checkbox" name="answer.id" :id=answer.id>
-            <label for="answer.id">{{ answer.proposition }}</label>
-        </div>
+        <fieldset>
+            <div v-for="answer in question.answers" :key="answer.id">
+                <input type="checkbox" :name=question.id :id=answer.id>
+                <label for="answer.id">{{ answer.proposition }}</label>
+            </div>
+        </fieldset>
     </div>
 </template>
 

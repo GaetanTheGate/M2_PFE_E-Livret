@@ -3,6 +3,10 @@
         <p>
             {{ question.title }}
         </p>
+        <div v-for="answer in question.answers" :key="answer.id">
+            <label for="answer.id">{{ answer.proposition }}</label>
+            <input type="text" :name=question.id :id=answer.id>
+        </div>
     </div>
 </template>
 
@@ -30,6 +34,11 @@
                 let id = this["questionId"]
                 this.$axiosApi.get("questions/"+ id ).then(q => {
                     this.question = q.data
+                }).then( () => {
+                    this.question.answers.forEach(answer => {
+                        document.getElementById(answer.id).value = answer.value;
+                        document.getElementById(answer.id).disabled = true; // enable quand on est en mode édition 
+                    });
                 });
             }
         },
