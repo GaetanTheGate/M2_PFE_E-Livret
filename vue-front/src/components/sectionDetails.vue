@@ -4,8 +4,9 @@
         <h2>{{ section.title }}</h2>
         <p>This section is owned by {{ section.owner }}</p>
         <div v-for="question in section.questions" :key="question.id" class="myUL">
-            <questionDetails :questionId="question.id" :editionMode="editionMode"/>
+            <questionDetails :ref="'Q' + question.id" :questionId="question.id" :editionMode="editionMode" @callable="addQuestionChild"/>
         </div>
+        <button v-if="editionMode" v-on:click="saveAnswers()">Sauvegarder</button>
     </div>
 </template>
 
@@ -31,6 +32,7 @@
             return {
                 section:            null,
                 displaySection:     null,
+                questionChilds:     null,
             }
         },
         mounted(){
@@ -39,10 +41,22 @@
 
         methods:{
             fetchSection: function() {
+                this.questionChilds = [];
+                
                 let id = this["sectionId"]
                 this.$axiosApi.get("sections/"+ id ).then(s => {
                     this.section = s.data
                     this.computeDisplaySection();
+                });
+            },
+
+            addQuestionChild: function(child) {
+                this.questionChilds.push(child);
+            },
+
+            saveAnswers: function() {
+                this.questionChilds.forEach(child => {
+                    child.saveAnswers();
                 });
             },
 

@@ -36,6 +36,7 @@
         },
         mounted(){
             this.fetchQuestion();
+            this.emitCallable();
         },
 
         methods:{
@@ -61,7 +62,27 @@
                     if(document.getElementById(answer.id))
                         document.getElementById(answer.id).disabled = !edit;
                 });
-            }
+            },
+
+            saveAnswers: function() {
+                this.question.answers.forEach(answer => {
+                    if(document.getElementById(answer.id)){
+                        let ans = {
+                            id: answer.id,
+                            value: document.getElementById(answer.id).checked,
+                        }
+                        this.$axiosApi.put("answers/saveValue", ans).then(a => {
+                            answer = a.data;
+                        });
+                    }
+                });
+            },
+
+            emitCallable: function() {
+                this.$emit("callable", {
+                    saveAnswers: () => this.saveAnswers()
+                });
+            },
         },
         watch:{
             questionId() {

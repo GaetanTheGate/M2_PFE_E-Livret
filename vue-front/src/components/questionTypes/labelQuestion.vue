@@ -30,6 +30,7 @@
         },
         mounted(){
             this.fetchQuestion();
+            this.emitCallable();
         },
 
         methods:{
@@ -39,7 +40,17 @@
                 this.$axiosApi.get("questions/"+ id ).then(q => {
                     this.question = q.data
                 });
-            }
+            },
+
+            saveAnswers: function() {
+                // Do nothing
+            },
+
+            emitCallable: function() {
+                this.$emit("callable", {
+                    saveAnswers: () => this.saveAnswers()
+                });
+            },
         },
         watch:{
             questionId() {
