@@ -43,7 +43,7 @@ public class ESectionController {
      * The service to authenticate the user.
      */
     @Autowired
-    private AuthentificationService service;
+    public AuthentificationService service;
     /**
      * Respository for the ESections.
      */
@@ -114,7 +114,21 @@ public class ESectionController {
 
     /// PutMapping
 
+    @PutMapping("saveVisibility")
+    @PreAuthorize("this.service.whoAmI(#req).id == @SectionRepository.getById(#section.id).livret.tutor.id")
+    public ESectionDTO.Out.AllPublic putVisibilitySection(@RequestBody ESectionDTO.In.Visibility section, HttpServletRequest req) throws AuthentificationException, ESectionException  {
+        ESection sec = mapper.map(section, ESection.class);
+        
+        ESection s = s_repo.findById(sec.getId())
+            .orElseThrow(() -> new ESectionException(HttpStatus.NO_CONTENT, "Section not found."));
+        
+        s.setVisibility(sec.getVisibility());
+
+        return mapper.map(s_repo.save(s), ESectionDTO.Out.AllPublic.class);
+    }
+
     // TODO : Faire avec spring security toute la fonction
+    @Deprecated
     @PutMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isMeFromLivret(#req.getLivret(), #section)")
     public ESection putSection(@RequestBody ESection section, HttpServletRequest req) throws AuthentificationException, ESectionException {

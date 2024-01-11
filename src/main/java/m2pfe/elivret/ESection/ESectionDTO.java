@@ -9,7 +9,12 @@ import m2pfe.elivret.EQuestion.AbstractEQuestion;
 
 public class ESectionDTO {
     public static class In {
-
+        @Data
+        @NoArgsConstructor
+        public static class Visibility {
+            public Integer id;
+            public Boolean visibility;
+        }
     }
 
     public static class Out {

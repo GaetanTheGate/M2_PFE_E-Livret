@@ -3,8 +3,14 @@
         <hr />
         <h2>{{ section.title }}</h2>
         <p>This section is owned by {{ section.owner }}</p>
+
+        <div v-if="displayVisibility">
+            <label for="section_visibility">Visible</label>
+            <input type="checkbox" :id="'section_'+section.id+'_visibility'" v-model="section.visibility" v-on:click="saveVisibility()">
+        </div>
+
         <div v-for="question in section.questions" :key="question.id" class="myUL">
-            <questionDetails :ref="'Q' + question.id" :questionId="question.id" :editionMode="editionMode" @callable="addQuestionChild"/>
+            <questionDetails :questionId="question.id" :editionMode="editionMode" @callable="addQuestionChild"/>
         </div>
         <button v-if="editionMode" v-on:click="saveAnswers()">Sauvegarder</button>
     </div>
@@ -32,6 +38,7 @@
             return {
                 section:            null,
                 displaySection:     null,
+                displayVisibility:  null,
                 questionChilds:     null,
             }
         },
@@ -47,6 +54,7 @@
                 this.$axiosApi.get("sections/"+ id ).then(s => {
                     this.section = s.data
                     this.computeDisplaySection();
+                    this.computeDisplayVisibility();
                 });
             },
 
@@ -58,6 +66,18 @@
                 this.questionChilds.forEach(child => {
                     child.saveAnswers();
                 });
+            },
+
+            saveVisibility: function() {
+                let sec = {
+                    id: this.section.id,
+                    visibility: document.getElementById("section_"+this.section.id+"_visibility").checked
+                };
+
+                this.$axiosApi.put("sections/saveVisibility", sec).then(s => {
+                    this.section = s.data;
+                    console.log(s.data);
+                })
             },
 
             // TODO : Ameliorer parce que c'est affreux !
@@ -101,6 +121,26 @@
                 else
                     this.displaySection = this.section.visibility;
 
+            },
+
+            computeDisplayVisibility: function() {let edit = this["editionMode"];
+                if(edit){
+                    this.$axiosLogin.get("whoami").then( u => {
+                        let me = u.data;
+
+                        this.$axiosApi.get("/livrets/"+this.section.livretId).then( l => {
+                            let livret = l.data;
+
+                            if(livret.tutorId == me.id)
+                                this.displayVisibility = true;
+                            else
+                                this.displayVisibility = false;
+                        })
+
+                    });
+                }
+                else
+                    this.displayVisibility = false;
             }
         },
         watch:{
@@ -109,6 +149,7 @@
             },
             editionMode() {
                 this.computeDisplaySection();
+                this.computeDisplayVisibility();
             }
         }
     }
