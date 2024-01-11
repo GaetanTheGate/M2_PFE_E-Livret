@@ -51,7 +51,7 @@ public class EAnwserController {
     /**
      * Mapper for mapping an object to another.
      */
-    private ModelMapper mapper = new ModelMapper();
+    public ModelMapper mapper = new ModelMapper();
 
 
     ///GetMapping
@@ -101,7 +101,7 @@ public class EAnwserController {
 
     // For the owner
     @PutMapping("saveProposition")
-    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #answer)")
+    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, @AnswerRepository.getById(#answer.id))")
     public EAnswer saveWholeAnswer(@RequestBody EAnswerDTO.In.Proposition answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
         EAnswer a = mapper.map(answer, EAnswer.class);
 
@@ -116,7 +116,7 @@ public class EAnwserController {
     // For the actors
 
     @PutMapping("saveValue")
-    @PreAuthorize("@EntityAccessAuthorization.isAnswerMine(#req, #answer)")
+    @PreAuthorize("@EntityAccessAuthorization.isAnswerMine(#req, #answer.id)")
     public EAnswer saveValueAsActor(@RequestBody EAnswerDTO.In.Value answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
         EAnswer a = mapper.map(answer, EAnswer.class);
 
