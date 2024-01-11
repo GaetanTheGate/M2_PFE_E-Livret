@@ -49,7 +49,8 @@ public class SpringConfiguration extends SpringBootServletInitializer implements
 	public void addCorsMappings(CorsRegistry registry) {
 		registry
 			.addMapping("/**")
-			.allowedOrigins("*");
+			.allowedOrigins("*")
+			.allowedMethods("*");
 	}
 
 }
