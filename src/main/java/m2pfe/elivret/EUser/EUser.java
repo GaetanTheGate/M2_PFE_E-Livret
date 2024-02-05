@@ -48,6 +48,7 @@ public class EUser {
     @NotBlank
     private String password;
 
+    // TODO : remove
     @Basic
     @Enumerated(EnumType.STRING)
     private ELivret.UserRole role;

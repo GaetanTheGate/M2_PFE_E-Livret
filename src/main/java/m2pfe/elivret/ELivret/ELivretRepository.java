@@ -10,6 +10,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * <p>
+ * Repository (DAO) for the ELivret entity.
+ * </p>
+ * <p>
+ * It is used to access and manipulate the ELivrets in the database, set in the configuration.
+ * </p>
+ * 
+ * @see ELivret
+ * @see JpaRepository
+ * 
+ * @author Gaëtan PUPET
+ * @version 1.1
+ */
 @Repository
 @Component(value="LivretRepository")
 @Transactional

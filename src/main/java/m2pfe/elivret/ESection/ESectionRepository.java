@@ -10,6 +10,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * <p>
+ * Repository (DAO) for the ESection entity.
+ * </p>
+ * <p>
+ * It is used to access and manipulate the ESections in the database, set in the configuration.
+ * </p>
+ * 
+ * @see ESection
+ * @see JpaRepository
+ * 
+ * @author Gaëtan PUPET
+ * @version 1.0
+ */
 @Repository
 @Component(value="SectionRepository")
 @Transactional
