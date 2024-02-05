@@ -1,8 +1,6 @@
 package m2pfe.elivret.EAnswer;
 
 import m2pfe.elivret.Authentification.AuthentificationException;
-import m2pfe.elivret.Authentification.AuthentificationService;
-import m2pfe.elivret.Authentification.EntityAccessAuthorization;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,28 +24,17 @@ import javax.servlet.http.HttpServletRequest;
  * @see EAnswer
  * 
  * @author Gaëtan PUPET
- * @version 1.1
+ * @version 1.2
  */
 @RestController
 @RequestMapping("/api/answers")
 public class EAnwserController {
     /**
-     * The service used to check the authenticated user's rights.
-     */
-    // TODO : Supprimer
-    // @Autowired
-    // private EntityAccessAuthorization authorization;
-
-    /**
-     * The service to authenticate the user.
-     */
-    @Autowired
-    private AuthentificationService service;
-    /**
      * Repository for the EAnswer entities.
      **/
     @Autowired
     private EAnswerRepository a_repo;
+
     /**
      * Mapper for mapping an object to another.
      */
@@ -66,9 +53,6 @@ public class EAnwserController {
     @GetMapping("/{id}")
     @PreAuthorize("@EntityAccessAuthorization.isMeFromLivret(#req, @AnswerRepository.getById(#id))")
     public EAnswer getAnswer(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, EAnswerException {
-        // if(!authorization.isMeFromLivret(req, a_repo.getById(id).getQuestion().getSection().getLivret().getId())) {
-        //     throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
-        // }
         Optional<EAnswer> a = a_repo.findById(id);
         a.orElseThrow(() -> new EAnswerException(HttpStatus.NO_CONTENT, "EAnswer not found."));
 
@@ -81,13 +65,6 @@ public class EAnwserController {
     @PostMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #answer)")
     public EAnswer postAnswer(@RequestBody EAnswer answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
-        // if(!authorization.isMeFromLivret(req, answer.getQuestion().getSection().getLivret().getId())) {
-        //     throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
-        // }
-
-        // if(!authorization.isSectionMine(req,answer.getQuestion().getSection().getId())){
-        //     throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
-        // }
         EAnswer a = mapper.map(answer, EAnswer.class);
 
         Optional.ofNullable(a_repo.findById(a.getId()).isPresent() ? null : a)
@@ -134,10 +111,6 @@ public class EAnwserController {
     @PutMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isAnswerMine(#req, #answer)")
     public EAnswer putAnswer(@RequestBody EAnswer answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
-        // if(!authorization.isAnswerMine(req, answer)) {
-        //     throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
-        // }
-
         EAnswer a = mapper.map(answer, EAnswer.class);
 
         a_repo.findById(a.getId())
@@ -153,12 +126,6 @@ public class EAnwserController {
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, @AnswerRepository.getById(#id))")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAnswer(@PathVariable int id, HttpServletRequest req) throws AuthentificationException {
-        // if(!authorization.isMeFromLivret(req, a_repo.getById(id).getQuestion().getSection().getLivret().getId())) {
-        //     throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
-        // }
-        // if(!authorization.isSectionMine(req,a_repo.getById(id).getQuestion().getSection().getId())){
-        //     throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
-        // }
         a_repo.deleteById(id);
     }
     

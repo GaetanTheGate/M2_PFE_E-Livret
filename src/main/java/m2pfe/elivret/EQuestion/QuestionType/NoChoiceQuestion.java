@@ -25,7 +25,6 @@ import m2pfe.elivret.EQuestion.AbstractEQuestion;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class NoChoiceQuestion extends AbstractEQuestion {
-    
     @Override
     public List<EAnswer> getAnswers() {
         return List.of();

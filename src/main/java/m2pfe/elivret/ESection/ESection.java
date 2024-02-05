@@ -20,10 +20,6 @@ public class ESection {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    // @OneToOne(cascade = CascadeType.PERSIST)
-    // @JsonBackReference
-    // private EUser owner;
-
     @Basic
     private UserRole owner;
 
@@ -38,11 +34,6 @@ public class ESection {
     @JoinColumn(name = "livret_id", referencedColumnName = "id")
     @JsonBackReference
     private ELivret livret;
-
-    // @ElementCollection
-    // private List<String> listQuestion;
-    // @ElementCollection
-    // private List<String> listReponse;
 
     @OneToMany(mappedBy = "section")
     @JsonManagedReference

@@ -31,9 +31,6 @@ import m2pfe.elivret.EQuestion.AbstractEQuestion;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MultipleChoiceQuestion extends AbstractEQuestion {
-    // @ElementCollection
-    // private List<String> values;
-
     /**
      * The answers to the question.
      */
