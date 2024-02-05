@@ -77,7 +77,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         try {
             if(jwt.validateToken(token)){
-                Authentication auth = jwt.getAuthentication(token); // RODO : Si possible, déplacer le getAuthentication pour pas qu'il soit dans le JwtManager.
+                Authentication auth = jwt.getAuthentication(token); // TODO : Si possible, déplacer le getAuthentication pour pas qu'il soit dans le JwtManager.
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
             // TODO: Else, also do the catch section ?

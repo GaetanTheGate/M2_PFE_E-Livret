@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import m2pfe.elivret.EUser.EUser;
 import m2pfe.elivret.EUser.EUserDTO;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 /**
  * <p>
@@ -32,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @see JwtManager
  * 
  * @author Gaëtan PUPET
- * @version 1.0
+ * @version 1.1
  */
 @RestController
 @RequestMapping("/authentification")
@@ -94,10 +92,10 @@ public class AuthentificationController {
      * </p>
      * 
      * @see AuthentificationService
-     * @see #AuthentificationService.logout(String)
+     * @see #AuthentificationService.logout(HttpServletRequest)
      * @see JwtManager
      * 
-     * @param token The token the application will forget.
+     * @param req The header where the token of the user is so that the application can forget it.
      * 
      * @return The responseEntity of the request
      */
@@ -112,11 +110,30 @@ public class AuthentificationController {
         }
     }
 
-    // TODO : COMMENT.
+    /**
+     * <p>
+     * <b>GET</b> request on path <b>"/whoami"</b>
+     * </p>
+     * <p>
+     * Returns the user linked to the token used by the authentificated user.
+     * </p>
+     * 
+     * @see AuthentificationService
+     * @see #AuthentificationService.whoAmI(HttpServletRequest)
+     * @see JwtManager
+     * 
+     * @param req The header where the token of the user is so that the application can find its linked user.
+     * 
+     * @return The responseEntity with the found user.
+     */
     @GetMapping("/whoami")
-    public EUserDTO.Out.UserInformation whoAmI(HttpServletRequest req) {
-        EUser me = service.whoAmI(req);
-        return mapper.map(me, EUserDTO.Out.UserInformation.class);
+    public ResponseEntity<EUserDTO.Out.UserInformation> whoAmI(HttpServletRequest req) {
+        try {
+            EUser me = service.whoAmI(req);
+            return ResponseEntity.ok(mapper.map(me, EUserDTO.Out.UserInformation.class));            
+        } catch (AuthentificationException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(null);
+        }
     }
     
 }
