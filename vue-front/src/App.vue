@@ -15,19 +15,20 @@ export default {
   components: {
   },
   mounted() {
-    //this.login('etudiant@mail.com', 'etudiant')
+    // TODO : un init de l'appli qui vérifie si y a un token, et autre si besoin 
+    // this.login('etudiant@mail.com', 'etudiant')
   },
   methods: {
     login: function (email, password) {
       this.$axiosLogin.post("login", { "email": email, "password": password }).then(t => {
         this.$setToken(t.data);
-        localStorage.access_token = t.data;
+        localStorage.access_token = t.data; // TODO : Mettre dans le $setToken
       })
     },
     logout: function () {
       this.$axiosLogin.post("logout").then(t => {
         this.$setToken(t.data);
-        localStorage.removeItem('token');
+        localStorage.removeItem('token');  // TODO : Mettre dans le $unsetToken
         this.$router.push({ path: "/Login"})
       })
     }
