@@ -1,0 +1,9 @@
+# Exclude specific file
+README.md
+
+# Exclude specific folder
+.git
+**/node_modules/
+
+# Exclude all hidden file
+.*
