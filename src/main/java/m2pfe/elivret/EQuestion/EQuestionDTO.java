@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import m2pfe.elivret.EAnswer.EAnswerDTO;
-import m2pfe.elivret.EQuestion.AbstractEQuestion.QuestionType;
+import m2pfe.elivret.EQuestion.EQuestion.QuestionType;
 
 /**
  * <p>

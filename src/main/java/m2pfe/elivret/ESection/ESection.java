@@ -3,7 +3,7 @@ package m2pfe.elivret.ESection;
 import lombok.*;
 import m2pfe.elivret.ELivret.ELivret;
 import m2pfe.elivret.ELivret.ELivret.UserRole;
-import m2pfe.elivret.EQuestion.AbstractEQuestion;
+import m2pfe.elivret.EQuestion.EQuestion;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -26,6 +26,7 @@ import java.util.List;
  */
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ESection {
@@ -69,5 +70,5 @@ public class ESection {
      */
     @OneToMany(mappedBy = "section")
     @JsonManagedReference
-    private List<AbstractEQuestion> questions;
+    private List<EQuestion> questions;
 }

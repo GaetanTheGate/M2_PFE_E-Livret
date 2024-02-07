@@ -14,13 +14,13 @@ import m2pfe.elivret.EUser.EUser;
 
 /**
  * <p>
- * Repository (DAO) for the AbstractEQuestion entity.
+ * Repository (DAO) for the EQuestion entity.
  * </p>
  * <p>
- * It is used to access and manipulate the AbstractEQuestions in the database, set in the configuration.
+ * It is used to access and manipulate the EQuestions in the database, set in the configuration.
  * </p>
  * 
- * @see AbstractEQuestion
+ * @see EQuestion
  * @see JpaRepository
  * 
  * @author Gaëtan PUPET
@@ -29,9 +29,9 @@ import m2pfe.elivret.EUser.EUser;
 @Repository
 @Component(value="QuestionRepository")
 @Transactional
-public interface EQestionRepository extends JpaRepository<AbstractEQuestion, Integer> {
+public interface EQestionRepository extends JpaRepository<EQuestion, Integer> {
     // TODO : plus jolie d'une manière si possible
         // Remplacer la fin de la query par une méthode
     @Query("SELECT DISTINCT(q) FROM ELivret l JOIN l.sections s ON s.livret = l JOIN s.questions q ON q.section = s JOIN q.answers a ON a.question = q WHERE a.value IS NULL AND ( (s.owner = 'STUDENT' AND l.student = :user) OR (s.owner = 'TUTOR' AND l.tutor = :user) OR (s.owner = 'MASTER' AND l.master = :user) OR (s.owner = 'RESPONSABLE' AND l.responsable = :user) )")
-    Optional<List<AbstractEQuestion>> findAllQuestionsUserHasToComplete(@Param("user") EUser user); 
+    Optional<List<EQuestion>> findAllQuestionsUserHasToComplete(@Param("user") EUser user); 
 }

@@ -17,13 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
- * Rest controller for the AbstractEQuestion entity.
+ * Rest controller for the EQuestion entity.
  * </p>
  * <p>
  * API that manages the request from the path "/api/questions".
  * </p>
  * 
- * @see AbstractEQuestion
+ * @see EQuestion
  * 
  * @author Gaëtan PUPET
  * @version 1.
@@ -54,8 +54,8 @@ public class EQuestionController {
     // TODO: Comments.
     @Deprecated
     @GetMapping("/getAll")
-    public List<AbstractEQuestion> getQuestions() {
-        return q_repo.findAll().stream().map(q -> mapper.map(q, AbstractEQuestion.class))
+    public List<EQuestion> getQuestions() {
+        return q_repo.findAll().stream().map(q -> mapper.map(q, EQuestion.class))
                 .toList();
     }
 
@@ -70,11 +70,11 @@ public class EQuestionController {
 
     @GetMapping("/{id}")
     @PreAuthorize("@EntityAccessAuthorization.isMeFromLivret(#req, @QuestionRepository.getById(#id))")
-    public AbstractEQuestion getQuestion(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, EQuestionException {
-        Optional<AbstractEQuestion> q = q_repo.findById(id);
-        q.orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "AbstractEQuestion not found."));
+    public EQuestion getQuestion(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, EQuestionException {
+        Optional<EQuestion> q = q_repo.findById(id);
+        q.orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "EQuestion not found."));
 
-        return mapper.map(q.get(), AbstractEQuestion.class);
+        return mapper.map(q.get(), EQuestion.class);
     }
 
 
@@ -82,11 +82,11 @@ public class EQuestionController {
 
     @PostMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #question)")
-    public AbstractEQuestion postQuestion(@RequestBody AbstractEQuestion question, HttpServletRequest req) throws AuthentificationException, EQuestionException {
-        AbstractEQuestion q = mapper.map(question, AbstractEQuestion.class);
+    public EQuestion postQuestion(@RequestBody EQuestion question, HttpServletRequest req) throws AuthentificationException, EQuestionException {
+        EQuestion q = mapper.map(question, EQuestion.class);
 
         Optional.ofNullable(q_repo.findById(q.getId()).isPresent() ? null : q)
-                .orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "AbstractEQuestion already exist."));
+                .orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "EQuestion already exist."));
 
         return q_repo.save(q);
     }
@@ -96,11 +96,11 @@ public class EQuestionController {
 
     @PutMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #question)")
-    public AbstractEQuestion putQuestion(@RequestBody AbstractEQuestion question, HttpServletRequest req) throws AuthentificationException, EQuestionException {
-        AbstractEQuestion q = mapper.map(question, AbstractEQuestion.class);
+    public EQuestion putQuestion(@RequestBody EQuestion question, HttpServletRequest req) throws AuthentificationException, EQuestionException {
+        EQuestion q = mapper.map(question, EQuestion.class);
 
         q_repo.findById(q.getId())
-                .orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "AbstractEQuestion not found."));
+                .orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "EQuestion not found."));
 
         return q_repo.save(q);
     }

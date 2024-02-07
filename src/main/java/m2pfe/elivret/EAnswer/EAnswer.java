@@ -14,9 +14,10 @@ import org.springframework.lang.NonNull;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import m2pfe.elivret.EQuestion.AbstractEQuestion;
+import m2pfe.elivret.EQuestion.EQuestion;
 
 /**
  * <p>
@@ -26,13 +27,14 @@ import m2pfe.elivret.EQuestion.AbstractEQuestion;
  * An EAnswer <b>primary key</b> is its <b>id</b>.
  * </p>
  * 
- * @see AbstractEQuestion
+ * @see EQuestion
  * 
  * @author Gaëtan PUPET
  * @version 1.1
  */
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class EAnswer {
@@ -59,11 +61,11 @@ public class EAnswer {
     /**
      * The EQuestion this EAnswer is attached.
      * 
-     * @see AbstractEQuestion
+     * @see EQuestion
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id", referencedColumnName = "id")
     @JsonBackReference
     @NonNull
-    private AbstractEQuestion question;
+    private EQuestion question;
 }

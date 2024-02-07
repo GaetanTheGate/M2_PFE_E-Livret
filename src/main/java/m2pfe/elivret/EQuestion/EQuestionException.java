@@ -5,7 +5,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 
 /**
  * <p>
- * Exception for when there is an AbstractEQuestion failure.
+ * Exception for when there is an EQuestion failure.
  * </p>
  * <p>
  * Specify an HttpStatus for the response to send.
@@ -20,7 +20,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 public class EQuestionException extends HttpStatusCodeException {
     /**
      * <p>
-     * Constructor of the AbstractEQuestion class.
+     * Constructor of the EQuestion class.
      * </p>
      * <p>
      * Calls the super constructor

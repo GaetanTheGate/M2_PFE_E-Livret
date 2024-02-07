@@ -10,10 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import m2pfe.elivret.EAnswer.EAnswer;
 import m2pfe.elivret.ESection.ESection;
 
@@ -32,14 +37,17 @@ import m2pfe.elivret.ESection.ESection;
  * @see EAnswers
  * 
  * @author Gaëtan PUPET
- * @version 1.0
+ * @version 2.0
  */
 @Entity
 @Data
-public abstract class AbstractEQuestion {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class EQuestion {
     /**
-     * Primary key of the AbstractEQuestion.
-     * Used to identify an AbstractEQuestion.
+     * Primary key of the EQuestion.
+     * Used to identify an EQuestion.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -66,13 +74,11 @@ public abstract class AbstractEQuestion {
     private ESection section;
 
     /**
-     * <p>
-     * Get the list of all EAnswers the questions has defined.
-     * </p>
-     * 
-     * @return The list of EAnswers
+     * The answers to the question.
      */
-    abstract public List<EAnswer> getAnswers();
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<EAnswer> answers;
 
     /**
      * Define the type of question that can exist.

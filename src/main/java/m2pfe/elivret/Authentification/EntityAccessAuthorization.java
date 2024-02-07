@@ -13,7 +13,7 @@ import m2pfe.elivret.ELivret.ELivret;
 import m2pfe.elivret.ELivret.ELivretException;
 import m2pfe.elivret.ELivret.ELivretRepository;
 import m2pfe.elivret.ELivret.ELivret.UserRole;
-import m2pfe.elivret.EQuestion.AbstractEQuestion;
+import m2pfe.elivret.EQuestion.EQuestion;
 import m2pfe.elivret.EQuestion.EQestionRepository;
 import m2pfe.elivret.EQuestion.EQuestionException;
 import m2pfe.elivret.ESection.ESection;
@@ -231,7 +231,7 @@ public class EntityAccessAuthorization {
      * @throws ESectionException
      * @throws EQuestionException
      */
-    public boolean isMeFromLivret(HttpServletRequest req, AbstractEQuestion question) throws AuthentificationException, EUserException, ELivretException, ESectionException, EQuestionException {
+    public boolean isMeFromLivret(HttpServletRequest req, EQuestion question) throws AuthentificationException, EUserException, ELivretException, ESectionException, EQuestionException {
         return isMeFromLivret(req, qr.findById(question.getId())
             .orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "Question's id not found."))
             .getSection());
@@ -355,7 +355,7 @@ public class EntityAccessAuthorization {
      * @throws ESectionException
      * @throws EQuestionException
      */
-    public boolean isLivretMine(HttpServletRequest req, AbstractEQuestion question) throws AuthentificationException, EUserException, ELivretException, ESectionException, EQuestionException {
+    public boolean isLivretMine(HttpServletRequest req, EQuestion question) throws AuthentificationException, EUserException, ELivretException, ESectionException, EQuestionException {
         return isLivretMine(req, qr.findById(question.getId())
             .orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "Question's id not found."))
             .getSection());
@@ -459,7 +459,7 @@ public class EntityAccessAuthorization {
      * @throws EQuestionException
      */
     public boolean isQuestionMine(HttpServletRequest req, Integer id) throws AuthentificationException, EUserException, ELivretException, ESectionException, EQuestionException {
-        AbstractEQuestion question = qr.findById(id)
+        EQuestion question = qr.findById(id)
             .orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "Question's id not found."));
 
         return isSectionMine(req, question.getSection());
@@ -483,7 +483,7 @@ public class EntityAccessAuthorization {
      * @throws ESectionException
      * @throws EQuestionException
      */
-    public boolean isQuestionMine(HttpServletRequest req, AbstractEQuestion question) throws AuthentificationException, EUserException, ELivretException, ESectionException, EQuestionException {
+    public boolean isQuestionMine(HttpServletRequest req, EQuestion question) throws AuthentificationException, EUserException, ELivretException, ESectionException, EQuestionException {
         return isQuestionMine(req, question.getId());
     }
 
