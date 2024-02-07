@@ -4,6 +4,11 @@
     <router-link :to="{ name: 'About' }">About</router-link>
     <router-link :to="{ name: 'Livrets' }">Livrets</router-link>
     <button type="button" v-on:click="this.logout()" class="loginButton">Logout</button>
+    <button type="button" v-on:click="this.loginStudent()" class="loginButton">Student</button>
+    <button type="button" v-on:click="this.loginResponsable()" class="loginButton">Responsable</button>
+    <button type="button" v-on:click="this.loginTutor()" class="loginButton">Tutor</button>
+
+
   </div>
   <router-view />
 </template>
@@ -31,7 +36,28 @@ export default {
         localStorage.removeItem('token');  // TODO : Mettre dans le $unsetToken
         this.$router.push({ path: "/Login"})
       })
-    }
+    },
+    loginStudent: function () {
+      this.$axiosLogin.post("login", { "email": "etudiant2@mail.com", "password": "etudiant2" }).then(t => {
+        this.$setToken(t.data);
+                localStorage.setItem('token', t.data);
+                this.$router.push({ path: "/"})
+      })
+    },
+    loginResponsable: function () {
+      this.$axiosLogin.post("login", { "email": "responsable@mail.com", "password": "responsable" }).then(t => {
+        this.$setToken(t.data);
+                localStorage.setItem('token', t.data);
+                this.$router.push({ path: "/"})
+      })
+    },
+    loginTutor: function () {
+      this.$axiosLogin.post("login", { "email": "tuteur@mail.com", "password": "tuteur" }).then(t => {
+        this.$setToken(t.data);
+                localStorage.setItem('token', t.data);
+                this.$router.push({ path: "/"})
+      })
+    },
   }
 }
 </script>
