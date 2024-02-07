@@ -4,15 +4,15 @@
         <h2>{{ section.title }}</h2>
         <p>This section is owned by {{ section.owner }}</p>
 
-        <div v-if="displayVisibility">
-            <label for="section_visibility">Visible</label>
-            <input type="checkbox" :id="'section_'+section.id+'_visibility'" v-model="section.visibility" v-on:click="saveVisibility()">
+        <div v-if="displayVisibility" class="form-check">
+            <label for="section_visibility" class="form-check-label">Visible</label>
+            <input type="checkbox" :id="'section_'+section.id+'_visibility'" v-model="section.visibility" v-on:click="saveVisibility()" class="form-check-input">
         </div>
 
         <div v-for="question in section.questions" :key="question.id" class="myUL">
             <questionDetails :questionId="question.id" :editionMode="editionMode" @callable="addQuestionChild"/>
         </div>
-        <button v-if="editionMode" v-on:click="saveAnswers()">Sauvegarder</button>
+        <button v-if="editionMode" v-on:click="saveAnswers()" class="btn btn-danger">Sauvegarder</button>
     </div>
 </template>
 

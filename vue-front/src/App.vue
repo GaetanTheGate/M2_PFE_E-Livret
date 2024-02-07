@@ -1,16 +1,48 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link>
-    <router-link :to="{ name: 'About' }">About</router-link>
-    <router-link :to="{ name: 'Livrets' }">Livrets</router-link>
-    <button type="button" v-on:click="this.logout()" class="loginButton">Logout</button>
-    <button type="button" v-on:click="this.loginStudent()" class="loginButton">Student</button>
-    <button type="button" v-on:click="this.loginResponsable()" class="loginButton">Responsable</button>
-    <button type="button" v-on:click="this.loginTutor()" class="loginButton">Tutor</button>
+  <nav id="nav" class="navbar navbar-expand-lg bd-navbar sticky-top" style="background-color: lightcoral;">
+      <div class="collapse navbar-collapse">
+          <ul class="navbar-nav me-auto">
 
+            <li class="nav-item">
+                <a class="nav-link active">
+                    <router-link to="/" class="nav-link">Home</router-link>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    <router-link :to="{ name: 'About' }" class="nav-link">About</router-link>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    <router-link :to="{ name: 'Livrets' }" class="nav-link">Livrets</router-link>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    <button type="button" v-on:click="this.logout()" class="nav-link">Logout</button>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    <button type="button" v-on:click="this.loginStudent()" class="nav-link">Student</button>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    <button type="button" v-on:click="this.loginResponsable()" class="nav-link">Responsable</button>
+                </a>
+            </li>
+              <li class="nav-item">
+                  <a class="nav-link">
+                      <button type="button" v-on:click="this.loginTutor()" class="nav-link">Tutor</button>
+                  </a>
+              </li>
+          </ul>
+      </div>
 
-  </div>
-  <router-view />
+  </nav>
+  <router-view/>
 </template>
 
 <script>
@@ -68,24 +100,34 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2e4153;
-  margin-top: 20px;
+  /*margin-top: 20px;*/
 }
 
-#nav {
-  padding: 30px;
-  text-align: center;
+/*#nav {*/
+/*  padding: 30px;*/
+/*  text-align: center;*/
+/*}*/
+
+/*#nav a {*/
+/*  font-weight: bold;*/
+/*  color: #2c3e50;*/
+/*  text-decoration: none;*/
+/*  padding: 10px;*/
+/*  border-radius: 4px;*/
+/*}*/
+
+/*#nav a.router-link-exact-active {*/
+/*  color: white;*/
+/*  background: crimson;*/
+/*}*/
+
+.bd-navbar {
+
+    color: green; /* Change la couleur du texte au clic */
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-  text-decoration: none;
-  padding: 10px;
-  border-radius: 4px;
-}
+ div{
+     margin-bottom: 30px;
+ }
 
-#nav a.router-link-exact-active {
-  color: white;
-  background: crimson;
-}
 </style>

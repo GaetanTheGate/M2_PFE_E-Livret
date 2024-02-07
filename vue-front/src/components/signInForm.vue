@@ -1,14 +1,14 @@
 <template>
     <div>
-   <form>
-    <label>Email:</label>
-    <input type="email" required v-model="email">
+   <form id="form">
+    <label id="label" class="form-label">Email:</label>
+    <input id="input" type="email" required v-model="email" class="form-control">
     
-    <label>Password:</label>
-    <input type="password" required v-model="password">
+    <label id="label" class="form-label">Password:</label>
+    <input id="input" type="password" required v-model="password" class="form-control">
 
-    <button type="button" v-on:click="this.login(email, password)" class="loginButton">Login</button>
-    <button type="button" v-on:click="whoami()" class="loginButton">Whoami</button>
+    <button type="button" v-on:click="this.login(email, password)" class="btn btn-primary">Login</button>
+    <button type="button" v-on:click="whoami()" class="btn btn-secondary">Whoami</button>
 
    </form>
 </div>
@@ -42,7 +42,7 @@
 </script>
 
 <style>
-    form {
+    #form {
         max-width: 420px;
         margin: 30px auto;
         background: white;
@@ -51,7 +51,7 @@
         border-radius: 10px;
     }
 
-    label {
+    #label {
         color: #aaa;
         display: inline-block;
         margin: 25px 0 15px;
@@ -61,7 +61,7 @@
         font-weight: bold;
     }
 
-    input {
+    #input {
         display: block;
         padding: 10px 6px;
         width: 100%;
@@ -71,8 +71,8 @@
         color: #555;
     }
 
-    .loginButton{
-        text-align: center
-        
-    }
+    /*.loginButton{*/
+    /*    text-align: center*/
+
+    /*}*/
 </style>

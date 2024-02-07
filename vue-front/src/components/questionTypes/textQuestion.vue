@@ -1,11 +1,11 @@
 <template>
     <div v-if="question">
-        <p>
+        <h4>
             {{ question.title }}
-        </p>
-        <div v-for="answer in question.answers" :key="answer.id">
-            <label for="answer.id">{{ answer.proposition }}</label>
-            <input type="text" :name=question.id :id=answer.id>
+        </h4>
+        <div v-for="answer in question.answers" :key="answer.id" >
+            <label for="answer.id" >{{ answer.proposition }}</label>
+            <input type="text" :name=question.id :id=answer.id class="form-control" >
         </div>
     </div>
 </template>

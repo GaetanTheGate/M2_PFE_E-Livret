@@ -1,8 +1,8 @@
 <template>
     <div v-if="question">
-        <p>
+        <h4>
             {{ question.title }}
-        </p>
+        </h4>
     </div>
 </template>
 

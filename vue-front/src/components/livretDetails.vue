@@ -1,8 +1,8 @@
 <template>
     <!-- <button v-on:click="fetchLivret()">SHOW SECTIONS</button> -->
     <div v-if="livret" class="container">
-        <button v-if="!editionMode" v-on:click="setEditionMode(true)">Editer</button>
-        <button v-if=" editionMode" v-on:click="setEditionMode(false)">Consulter</button>
+        <button v-if="!editionMode" v-on:click="setEditionMode(true)" class="btn btn-info" >Editer</button>
+        <button v-if=" editionMode" v-on:click="setEditionMode(false)" class="btn btn-info">Consulter</button>
         <ul class="myUL">
             <li>student : {{ livret.student }}</li>
             <li>master : {{ livret.master }}</li>
@@ -63,9 +63,9 @@ export default {
 
 <style>
 
-div.container {
-  text-align: center;
-}
+/*div.container {*/
+/*  text-align: center;*/
+/*}*/
 
 ul.myUL {
     text-align: left;

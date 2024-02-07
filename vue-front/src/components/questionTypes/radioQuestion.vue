@@ -1,12 +1,12 @@
 <template>
     <div v-if="question">
-        <p>
+        <h4>
             {{ question.title }}
-        </p>
+        </h4>
         <fieldset>
-            <div v-for="answer in question.answers" :key="answer.id">
-                <input type="radio" :name=question.id :id=answer.id>
-                <label for="answer.id">{{ answer.proposition }}</label>
+            <div v-for="answer in question.answers" :key="answer.id" class="form-check">
+                <label for="answer.id" class="form-check-label">{{ answer.proposition }}</label>
+                <input type="radio" :name=question.id :id=answer.id class="form-check-input">
             </div>
         </fieldset>
     </div>
