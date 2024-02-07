@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Livret from '../views/Livret.vue'
 import Login from '../views/Login.vue'
+import Livrets from '../views/Livrets.vue'
 
 
 const routes = [
@@ -17,21 +18,28 @@ const routes = [
         component: About
     },
     {
-        path: '/Livret',
+        path: '/Livret/:id',
         name: 'Livret',
-        component: Livret
+        component: Livret,
+        props: true
     },
     {
         path: '/Login',
         name: 'Login',
         component: Login
+    },
+    {
+        path: '/Livrets',
+        name: 'Livrets',
+        component: Livrets
     }
 ]
 
 const protectedRoutes = [
     "Home",
     "About",
-    "Livret"
+    "Livret",
+    "Livrets"
 ]
 
 const router = createRouter({
@@ -44,11 +52,6 @@ const isLoggedIn = () => {
 }
 
 router.beforeEach(async (to, from, next) => {
-    //    const token = localStorage.getItem('access_token')
-    //    if (!token) next ({ name: 'Login' });
-    //   //else continue
-    //   else next();
-
     const isProtected = protectedRoutes.includes(to.name)
     if (isProtected && !isLoggedIn()) {
         next({

@@ -2,7 +2,7 @@
   <div id="nav">
     <router-link to="/">Home</router-link>
     <router-link :to="{ name: 'About' }">About</router-link>
-    <router-link :to="{ name: 'Livret' }">Livret</router-link>
+    <router-link :to="{ name: 'Livrets' }">Livrets</router-link>
     <button type="button" v-on:click="this.logout()" class="loginButton">Logout</button>
   </div>
   <router-view />
