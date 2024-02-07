@@ -46,7 +46,16 @@ public class EAnswerDTO {
      * The DTOs the user will get from the application.
      */
     public static class Out {
-
+        /**
+         * The DTO used to give all the public information about an answer.
+         */
+        @Data
+        @NoArgsConstructor
+        public static class AllPublic {
+            private Integer id;
+            private String proposition;
+            private String value;
+        }
     }
     
 }

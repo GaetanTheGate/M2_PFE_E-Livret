@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <p>
@@ -32,4 +33,11 @@ public interface ESectionRepository extends JpaRepository<ESection, Integer> {
             "JOIN s.livret l " +
             "WHERE l.student = :user OR l.tutor = :user OR l.master = :user OR l.responsable = :user")
     List<ESection> findByUser(@Param("user") EUser user);
+
+
+    // TODO : plus jolie d'une manière si possible
+        // Remplacer la fin de la query par une méthode
+    @Query("SELECT DISTINCT(s) FROM ELivret l JOIN l.sections s ON s.livret = l JOIN s.questions q ON q.section = s JOIN q.answers a ON a.question = q WHERE a.value IS NULL AND ( (s.owner = 'STUDENT' AND l.student = :user) OR (s.owner = 'TUTOR' AND l.tutor = :user) OR (s.owner = 'MASTER' AND l.master = :user) OR (s.owner = 'RESPONSABLE' AND l.responsable = :user) )")
+    Optional<List<ESection>> findAllSectionsUserHasToComplete(@Param("user") EUser user); 
+
 }

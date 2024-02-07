@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import m2pfe.elivret.Authentification.AuthentificationException;
+import m2pfe.elivret.Authentification.AuthentificationService;
+import m2pfe.elivret.EUser.EUser;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,12 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/api/questions")
 public class EQuestionController {
     /**
+     * The service to authenticate the user.
+     */
+    @Autowired
+    public AuthentificationService service;
+
+    /**
      * Respository for the EQuestions.
      */
     @Autowired
@@ -49,6 +57,15 @@ public class EQuestionController {
     public List<AbstractEQuestion> getQuestions() {
         return q_repo.findAll().stream().map(q -> mapper.map(q, AbstractEQuestion.class))
                 .toList();
+    }
+
+
+    @GetMapping("/mine/tocomplete")
+    public List<EQuestionDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req){
+        EUser me = service.whoAmI(req);
+
+        return q_repo.findAllQuestionsUserHasToComplete(me).get()
+            .stream().map(l -> mapper.map(l, EQuestionDTO.Out.AllPublic.class)).toList();
     }
 
     @GetMapping("/{id}")

@@ -56,10 +56,18 @@ public class ELivretController {
         return l_repo.findAll().stream().map(l -> mapper.map(l, ELivretDTO.Out.AllPublic.class)).toList();
     }
 
-    @GetMapping("")
+    @GetMapping("/mine")
     public List<ELivretDTO.Out.AllPublic> getMyLivrets(HttpServletRequest req) throws AuthentificationException, ELivretException {
         EUser me = service.whoAmI(req);
         return l_repo.findByUser(me).stream().map(l -> mapper.map(l, ELivretDTO.Out.AllPublic.class)).toList();
+    }
+
+    @GetMapping("/mine/tocomplete")
+    public List<ELivretDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req){
+        EUser me = service.whoAmI(req);
+
+        return l_repo.findAllLivretsUserHasToComplete(me).get()
+            .stream().map(l -> mapper.map(l, ELivretDTO.Out.AllPublic.class)).toList();
     }
 
     @GetMapping("/{id}")

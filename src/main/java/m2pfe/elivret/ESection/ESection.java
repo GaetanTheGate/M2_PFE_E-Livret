@@ -41,6 +41,7 @@ public class ESection {
      * The owner of the section.
      */
     @Basic
+    @Enumerated(EnumType.STRING)
     private UserRole owner;
 
     /**

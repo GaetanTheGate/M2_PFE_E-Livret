@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import m2pfe.elivret.ELivret.ELivret.UserRole;
-import m2pfe.elivret.EQuestion.AbstractEQuestion;
+import m2pfe.elivret.EQuestion.EQuestionDTO;
 
 /**
  * <p>
@@ -49,7 +49,7 @@ public class ESectionDTO {
             public Boolean visibility;
             public String title;
             public Integer livretId;
-            public List<AbstractEQuestion> questions;
+            public List<EQuestionDTO.Out.AllPublic> questions;
         }
     }
     

@@ -162,7 +162,7 @@ public class PopulateTesting {
     }
 
     private EAnswer createAndSaveAnswer(String proposition, String value, AbstractEQuestion question) {
-        return ar.save(new EAnswer(0, proposition, value, question));
+        return ar.save(new EAnswer(0, proposition, null, question));
     }
 
     private SingleChoiceQuestion singleQuestion(String anwser){

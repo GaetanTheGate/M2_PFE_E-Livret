@@ -66,10 +66,18 @@ public class ESectionController {
 
     // TODO : supprimer
     @Deprecated
-    @GetMapping("")
+    @GetMapping("/mine")
     public List<ESectionDTO.Out.AllPublic> getMySections(HttpServletRequest req) throws AuthentificationException, ESectionException {
         EUser me = service.whoAmI(req);
         return s_repo.findByUser(me).stream().map(s -> mapper.map(s, ESectionDTO.Out.AllPublic.class)).toList();
+    }
+
+    @GetMapping("/mine/tocomplete")
+    public List<ESectionDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req){
+        EUser me = service.whoAmI(req);
+
+        return s_repo.findAllSectionsUserHasToComplete(me).get()
+            .stream().map(l -> mapper.map(l, ESectionDTO.Out.AllPublic.class)).toList();
     }
 
     @GetMapping("/{id}")

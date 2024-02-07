@@ -1,6 +1,9 @@
 package m2pfe.elivret.EAnswer;
 
 import m2pfe.elivret.Authentification.AuthentificationException;
+import m2pfe.elivret.Authentification.AuthentificationService;
+import m2pfe.elivret.EUser.EUser;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,6 +33,12 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/api/answers")
 public class EAnwserController {
     /**
+     * The service to authenticate the user.
+     */
+    @Autowired
+    private AuthentificationService service;
+
+    /**
      * Repository for the EAnswer entities.
      **/
     @Autowired
@@ -48,6 +57,14 @@ public class EAnwserController {
     public List<EAnswer> getAnswers() {
         return a_repo.findAll().stream().map(a -> mapper.map(a, EAnswer.class))
                 .toList();
+    }
+
+    @GetMapping("/mine/tocomplete")
+    public List<EAnswerDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req){
+        EUser me = service.whoAmI(req);
+
+        return a_repo.findAllAnswersUserHasToComplete(me).get()
+            .stream().map(l -> mapper.map(l, EAnswerDTO.Out.AllPublic.class)).toList();
     }
 
     @GetMapping("/{id}")
