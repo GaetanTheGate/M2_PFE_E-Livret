@@ -1,5 +1,4 @@
 <template>
-    
     <div class="login">
         <signInForm />
     </div>
@@ -7,10 +6,14 @@
 
 <script>
 import signInForm from '../components/signInForm.vue'
-    export default {
-        name: 'LoginPage',
-        components:{
-            signInForm
-         }
-    }
+export default {
+    name: 'LoginPage',
+    components: {
+        signInForm
+    },
+
+    mounted() {
+        localStorage.removeItem('token');
+    },
+}
 </script>
