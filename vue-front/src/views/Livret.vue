@@ -1,7 +1,7 @@
 <template>
     
     <div id="livret">
-        <livretDetails :livretId="7" />
+        <livretDetails :livretId="80" />
     </div>
 </template>
 

@@ -13,9 +13,9 @@ import m2pfe.elivret.EAnswer.EAnswer;
 import m2pfe.elivret.EAnswer.EAnswerRepository;
 import m2pfe.elivret.ELivret.ELivret;
 import m2pfe.elivret.ELivret.ELivret.UserRole;
-import m2pfe.elivret.EQuestion.AbstractEQuestion;
+import m2pfe.elivret.EQuestion.EQuestion;
 import m2pfe.elivret.EQuestion.EQestionRepository;
-import m2pfe.elivret.EQuestion.AbstractEQuestion.QuestionType;
+import m2pfe.elivret.EQuestion.EQuestion.QuestionType;
 import m2pfe.elivret.EQuestion.QuestionType.NoChoiceQuestion;
 import m2pfe.elivret.EQuestion.QuestionType.MultipleChoiceQuestion;
 import m2pfe.elivret.EQuestion.QuestionType.SingleChoiceQuestion;
@@ -62,13 +62,12 @@ public class PopulateTesting {
 
         createUsers();
         createELivrets();
+
+        createExampleLivret();
     }
 
     private void createUsers(){
         createAndSaveUser("email", "password" , UserRole.RESPONSABLE);
-
-        createAndSaveUser("responsable@mail.com", "responsable" , UserRole.RESPONSABLE);
-
     }
 
     private EUser createAndSaveUser(String mail, String password, ELivret.UserRole role) {
@@ -117,8 +116,8 @@ public class PopulateTesting {
         return section;
     }
 
-    private AbstractEQuestion createAndSaveEQuestion(ESection section, String title, QuestionType type){
-        AbstractEQuestion question;
+    private EQuestion createAndSaveEQuestion(ESection section, String title, QuestionType type){
+        EQuestion question;
         
         switch (type) {
             case LABEL:
@@ -161,7 +160,7 @@ public class PopulateTesting {
         return question;
     }
 
-    private EAnswer createAndSaveAnswer(String proposition, String value, AbstractEQuestion question) {
+    private EAnswer createAndSaveAnswer(String proposition, String value, EQuestion question) {
         return ar.save(new EAnswer(0, proposition, null, question));
     }
 
@@ -176,5 +175,94 @@ public class PopulateTesting {
 
     private NoChoiceQuestion labelQuestion(){
         return new NoChoiceQuestion();
+    }
+
+
+    private void createExampleLivret() {
+        EUser student = createAndSaveUser("etudiant2@mail.com", "etudiant2", UserRole.STUDENT);
+
+        EUser responsable   = ur.findByEmail("responsable@mail.com").get();
+        EUser tutor         = ur.findByEmail("tuteur@mail.com").get();
+        EUser master        = ur.findByEmail("maitre@mail.com").get();
+
+
+        ELivret livret              = lr.save(new ELivret(0, "Livret d'apprentissage", student, tutor, master, responsable, null));
+
+
+        ESection s_ident_student    = sr.save(new ESection(0, UserRole.STUDENT, true, "Fiche d'identité de l'apprenti(e)"               , livret, null));
+        ESection s_ident_company    = sr.save(new ESection(0, UserRole.MASTER , true, "Informations sur l'entreprise d'accueil"         , livret, null));
+        ESection s_ident_master     = sr.save(new ESection(0, UserRole.MASTER , true, "Fiche d'identité du maitre d'apprentissage"      , livret, null));
+        ESection s_ident_fomatation = sr.save(new ESection(0, UserRole.TUTOR  , true, "Informations sur la formation de l'apprenti(e)"  , livret, null));
+        ESection s_ident_tutor      = sr.save(new ESection(0, UserRole.TUTOR  , true, "Fiche d'identité de tuteur pédagogique"          , livret, null));
+        
+        ESection s_present_forma    = sr.save(new ESection(0, UserRole.TUTOR  , true, "Présentation de la formation"                    , livret, null));
+        ESection s_calendar         = sr.save(new ESection(0, UserRole.TUTOR  , true, "Le calendrier d'alterance"                       , livret, null));
+
+        ESection s_suivi_1_sem      = sr.save(new ESection(0, UserRole.MASTER , true, "Fiche de suivi du 1er semestre"                          , livret, null));
+        ESection s_comment_master_1 = sr.save(new ESection(0, UserRole.MASTER , true, "Commentaire du maitre d'apprentissage du 1er semestre"   , livret, null));
+        ESection s_comment_stud_1   = sr.save(new ESection(0, UserRole.STUDENT, true, "Commentaire de l'apprenti(e) du 1er semestre"            , livret, null));
+        ESection s_comment_tutor_1  = sr.save(new ESection(0, UserRole.TUTOR  , true, "Commentaire du tuteur pédagogique du 1er semestre"       , livret, null));
+        
+        ESection s_suivi_2_sem      = sr.save(new ESection(0, UserRole.MASTER , true, "Fiche de suivi du 2ème semestre"                         , livret, null));
+        ESection s_comment_master_2 = sr.save(new ESection(0, UserRole.MASTER , true, "Commentaire du maitre d'apprentissage du 2ème semestre"  , livret, null));
+        ESection s_comment_stud_2   = sr.save(new ESection(0, UserRole.STUDENT, true, "Commentaire de l'apprenti(e) du 2ème semestre"           , livret, null));
+        ESection s_comment_tutor_2  = sr.save(new ESection(0, UserRole.TUTOR  , true, "Commentaire du tuteur pédagogique du 2ème semestre"      , livret, null));
+        
+        
+        ESection s_eval_student     = sr.save(new ESection(0, UserRole.STUDENT, true, "Evaluation de la formation par les apprentis"    , livret, null));
+        ESection s_eval_company     = sr.save(new ESection(0, UserRole.MASTER , true, "Evaluation de la formation par l'entreprise"     , livret, null));
+    
+    
+        EQuestion q_ident_student_1     = qr.save(EQuestion.builder().section(s_ident_student)      .type(QuestionType.RADIO) .title("Civilité").build());
+            ar.save(EAnswer.builder()       .question(q_ident_student_1).proposition("Homme").build());
+            ar.save(EAnswer.builder()       .question(q_ident_student_1).proposition("Femme").build());
+            ar.save(EAnswer.builder()       .question(q_ident_student_1).proposition("Autre").build());
+        EQuestion q_ident_student_2     = qr.save(EQuestion.builder().section(s_ident_student)      .type(QuestionType.TEXT)  .title("Nom").build());
+            ar.save(EAnswer.builder()       .question(q_ident_student_2).build());
+        EQuestion q_ident_student_3     = qr.save(EQuestion.builder().section(s_ident_student)      .type(QuestionType.TEXT)  .title("Prénom").build());
+            ar.save(EAnswer.builder()       .question(q_ident_student_3).build());
+        EQuestion q_ident_student_4     = qr.save(EQuestion.builder().section(s_ident_student)      .type(QuestionType.TEXT)  .title("Date de naissance").build());
+            ar.save(EAnswer.builder()       .question(q_ident_student_4).build());
+        EQuestion q_ident_student_5     = qr.save(EQuestion.builder().section(s_ident_student)      .type(QuestionType.TEXT)  .title("Adresse").build());
+            ar.save(EAnswer.builder()       .question(q_ident_student_5).build());
+        EQuestion q_ident_student_6     = qr.save(EQuestion.builder().section(s_ident_student)      .type(QuestionType.TEXT)  .title("Téléphone").build());
+            ar.save(EAnswer.builder()       .question(q_ident_student_6).build());
+        EQuestion q_ident_student_7     = qr.save(EQuestion.builder().section(s_ident_student)      .type(QuestionType.TEXT)  .title("Mail").build());
+            ar.save(EAnswer.builder()       .question(q_ident_student_7).build());
+        EQuestion q_ident_student_8     = qr.save(EQuestion.builder().section(s_ident_student)      .type(QuestionType.TEXT)  .title("Dates de contrat").build());
+            ar.save(EAnswer.builder()       .question(q_ident_student_8).build());
+
+        EQuestion q_ident_company_1     = qr.save(EQuestion.builder().section(s_ident_company)      .type(QuestionType.TEXT)  .title("Nom").build());
+            ar.save(EAnswer.builder()       .question(q_ident_company_1).build());
+        EQuestion q_ident_company_2     = qr.save(EQuestion.builder().section(s_ident_company)      .type(QuestionType.TEXT)  .title("Adresse").build());
+            ar.save(EAnswer.builder()       .question(q_ident_company_2).build());
+        
+        EQuestion q_ident_master_1      = qr.save(EQuestion.builder().section(s_ident_master)       .type(QuestionType.TEXT)  .title("Nom").build());
+            ar.save(EAnswer.builder()       .question(q_ident_master_1).build());
+        EQuestion q_ident_master_2      = qr.save(EQuestion.builder().section(s_ident_master)       .type(QuestionType.TEXT)  .title("Prénom").build());
+            ar.save(EAnswer.builder()       .question(q_ident_master_2).build());
+        EQuestion q_ident_master_3      = qr.save(EQuestion.builder().section(s_ident_master)       .type(QuestionType.TEXT)  .title("Fonction").build());
+            ar.save(EAnswer.builder()       .question(q_ident_master_3).build());
+        EQuestion q_ident_master_4      = qr.save(EQuestion.builder().section(s_ident_master)       .type(QuestionType.TEXT)  .title("Téléphone").build());
+            ar.save(EAnswer.builder()       .question(q_ident_master_4).build());
+        EQuestion q_ident_master_5      = qr.save(EQuestion.builder().section(s_ident_master)       .type(QuestionType.TEXT)  .title("Mail").build());
+            ar.save(EAnswer.builder()       .question(q_ident_master_5).build());
+        
+        EQuestion q_ident_fomatation_1  = qr.save(EQuestion.builder().section(s_ident_fomatation)   .type(QuestionType.TEXT)  .title("Mail").build());
+            ar.save(EAnswer.builder()       .question(q_ident_fomatation_1).build());
+        EQuestion q_ident_fomatation_2  = qr.save(EQuestion.builder().section(s_ident_fomatation)   .type(QuestionType.TEXT)  .title("Adresse").build());
+            ar.save(EAnswer.builder()       .question(q_ident_fomatation_2).build());
+        
+        EQuestion q_ident_tutor_1       = qr.save(EQuestion.builder().section(s_ident_tutor)        .type(QuestionType.TEXT)  .title("Nom").build());
+            ar.save(EAnswer.builder()       .question(q_ident_tutor_1).build());
+        EQuestion q_ident_tutor_2       = qr.save(EQuestion.builder().section(s_ident_tutor)        .type(QuestionType.TEXT)  .title("Prénom").build());
+            ar.save(EAnswer.builder()       .question(q_ident_tutor_2).build());
+        EQuestion q_ident_tutor_3       = qr.save(EQuestion.builder().section(s_ident_tutor)        .type(QuestionType.TEXT)  .title("Fonction").build());
+            ar.save(EAnswer.builder()       .question(q_ident_tutor_3).build());
+        EQuestion q_ident_tutor_4       = qr.save(EQuestion.builder().section(s_ident_tutor)        .type(QuestionType.TEXT)  .title("Téléphone").build());
+            ar.save(EAnswer.builder()       .question(q_ident_tutor_4).build());
+        EQuestion q_ident_tutor_5       = qr.save(EQuestion.builder().section(s_ident_tutor)        .type(QuestionType.TEXT)  .title("Mail").build());
+            ar.save(EAnswer.builder()       .question(q_ident_tutor_5).build());
+
     }
 }
