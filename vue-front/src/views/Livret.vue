@@ -1,6 +1,6 @@
 <template>
     <div id="livret">
-        <livretDetails :livretId=this.id />
+        <livretDetails :livretId=id />
     </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
 
     props: {
         id: {
-            type: String,
+            type: Number,
             required: true
         }
     },
