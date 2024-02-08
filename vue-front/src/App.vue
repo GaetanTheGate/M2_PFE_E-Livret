@@ -1,43 +1,48 @@
 <template>
-  <nav id="nav" class="navbar navbar-expand-lg bd-navbar sticky-top" style="background-color: #5a0cb9">
+  <nav id="nav" class="navbar navbar-expand-lg bd-navbar sticky-top" style="background-color: lightcoral;">
       <div class="collapse navbar-collapse">
           <ul class="navbar-nav me-auto">
 
             <li class="nav-item">
-                <a >
+                <a class="nav-link active">
                     <router-link to="/" class="nav-link">Home</router-link>
                 </a>
             </li>
             <li class="nav-item">
-                <a >
+                <a class="nav-link">
                     <router-link :to="{ name: 'About' }" class="nav-link">About</router-link>
                 </a>
             </li>
             <li class="nav-item">
-                <a >
+                <a class="nav-link">
                     <router-link :to="{ name: 'Livrets' }" class="nav-link">Livrets</router-link>
                 </a>
             </li>
             <li class="nav-item">
-                <a >
-                    <button type="button" v-on:click="this.logout()" class="nav-link">Logout</button>
+                <a class="nav-link">
+                    <button type="button" v-on:click="logout()" class="nav-link">Logout</button>
                 </a>
             </li>
             <li class="nav-item">
-                <a >
-                    <button type="button" v-on:click="this.loginStudent()" class="nav-link">Student</button>
+                <a class="nav-link">
+                    <button type="button" v-on:click="login(`etudiant2@mail.com`, `etudiant2`)" class="nav-link">Student</button>
                 </a>
             </li>
             <li class="nav-item">
-                <a >
-                    <button type="button" v-on:click="this.loginResponsable()" class="nav-link">Responsable</button>
+              <a class="nav-link">
+                <button type="button" v-on:click="login(`maitre@mail.com`, `maitre`)" class="nav-link">Master</button>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">
+                <button type="button" v-on:click="login(`tuteur@mail.com`, `tuteur`)" class="nav-link">Tutor</button>
+              </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    <button type="button" v-on:click="login(`responsable@mail.com`, `responsable`)" class="nav-link">Responsable</button>
                 </a>
             </li>
-              <li class="nav-item">
-                  <a>
-                      <button type="button" v-on:click="this.loginTutor()" class="nav-link">Tutor</button>
-                  </a>
-              </li>
           </ul>
       </div>
 
@@ -59,7 +64,8 @@ export default {
     login: function (email, password) {
       this.$axiosLogin.post("login", { "email": email, "password": password }).then(t => {
         this.$setToken(t.data);
-        localStorage.access_token = t.data; // TODO : Mettre dans le $setToken
+        localStorage.setItem('token', t.data);
+        this.$router.push({ path: "/"})
       })
     },
     logout: function () {
@@ -121,21 +127,13 @@ export default {
 /*  background: crimson;*/
 /*}*/
 
-.nav-link {
-    color: white;
-    padding-bottom: 8px;
-    padding-top: 8px;
+.bd-navbar {
 
-
-}
-.nav-link:hover {
-    border-bottom: 3px solid #9cfb04;
-    color : white;
-}
-.navbar {
-    padding-top: 0;
-    padding-bottom: 0;
+    color: green; /* Change la couleur du texte au clic */
 }
 
+ div{
+     margin-bottom: 30px;
+ }
 
 </style>

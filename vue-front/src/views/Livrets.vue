@@ -1,8 +1,9 @@
 <template>
-    <div v-if="livretsId" class="container">
-        <div v-for="livrets in livretsId" :key="livrets.id" id="livret">
-            <button class="link" v-on:click="this.redirect(livrets)">Livret {{livrets}}</button>
-            <!-- <livretDetails :livretId="livretsId[0]" /> -->
+    <div v-if="livrets">
+        <div v-for="livret in livrets" :key="livret.id" id="livret">
+            <button class="link" v-on:click="this.redirect(livret.id)">Livret {{livret.id}} <p v-if="livretIdsToComplete.includes(livret.id)" class=""> - A compléter !</p></button>
+            
+            <button v-on:click="this.modifyLivret(livret.id)">Modifier livret</button>
         </div>
     </div>
 </template>
@@ -19,23 +20,36 @@ export default {
 
     data() {
         return {
-            livretsId: null
+            livrets:              null,
+            livretIdsToComplete:  null,
         }
     },
 
     mounted() {
-        this.fetchLivrett();
-        this.livretsId = [];
+        this.fetchLivrets();
+        this.fetchLivretsToComplete();
     },
 
     methods: {
-        fetchLivrett: function () {
-            this.$axiosApi.get("livrets/mine").then(s => {
-                s.data.forEach((element) => this.livretsId.push(element.id))
+        fetchLivrets: function () {
+            this.livrets = [];
+            this.$axiosApi.get("livrets/mine").then(l => {
+                this.livrets = l.data;
+                console.log(this.livrets);
+            });
+        },
+        fetchLivretsToComplete: function() {
+            this.livretIdsToComplete = [];
+            this.$axiosApi.get("livrets/mine/tocomplete").then(l => {
+                l.data.forEach(element => this.livretIdsToComplete.push(element.id));
+                console.log(this.livretIdsToComplete);
             });
         },
         redirect: function(livretsId){
             this.$router.push({ path: `/Livret/${livretsId}`})
+        },
+        modifyLivret: function(livretsId){
+            this.$router.push({ path: `/Livret/${livretsId}/modify`})
         }
     }
 }
