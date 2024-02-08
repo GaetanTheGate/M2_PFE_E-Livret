@@ -4,7 +4,7 @@
             {{ question.title }}
         </h4>
         <div v-for="answer in question.answers" :key="answer.id" >
-            <label for="answer.id" >{{ answer.proposition }}</label>
+            <label v-if="answer.proposition" for="answer.id" >{{ answer.proposition }}</label>
             <input type="text" :name=question.id :id=answer.id class="form-control" >
         </div>
     </div>

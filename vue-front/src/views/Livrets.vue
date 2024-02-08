@@ -1,5 +1,5 @@
 <template>
-    <div v-if="livrets">
+    <div class="container" v-if="livrets">
         <div v-for="livret in livrets" :key="livret.id" id="livret">
             <button class="link" v-on:click="this.redirect(livret.id)">Livret {{livret.id}} <p v-if="livretIdsToComplete.includes(livret.id)" class=""> - A compléter !</p></button>
             
