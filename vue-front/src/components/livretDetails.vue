@@ -67,7 +67,7 @@ export default {
 /*  text-align: center;*/
 /*}*/
 
-ul.myUL {
-    text-align: left;
-}
+/*ul.myUL {*/
+/*    text-align: left;*/
+/*}*/
 </style>

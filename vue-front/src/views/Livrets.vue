@@ -1,5 +1,5 @@
 <template>
-    <div v-if="livretsId">
+    <div v-if="livretsId" class="container">
         <div v-for="livrets in livretsId" :key="livrets.id" id="livret">
             <button class="link" v-on:click="this.redirect(livrets)">Livret {{livrets}}</button>
             <!-- <livretDetails :livretId="livretsId[0]" /> -->

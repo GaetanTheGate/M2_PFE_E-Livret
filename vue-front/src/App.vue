@@ -1,40 +1,40 @@
 <template>
-  <nav id="nav" class="navbar navbar-expand-lg bd-navbar sticky-top" style="background-color: lightcoral;">
+  <nav id="nav" class="navbar navbar-expand-lg bd-navbar sticky-top" style="background-color: #5a0cb9">
       <div class="collapse navbar-collapse">
           <ul class="navbar-nav me-auto">
 
             <li class="nav-item">
-                <a class="nav-link active">
+                <a >
                     <router-link to="/" class="nav-link">Home</router-link>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">
+                <a >
                     <router-link :to="{ name: 'About' }" class="nav-link">About</router-link>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">
+                <a >
                     <router-link :to="{ name: 'Livrets' }" class="nav-link">Livrets</router-link>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">
+                <a >
                     <button type="button" v-on:click="this.logout()" class="nav-link">Logout</button>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">
+                <a >
                     <button type="button" v-on:click="this.loginStudent()" class="nav-link">Student</button>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">
+                <a >
                     <button type="button" v-on:click="this.loginResponsable()" class="nav-link">Responsable</button>
                 </a>
             </li>
               <li class="nav-item">
-                  <a class="nav-link">
+                  <a>
                       <button type="button" v-on:click="this.loginTutor()" class="nav-link">Tutor</button>
                   </a>
               </li>
@@ -121,13 +121,21 @@ export default {
 /*  background: crimson;*/
 /*}*/
 
-.bd-navbar {
+.nav-link {
+    color: white;
+    padding-bottom: 8px;
+    padding-top: 8px;
 
-    color: green; /* Change la couleur du texte au clic */
+
+}
+.nav-link:hover {
+    border-bottom: 3px solid #9cfb04;
+    color : white;
+}
+.navbar {
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
- div{
-     margin-bottom: 30px;
- }
 
 </style>
