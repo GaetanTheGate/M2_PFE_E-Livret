@@ -1,6 +1,6 @@
 <template>
     <div v-if="true">
-        <p v-if=" user"> <u>{{ userType }}</u> : {{ user.email }}</p>
+        <p v-if="user"> <u>{{ userType }}</u> : {{ user.email }}</p>
         <p v-if="!user"> <u>{{ userType }} non défini !</u></p>
 
         <div>
@@ -10,7 +10,8 @@
         </div>
 
         <div>
-            <button v-for="userFound in usersFound" :key="userFound.id" v-on:click="sendUserToParent(userFound)">{{ userFound.email }}</button>
+            <button v-for="userFound in usersFound" :key="userFound.id" v-on:click="sendUserToParent(userFound)">{{
+                userFound.email }}</button>
         </div>
     </div>
 </template>
@@ -24,17 +25,17 @@ export default {
     props: {
         userType: {
             type: String,
-            required: true,  
+            required: true,
         },
         userId: {
             type: Number,
-            required: false,  
+            required: false,
         }
     },
 
     data() {
         return {
-            user:       null,
+            user: null,
             usersFound: null,
         }
     },
@@ -43,20 +44,20 @@ export default {
     },
 
     methods: {
-        fetchUser: function() {
+        fetchUser: function () {
             this.user = null;
             let id = this["userId"];
-            this.$axiosApi.get("users/" + id).then( u => {
+            this.$axiosApi.get("users/" + id).then(u => {
                 this.user = u.data;
             });
         },
-        searchUsers: function(mail) {
+        searchUsers: function (mail) {
             this.usersFound = null;
-            this.$axiosApi.post("users/search", { email : mail }).then( u => {
+            this.$axiosApi.post("users/search", { email: mail }).then(u => {
                 this.usersFound = u.data;
             });
         },
-        sendUserToParent: function(user) {
+        sendUserToParent: function (user) {
             this.$emit('user_clicked', user);
         }
     },

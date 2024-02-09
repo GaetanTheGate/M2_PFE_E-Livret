@@ -10,7 +10,7 @@ import livretModify from '../components/modifyLivret/livretModify.vue';
 
 export default {
 
-    
+
     name: 'ModifyLivretPage',
     components: {
         livretModify

@@ -14,83 +14,83 @@
 
 
 <script>
-    export default {
-        name:"radioQuestion",
-        components:{
+export default {
+    name: "radioQuestion",
+    components: {
+    },
+    props: {
+        questionId: {
+            type: Number,
+            required: true,
         },
-        props: {
-            questionId: {
-                type: Number,
-                required: true,  
-            },
-            editionMode: {
-                type: Boolean,
-                default: false,
-            }
-        },
+        editionMode: {
+            type: Boolean,
+            default: false,
+        }
+    },
 
-        data(){
-            return {
-                question:    null,
-            }
-        },
-        mounted(){
-            this.fetchQuestion();
-            this.emitCallable();
-        },
+    data() {
+        return {
+            question: null,
+        }
+    },
+    mounted() {
+        this.fetchQuestion();
+        this.emitCallable();
+    },
 
-        methods:{
-            fetchQuestion: function() {
-                let id = this["questionId"];
+    methods: {
+        fetchQuestion: function () {
+            let id = this["questionId"];
 
-                this.$axiosApi.get("questions/"+ id ).then(q => {
-                    this.question = q.data
-                }).then( () => {
-                    this.question.answers.forEach(answer => {
-                        if(document.getElementById(answer.id))
-                            document.getElementById(answer.id).checked = answer.value == 'true';
-                    });
-
-                    this.setupEditionMode();
-                });
-            },
-
-            setupEditionMode: function() {
-                let edit = this["editionMode"];
-
+            this.$axiosApi.get("questions/" + id).then(q => {
+                this.question = q.data
+            }).then(() => {
                 this.question.answers.forEach(answer => {
-                    if(document.getElementById(answer.id))
-                        document.getElementById(answer.id).disabled = !edit;
+                    if (document.getElementById(answer.id))
+                        document.getElementById(answer.id).checked = answer.value == 'true';
                 });
-            },
 
-            saveAnswers: function() {
-                this.question.answers.forEach(answer => {
-                    if(document.getElementById(answer.id)){
-                        let ans = {
-                            id: answer.id,
-                            value: document.getElementById(answer.id).checked,
-                        }
-                        this.$axiosApi.put("answers/saveValue", ans).then(a => {
-                            answer = a.data;
-                        });
-                    }
-                });
-            },
-
-            emitCallable: function() {
-                this.$emit("callable", {
-                    saveAnswers: () => this.saveAnswers()
-                });
-            },
-        },
-        watch:{
-            questionId() {
-                this.fetchQuestion();
-            },
-            editionMode() {
                 this.setupEditionMode();
-            }
+            });
+        },
+
+        setupEditionMode: function () {
+            let edit = this["editionMode"];
+
+            this.question.answers.forEach(answer => {
+                if (document.getElementById(answer.id))
+                    document.getElementById(answer.id).disabled = !edit;
+            });
+        },
+
+        saveAnswers: function () {
+            this.question.answers.forEach(answer => {
+                if (document.getElementById(answer.id)) {
+                    let ans = {
+                        id: answer.id,
+                        value: document.getElementById(answer.id).checked,
+                    }
+                    this.$axiosApi.put("answers/saveValue", ans).then(a => {
+                        answer = a.data;
+                    });
+                }
+            });
+        },
+
+        emitCallable: function () {
+            this.$emit("callable", {
+                saveAnswers: () => this.saveAnswers()
+            });
+        },
+    },
+    watch: {
+        questionId() {
+            this.fetchQuestion();
+        },
+        editionMode() {
+            this.setupEditionMode();
         }
     }
+}
 </script>

@@ -1,8 +1,9 @@
 <template>
     <div class="container" v-if="livrets">
         <div v-for="livret in livrets" :key="livret.id" id="livret">
-            <button class="link" v-on:click="this.redirect(livret.id)">Livret {{livret.id}} <p v-if="livretIdsToComplete.includes(livret.id)" class=""> - A compléter !</p></button>
-            
+            <button class="link" v-on:click="this.redirect(livret.id)">Livret {{ livret.id }} <p
+                    v-if="livretIdsToComplete.includes(livret.id)" class=""> - A compléter !</p></button>
+
             <button v-on:click="this.modifyLivret(livret.id)">Modifier livret</button>
         </div>
     </div>
@@ -20,8 +21,8 @@ export default {
 
     data() {
         return {
-            livrets:              null,
-            livretIdsToComplete:  null,
+            livrets: null,
+            livretIdsToComplete: null,
         }
     },
 
@@ -37,17 +38,17 @@ export default {
                 this.livrets = l.data;
             });
         },
-        fetchLivretsToComplete: function() {
+        fetchLivretsToComplete: function () {
             this.livretIdsToComplete = [];
             this.$axiosApi.get("livrets/mine/tocomplete").then(l => {
                 l.data.forEach(element => this.livretIdsToComplete.push(element.id));
             });
         },
-        redirect: function(livretsId){
-            this.$router.push({ path: `/Livret/${livretsId}/details`})
+        redirect: function (livretsId) {
+            this.$router.push({ path: `/Livret/${livretsId}/details` })
         },
-        modifyLivret: function(livretsId){
-            this.$router.push({ path: `/Livret/${livretsId}/modify`})
+        modifyLivret: function (livretsId) {
+            this.$router.push({ path: `/Livret/${livretsId}/modify` })
         }
     }
 }
@@ -57,4 +58,5 @@ export default {
 button.link {
     background: none;
     border: none;
-}</style>
+}
+</style>

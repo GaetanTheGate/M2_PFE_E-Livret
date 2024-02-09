@@ -1,9 +1,9 @@
 <template>
     <div v-if="livret" class="container">
-        <userModify :userId="livret.student.id" @user_clicked="setStudent"   :userType="'Apprenti(e)'" />
-        <userModify :userId="livret.master.id"  @user_clicked="setMaster"    :userType="'Maitre d\'apprentissage'" />
-        <userModify :userId="livret.tutor.id"   @user_clicked="setTutor"     :userType="'Tuteur'" />
-        
+        <userModify :userId="livret.student.id" @user_clicked="setStudent" :userType="'Apprenti(e)'" />
+        <userModify :userId="livret.master.id" @user_clicked="setMaster" :userType="'Maitre d\'apprentissage'" />
+        <userModify :userId="livret.tutor.id" @user_clicked="setTutor" :userType="'Tuteur'" />
+
         <div v-for="section in livret.sections" :key="section.id" class="myUL">
             {{ section.id }}
         </div>
@@ -22,13 +22,13 @@ export default {
     props: {
         livretId: {
             type: Number,
-            required: true,  
+            required: true,
         }
     },
 
     data() {
         return {
-            livret:         null,
+            livret: null,
         }
     },
     mounted() {
@@ -36,19 +36,19 @@ export default {
     },
 
     methods: {
-        fetchLivret: function() {
+        fetchLivret: function () {
             let id = this["livretId"];
             this.$axiosApi.get("livrets/" + id).then(s => {
                 this.livret = s.data
             });
         },
 
-        setStudent: function(user) {
+        setStudent: function (user) {
             let l = {
-                id:         this.livret.id,
-                studentId:  user.id,
-                masterId:   this.livret.master.id,
-                tutorId:    this.livret.tutor.id,
+                id: this.livret.id,
+                studentId: user.id,
+                masterId: this.livret.master.id,
+                tutorId: this.livret.tutor.id,
             }
 
             this.$axiosApi.put("livrets/set-actors?setStudent=true", l).then(l => {
@@ -56,12 +56,12 @@ export default {
             });
         },
 
-        setMaster: function(user) {
+        setMaster: function (user) {
             let l = {
-                id:         this.livret.id,
-                studentId:  this.livret.student.id,
-                masterId:   user.id,
-                tutorId:    this.livret.tutor.id,
+                id: this.livret.id,
+                studentId: this.livret.student.id,
+                masterId: user.id,
+                tutorId: this.livret.tutor.id,
             }
 
             this.$axiosApi.put("livrets/set-actors?setMaster=true", l).then(l => {
@@ -69,12 +69,12 @@ export default {
             });
         },
 
-        setTutor: function(user) {
+        setTutor: function (user) {
             let l = {
-                id:         this.livret.id,
-                studentId:  this.livret.student.id,
-                masterId:   this.livret.master.id,
-                tutorId:    user.id,
+                id: this.livret.id,
+                studentId: this.livret.student.id,
+                masterId: this.livret.master.id,
+                tutorId: user.id,
             }
 
             this.$axiosApi.put("livrets/set-actors?setTutor=true", l).then(l => {
