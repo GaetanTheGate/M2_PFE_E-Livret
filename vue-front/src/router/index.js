@@ -4,6 +4,7 @@ import About from '../views/About.vue'
 import Livret from '../views/Livret.vue'
 import Login from '../views/Login.vue'
 import Livrets from '../views/Livrets.vue'
+import LivretModify from '../views/ModifyLivret.vue'
 
 
 const routes = [
@@ -32,7 +33,13 @@ const routes = [
         path: '/Livrets',
         name: 'Livrets',
         component: Livrets
-    }
+    },
+    {
+        path: '/Livret/:id/modify',
+        name: 'LivretModify',
+        component: LivretModify,
+        props: true
+    },
 ]
 
 const protectedRoutes = [

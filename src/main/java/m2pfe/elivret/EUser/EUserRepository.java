@@ -1,5 +1,6 @@
 package m2pfe.elivret.EUser;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -41,4 +42,7 @@ public interface EUserRepository extends JpaRepository<EUser, Integer> {
      */
     @Query("SELECT u FROM EUser u WHERE u.email = :email")
     public Optional<EUser> findByEmail(String email); 
+
+    @Query("SELECT u, u.email FROM EUser u WHERE DIFFERENCE(u.email, :email) >= 3 ORDER BY DIFFERENCE(u.email, :email)")
+    public Optional<List<EUser>> findSimilarTo(String email);
 }

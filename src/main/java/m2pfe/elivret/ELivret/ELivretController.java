@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import m2pfe.elivret.Authentification.AuthentificationException;
 import m2pfe.elivret.Authentification.AuthentificationService;
 import m2pfe.elivret.EUser.EUser;
+import m2pfe.elivret.EUser.EUserException;
+import m2pfe.elivret.EUser.EUserRepository;
 
 import org.modelmapper.ModelMapper;
 
@@ -42,6 +44,12 @@ public class ELivretController {
      */
     @Autowired
     private ELivretRepository l_repo;
+
+    /**
+     * Respository for the Eusers.
+     */
+    @Autowired
+    private EUserRepository u_repo;
 
     /**
      * Mapper for mapping an object to another.
@@ -95,6 +103,31 @@ public class ELivretController {
 
 
     /// PutMapping
+
+    @PutMapping("/set-actors")
+    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret.id)")
+    public ELivretDTO.Out.AllPublic setActors(@RequestBody ELivretDTO.In.Actors livret, HttpServletRequest req,
+            @RequestParam(required = false, defaultValue = "false") Boolean setStudent,
+            @RequestParam(required = false, defaultValue = "false") Boolean setMaster,
+            @RequestParam(required = false, defaultValue = "false") Boolean setTutor) {
+        
+        ELivret l = l_repo.findById(livret.id)
+            .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found"));
+
+        if(setStudent)
+            l.setStudent(u_repo.findById(livret.studentId)
+                .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Student not found")));
+
+        if(setMaster)
+            l.setMaster(u_repo.findById(livret.masterId)
+                .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Master not found")));
+
+        if(setTutor)
+            l.setTutor(u_repo.findById(livret.tutorId)
+                .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Tutor not found")));
+
+        return mapper.map(l_repo.save(l), ELivretDTO.Out.AllPublic.class);
+    }
 
     @PutMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret)")

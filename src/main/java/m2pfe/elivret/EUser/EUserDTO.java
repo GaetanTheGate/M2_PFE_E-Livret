@@ -31,6 +31,15 @@ public class EUserDTO {
             private String email;
             private String password;
         }
+
+        /**
+         * The DTO used for searching users.
+         */
+        @Data
+        @NoArgsConstructor
+        public static class searchInformation {
+            private String email;
+        }
     }
 
 

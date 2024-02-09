@@ -35,14 +35,12 @@ export default {
             this.livrets = [];
             this.$axiosApi.get("livrets/mine").then(l => {
                 this.livrets = l.data;
-                console.log(this.livrets);
             });
         },
         fetchLivretsToComplete: function() {
             this.livretIdsToComplete = [];
             this.$axiosApi.get("livrets/mine/tocomplete").then(l => {
                 l.data.forEach(element => this.livretIdsToComplete.push(element.id));
-                console.log(this.livretIdsToComplete);
             });
         },
         redirect: function(livretsId){

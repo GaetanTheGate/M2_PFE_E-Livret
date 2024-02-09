@@ -24,7 +24,18 @@ public class ELivretDTO {
      * The DTOs the user will give to the application.
      */
     public static class In {
+        /**
+         * The DTO used to specify the actors within a livret.
+         */
+        @Data
+        @NoArgsConstructor
+        public static class Actors {
+            public Integer id;
 
+            public Integer studentId;
+            public Integer tutorId;
+            public Integer masterId;
+        }
     }
 
     /**

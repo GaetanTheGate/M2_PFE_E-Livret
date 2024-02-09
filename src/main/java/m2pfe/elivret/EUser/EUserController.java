@@ -1,11 +1,17 @@
 package m2pfe.elivret.EUser;
 
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 /**
  * <p>
@@ -23,25 +29,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/users")
 public class EUserController {
+
+    @Autowired
+    private EUserRepository u_repo;
+
+    /**
+     * Mapper for mapping an object to another.
+     */
+    private ModelMapper mapper = new ModelMapper();
     
     @GetMapping("/{id}")
-    public EUser getUser(@PathVariable Integer id){
+    public EUserDTO.Out.UserInformation getUser(@PathVariable Integer id){
+        EUser user = u_repo.findById(id)
+            .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "User not found."));
 
-        return new EUser();
+        return mapper.map(user, EUserDTO.Out.UserInformation.class);
     }
 
-    @PostMapping("")
-    public void addUser(){
+    @PostMapping("/search")
+    public List<EUserDTO.Out.UserInformation> searchSimilarUsers(@RequestBody EUserDTO.In.searchInformation user) {
+        List<EUser> users = u_repo.findSimilarTo(user.getEmail())
+            .get();
 
+        return users.stream().map(u -> mapper.map(u, EUserDTO.Out.UserInformation.class)).toList();
     }
+    
 
-    @PutMapping("/edit")
-    public void editUser(){
-
-    }
-
-    @PutMapping("")
-    public void changePassword(){
-
-    }
 }
