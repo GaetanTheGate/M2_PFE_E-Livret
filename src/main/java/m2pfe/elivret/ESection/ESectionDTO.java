@@ -11,7 +11,7 @@ import m2pfe.elivret.EQuestion.EQuestionDTO;
  * <p>
  * A list of DTO to be mapped with an ESection.
  * <p>
- * </p> 
+ * </p>
  * Used to filter the informations of a given or taken ESection.
  * </p>
  * 
@@ -44,7 +44,7 @@ public class ESectionDTO {
         @NoArgsConstructor
         public static class AllPublic {
             public Integer id;
-            
+
             public UserRole owner;
             public Boolean visibility;
             public String title;
@@ -52,5 +52,5 @@ public class ESectionDTO {
             public List<EQuestionDTO.Out.AllPublic> questions;
         }
     }
-    
+
 }

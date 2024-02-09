@@ -32,5 +32,5 @@ public class ELivretException extends HttpStatusCodeException {
     public ELivretException(HttpStatus statusCode, String statusText) {
         super(statusCode, statusText);
     }
-    
+
 }

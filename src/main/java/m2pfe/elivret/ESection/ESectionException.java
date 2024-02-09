@@ -32,5 +32,5 @@ public class ESectionException extends HttpStatusCodeException {
     public ESectionException(HttpStatus statusCode, String statusText) {
         super(statusCode, statusText);
     }
-    
+
 }

@@ -11,7 +11,7 @@ import m2pfe.elivret.EQuestion.EQuestion.QuestionType;
  * <p>
  * A list of DTO to be mapped with an EQuestion.
  * <p>
- * </p> 
+ * </p>
  * Used to filter the informations of a given or taken EQuestion.
  * </p>
  * 
@@ -44,5 +44,5 @@ public class EQuestionDTO {
             private List<EAnswerDTO.Out.AllPublic> answers;
         }
     }
-    
+
 }

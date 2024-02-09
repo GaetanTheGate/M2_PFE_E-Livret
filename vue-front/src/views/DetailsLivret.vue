@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import livretDetails from '../components/livretDetails.vue'
+import livretDetails from '../components/detailsLivret/livretDetails.vue'
 
 export default {
 
-    name: 'LivretPage',
+    name: 'DetailsLivretPage',
     components: {
         livretDetails
     },
@@ -22,7 +22,7 @@ export default {
     },
 
     mounted() {
-        console.log(this.id)
+
     }
 }
 </script>

@@ -14,7 +14,8 @@ import org.springframework.stereotype.Repository;
  * Repository (DAO) for the EUser entity.
  * </p>
  * <p>
- * It is used to access and manipulate the EUsers in the database, set in the configuration. 
+ * It is used to access and manipulate the EUsers in the database, set in the
+ * configuration.
  * </p>
  * 
  * @see EUser
@@ -26,7 +27,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Transactional
 public interface EUserRepository extends JpaRepository<EUser, Integer> {
-    
+
     /**
      * <p>
      * Fetch and return the user with the email passed in parameter.
@@ -35,13 +36,14 @@ public interface EUserRepository extends JpaRepository<EUser, Integer> {
      * @see EUser
      * 
      * @param email The email associated with the user you wish to find.
-     * @return <ul>
-     *  <li>An optional of the <i>EUser</i> found.</li>
-     *  <li><i>null</i> if nothing was found</li>
-     * </ul>
+     * @return
+     *         <ul>
+     *         <li>An optional of the <i>EUser</i> found.</li>
+     *         <li><i>null</i> if nothing was found</li>
+     *         </ul>
      */
     @Query("SELECT u FROM EUser u WHERE u.email = :email")
-    public Optional<EUser> findByEmail(String email); 
+    public Optional<EUser> findByEmail(String email);
 
     @Query("SELECT u, u.email FROM EUser u WHERE DIFFERENCE(u.email, :email) >= 3 ORDER BY DIFFERENCE(u.email, :email)")
     public Optional<List<EUser>> findSimilarTo(String email);

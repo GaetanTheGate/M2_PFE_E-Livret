@@ -11,7 +11,7 @@ import livretModify from '../components/modifyLivret/livretModify.vue';
 export default {
 
     
-    name: 'LivretModifyPage',
+    name: 'ModifyLivretPage',
     components: {
         livretModify
     },
@@ -28,7 +28,7 @@ export default {
         }
     },
     mounted() {
-        
+
     }
 }
 </script>

@@ -35,7 +35,8 @@ public class SingleChoiceQuestion extends EQuestion {
     /**
      * The answer to the question.
      */
-    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER) // TODO : OneToMany FAUX, mais fais fonctionner les entités "MultipleChoiceQuestion". Remettre à OneToOne
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER) // TODO : OneToMany FAUX, mais fais fonctionner les
+                                                               // entités "MultipleChoiceQuestion". Remettre à OneToOne
     @JsonManagedReference
     private List<EAnswer> answer;
 

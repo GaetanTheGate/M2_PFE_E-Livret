@@ -49,7 +49,7 @@ public class SpringSecurityConfirguration extends WebSecurityConfigurerAdapter {
      * </p>
      */
     @PostConstruct
-    public void init(){
+    public void init() {
 
     }
 
@@ -61,11 +61,12 @@ public class SpringSecurityConfirguration extends WebSecurityConfigurerAdapter {
 
     /**
      * <p>
-     * Filter any entering http request so that it must : <ul>
-     *  <li>Disable the <i>CSRF</i></li>
-     *  <li>The policy of the session management is <i>STATELESS</i></li>
-     *  <li>Grant access to all the request.</li>
-     *  <li>Apply a JWT filter </li>
+     * Filter any entering http request so that it must :
+     * <ul>
+     * <li>Disable the <i>CSRF</i></li>
+     * <li>The policy of the session management is <i>STATELESS</i></li>
+     * <li>Grant access to all the request.</li>
+     * <li>Apply a JWT filter</li>
      * </ul>
      * </p>
      * 
@@ -80,13 +81,12 @@ public class SpringSecurityConfirguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-            .csrf(c -> c.disable())
-            .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .httpBasic(basic -> basic.disable())
-            .authorizeRequests(requests -> requests
-                .anyRequest().permitAll()
-                )
-            .apply(new JwtFiltrerConfigurer(jwt));
+                .csrf(c -> c.disable())
+                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .httpBasic(basic -> basic.disable())
+                .authorizeRequests(requests -> requests
+                        .anyRequest().permitAll())
+                .apply(new JwtFiltrerConfigurer(jwt));
     }
 
     /**
@@ -98,10 +98,10 @@ public class SpringSecurityConfirguration extends WebSecurityConfigurerAdapter {
      * 
      * @return The password encoder created.
      */
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(12);
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12);
+    }
 
     /**
      * <p>
@@ -116,7 +116,7 @@ public class SpringSecurityConfirguration extends WebSecurityConfigurerAdapter {
      * @see PasswordEncoder
      * @see HttpSecurity
      * 
-     * @param http The HttpSecurity to base the AuthenticationManager from.
+     * @param http    The HttpSecurity to base the AuthenticationManager from.
      * @param encoder The passwordEncoder to use.
      * @return The created authentcation manager.
      * @throws Exception
@@ -124,7 +124,7 @@ public class SpringSecurityConfirguration extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder encoder) throws Exception {
         AuthenticationManagerBuilder builder = http
-            .getSharedObject(AuthenticationManagerBuilder.class);
+                .getSharedObject(AuthenticationManagerBuilder.class);
         builder.userDetailsService(userDetailsService).passwordEncoder(encoder);
 
         return builder.build();

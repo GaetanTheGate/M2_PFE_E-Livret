@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import m2pfe.elivret.ESection.ESection;
 import m2pfe.elivret.EUser.EUser;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
@@ -94,7 +93,7 @@ public class ELivret {
      * @param role The role of the user you are trying to get.
      * @return The user linked to the role.
      */
-    public EUser getUserFromRole(UserRole role){
+    public EUser getUserFromRole(UserRole role) {
         switch (role) {
             case STUDENT:
                 return this.student;
@@ -113,6 +112,6 @@ public class ELivret {
      * List the different role the user can have in a livret.
      */
     public static enum UserRole {
-        STUDENT, TUTOR, MASTER , RESPONSABLE
+        STUDENT, TUTOR, MASTER, RESPONSABLE
     }
 }

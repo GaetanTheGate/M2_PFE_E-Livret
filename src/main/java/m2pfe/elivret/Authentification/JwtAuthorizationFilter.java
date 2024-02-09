@@ -36,7 +36,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
      * @see JwtManager
      */
     private JwtManager jwt;
-    
+
     /**
      * <p>
      * Default constructor for JwtAuthorizationFilter.
@@ -47,42 +47,45 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
      * @param manager The JwtHandler to use for the filtering.
      */
     public JwtAuthorizationFilter(JwtManager manager) {
-		this.jwt = manager;
-	}
-    
+        this.jwt = manager;
+    }
+
     /**
      * <p>
      * Filter request for JWT validity.
      * </p>
      * <p>
-     * If a token is invalid, send an error on the HttpResponse, and block the Authentification.
+     * If a token is invalid, send an error on the HttpResponse, and block the
+     * Authentification.
      * </p>
      * 
      * @see JwtManager
      * @see #JwtManager.validateToken(String)
      * @see HttpServletRequest
-     * @see HttpServletResponse 
-     * @see FilterChain 
+     * @see HttpServletResponse
+     * @see FilterChain
      * 
-     * @param request The HttpRequest to process.
-     * @param response The HttpResponse to give.
+     * @param request     The HttpRequest to process.
+     * @param response    The HttpResponse to give.
      * @param filterChain The chain to filter.
      * 
      * @throws IOException
      * @throws ServletException
      */
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException{
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws IOException, ServletException {
         String token = jwt.resolveToken(request);
 
         try {
-            if(jwt.validateToken(token)){
-                Authentication auth = jwt.getAuthentication(token); // TODO : Si possible, déplacer le getAuthentication pour pas qu'il soit dans le JwtManager.
+            if (jwt.validateToken(token)) {
+                Authentication auth = jwt.getAuthentication(token); // TODO : Si possible, déplacer le getAuthentication
+                                                                    // pour pas qu'il soit dans le JwtManager.
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
             // TODO: Else, also do the catch section ?
         } catch (AuthentificationException e) {
-            
+
             SecurityContextHolder.clearContext();
 
             response.setStatus(HttpStatus.FORBIDDEN.value());

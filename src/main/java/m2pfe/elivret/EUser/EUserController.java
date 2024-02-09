@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 /**
  * <p>
  * Rest controller for the EUser entity.
@@ -37,11 +36,11 @@ public class EUserController {
      * Mapper for mapping an object to another.
      */
     private ModelMapper mapper = new ModelMapper();
-    
+
     @GetMapping("/{id}")
-    public EUserDTO.Out.UserInformation getUser(@PathVariable Integer id){
+    public EUserDTO.Out.UserInformation getUser(@PathVariable Integer id) {
         EUser user = u_repo.findById(id)
-            .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "User not found."));
+                .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "User not found."));
 
         return mapper.map(user, EUserDTO.Out.UserInformation.class);
     }
@@ -49,10 +48,9 @@ public class EUserController {
     @PostMapping("/search")
     public List<EUserDTO.Out.UserInformation> searchSimilarUsers(@RequestBody EUserDTO.In.searchInformation user) {
         List<EUser> users = u_repo.findSimilarTo(user.getEmail())
-            .get();
+                .get();
 
         return users.stream().map(u -> mapper.map(u, EUserDTO.Out.UserInformation.class)).toList();
     }
-    
 
 }

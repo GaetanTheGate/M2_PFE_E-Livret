@@ -55,5 +55,4 @@ public class EUser {
     @Enumerated(EnumType.STRING)
     private ELivret.UserRole role;
 
-
 }

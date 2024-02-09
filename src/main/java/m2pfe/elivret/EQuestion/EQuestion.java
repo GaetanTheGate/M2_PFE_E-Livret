@@ -25,13 +25,15 @@ import m2pfe.elivret.ESection.ESection;
 
 /**
  * <p>
- * Abtract entity used to represent a question from an ESection in the application.
+ * Abtract entity used to represent a question from an ESection in the
+ * application.
  * </p>
  * <p>
  * An EQuestion <b>primary key</b> is its <b>id</b>.
  * </p>
  * <p>
- * Each abstraction of this entity will define their type of questions and their EAnswsers.
+ * Each abstraction of this entity will define their type of questions and their
+ * EAnswsers.
  * </p>
  * 
  * @see ESection

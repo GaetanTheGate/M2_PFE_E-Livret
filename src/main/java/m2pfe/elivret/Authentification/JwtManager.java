@@ -43,15 +43,15 @@ public class JwtManager {
     private static final String REQ_HEADER = "Authorization";
     /**
      * The prefix of the token to substract from the bearer.
-     */ 
-    private static final String TOK_PREFIX = "Bearer "; 
-    
+     */
+    private static final String TOK_PREFIX = "Bearer ";
+
     // TODO: replace the secret key with something, maybe fetch it from a server
     /**
      * The secret key to encode the JWT.
      */
     private String secretKey = "SECRET";
-    
+
     /**
      * The parser which to parse the JWT.
      * 
@@ -63,7 +63,7 @@ public class JwtManager {
     /**
      * Length of validity of the token in milliseconds.
      */
-	private long tokenValidityLenght = 1 * 60 * 60 * 1000; // lenght * 60 * 60 * 1000 <=> lenght in hour
+    private long tokenValidityLenght = 1 * 60 * 60 * 1000; // lenght * 60 * 60 * 1000 <=> lenght in hour
 
     /**
      * The list of all the created tokens, thus which are allowed to be validated.
@@ -91,7 +91,7 @@ public class JwtManager {
     @PostConstruct
     protected void init() {
         parser = Jwts.parser()
-            .setSigningKey(secretKey); // TODO: encode secret key
+                .setSigningKey(secretKey); // TODO: encode secret key
     }
 
     /**
@@ -111,22 +111,19 @@ public class JwtManager {
      */
     public String createToken(EUser user) {
         Claims claims = Jwts.claims()
-            .setSubject(user.getEmail());
-
+                .setSubject(user.getEmail());
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + tokenValidityLenght);
 
         String token = Jwts.builder()
-            .setClaims(claims)
-            .setIssuedAt(now)
-            .setExpiration(validity)
-            .signWith(SignatureAlgorithm.HS256, secretKey)
-            .compact();
-
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(validity)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
 
         authorizedTokens.add(token);
-
 
         return token;
     }
@@ -142,7 +139,7 @@ public class JwtManager {
      * @throws AuthentificationException
      */
     public void forgetToken(String token) throws AuthentificationException {
-        if(! authorizedTokens.remove(token))
+        if (!authorizedTokens.remove(token))
             throw new AuthentificationException(HttpStatus.NO_CONTENT, "Unknown token to forget");
     }
 
@@ -153,9 +150,9 @@ public class JwtManager {
      * 
      * @see #forgetToken(String)
      */
-    public void cleanAuthorizedTokens(){
-        for(String token : authorizedTokens){
-            if(!validateToken(token))
+    public void cleanAuthorizedTokens() {
+        for (String token : authorizedTokens) {
+            if (!validateToken(token))
                 forgetToken(token);
         }
     }
@@ -165,7 +162,8 @@ public class JwtManager {
      * Check if a token is valid.
      * </p>
      * <p>
-     * A token is valid if : <ul>
+     * A token is valid if :
+     * <ul>
      * <li>It is not null</li>
      * <li>It is known from the manager</li>
      * <li>It can be parsed with the secret key</li>
@@ -176,46 +174,46 @@ public class JwtManager {
      * @see #createToken(EUser)
      * @see Jwts
      * 
-     * @param token The token to process the validity. 
-     * @return <ul>
-     *  <li><i>true</i> if it is valid</li>
-     *  <li><i>false</i> otherwise</li>
-     * </ul>
+     * @param token The token to process the validity.
+     * @return
+     *         <ul>
+     *         <li><i>true</i> if it is valid</li>
+     *         <li><i>false</i> otherwise</li>
+     *         </ul>
      * @throws AuthentificationException
      */
-    public boolean validateToken(String token) throws AuthentificationException{
+    public boolean validateToken(String token) throws AuthentificationException {
         try {
-            if(token == null || !authorizedTokens.contains(token))
+            if (token == null || !authorizedTokens.contains(token))
                 return false;
 
             parser.parseClaimsJws(token);
             return true;
-        }
-        catch (ExpiredJwtException e) {
+        } catch (ExpiredJwtException e) {
             forgetToken(token);
             throw new AuthentificationException(HttpStatus.FORBIDDEN, "Expired token");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new AuthentificationException(HttpStatus.INTERNAL_SERVER_ERROR, "Invalid token");
         }
     }
 
     /**
      * <p>
-     * Process a http request to determine the token it contains. 
+     * Process a http request to determine the token it contains.
      * </p>
      * 
      * @see HttpServletRequest
      * 
      * @param request The http request where to search the token.
-     * @return <ul>
-     *  <li>The processed <i>token</i> if it was found.</li>
-     *  <li><i>null</i> otherwise.</li>
-     * </ul>
+     * @return
+     *         <ul>
+     *         <li>The processed <i>token</i> if it was found.</li>
+     *         <li><i>null</i> otherwise.</li>
+     *         </ul>
      * 
-     * The processed token.
+     *         The processed token.
      */
-    public String resolveToken(HttpServletRequest request){
+    public String resolveToken(HttpServletRequest request) {
         String bearer = request.getHeader(REQ_HEADER);
         if (bearer != null && bearer.startsWith(TOK_PREFIX))
             return bearer.substring(TOK_PREFIX.length());
@@ -225,7 +223,7 @@ public class JwtManager {
 
     /**
      * <p>
-     * Process a token to determine the email it contains. 
+     * Process a token to determine the email it contains.
      * </p>
      * 
      * @see Jwts
@@ -236,7 +234,7 @@ public class JwtManager {
      * @throws AuthentificationException
      */
     public String resolveEmail(String token) throws AuthentificationException {
-        if(!validateToken(token))
+        if (!validateToken(token))
             throw new AuthentificationException(HttpStatus.NO_CONTENT, "Unknown token to process.");
 
         return parser.parseClaimsJws(token).getBody().getSubject();
@@ -258,6 +256,6 @@ public class JwtManager {
      */
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userService.loadUserByUsername(resolveEmail(token));
-		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 }

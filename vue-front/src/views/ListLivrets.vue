@@ -13,7 +13,7 @@
 
 export default {
 
-    name: 'LivretPage',
+    name: 'ListLivretsPage',
     components: {
         // livretDetails
     },
@@ -44,7 +44,7 @@ export default {
             });
         },
         redirect: function(livretsId){
-            this.$router.push({ path: `/Livret/${livretsId}`})
+            this.$router.push({ path: `/Livret/${livretsId}/details`})
         },
         modifyLivret: function(livretsId){
             this.$router.push({ path: `/Livret/${livretsId}/modify`})

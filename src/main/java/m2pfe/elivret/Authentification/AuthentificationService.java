@@ -39,7 +39,7 @@ public class AuthentificationService {
      */
     @Autowired
     private JwtManager jwt;
-    
+
     /**
      * Attribute used to fetch EUsers.
      * 
@@ -47,20 +47,21 @@ public class AuthentificationService {
      */
     @Autowired
     private EUserRepository ur;
-    
+
     /**
      * <p>
      * Log in a user from its email and password.
      * </p>
      * <p>
-     * If the authentification informations matches something, creates and return a token for the user.
+     * If the authentification informations matches something, creates and return a
+     * token for the user.
      * </p>
      * 
      * @see JwtManager
      * @see #JwtManager.createToken(EUser)
      * @see AuthentificationException
      * 
-     * @param email The email used to identify the user?
+     * @param email    The email used to identify the user?
      * @param password The password of the user.
      * @return The token created.
      * @throws AuthentificationException if it couldn't log in the user.
@@ -70,7 +71,7 @@ public class AuthentificationService {
             authentication.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 
             EUser user = ur.findByEmail(email)
-                .orElseThrow(Exception::new);
+                    .orElseThrow(Exception::new);
 
             return jwt.createToken(user);
         } catch (Exception e) {
@@ -95,7 +96,7 @@ public class AuthentificationService {
     public void logout(String token) throws AuthentificationException {
         jwt.forgetToken(token);
     }
-    
+
     /**
      * <p>
      * Log out an user from the application using its token from the HttpRequest.
@@ -133,7 +134,8 @@ public class AuthentificationService {
         String myEmail = jwt.resolveEmail(token);
 
         return ur.findByEmail(myEmail)
-            .orElseThrow(() -> new AuthentificationException(HttpStatus.INTERNAL_SERVER_ERROR, "Token's email unknown."));
+                .orElseThrow(() -> new AuthentificationException(HttpStatus.INTERNAL_SERVER_ERROR,
+                        "Token's email unknown."));
     }
 
     /**

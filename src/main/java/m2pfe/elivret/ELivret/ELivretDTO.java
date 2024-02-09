@@ -11,7 +11,7 @@ import m2pfe.elivret.EUser.EUserDTO;
  * <p>
  * A list of DTO to be mapped with an ELivret.
  * <p>
- * </p> 
+ * </p>
  * Used to filter the informations of a given or taken ELivret.
  * </p>
  * 
@@ -58,5 +58,5 @@ public class ELivretDTO {
             public List<ESectionDTO.Out.AllPublic> sections;
         }
     }
-    
+
 }

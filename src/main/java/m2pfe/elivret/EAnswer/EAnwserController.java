@@ -49,8 +49,7 @@ public class EAnwserController {
      */
     public ModelMapper mapper = new ModelMapper();
 
-
-    ///GetMapping
+    /// GetMapping
 
     // TODO: COMMENTS.
     @GetMapping("/getAll")
@@ -60,28 +59,29 @@ public class EAnwserController {
     }
 
     @GetMapping("/mine/tocomplete")
-    public List<EAnswerDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req){
+    public List<EAnswerDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req) {
         EUser me = service.whoAmI(req);
 
         return a_repo.findAllAnswersUserHasToComplete(me).get()
-            .stream().map(l -> mapper.map(l, EAnswerDTO.Out.AllPublic.class)).toList();
+                .stream().map(l -> mapper.map(l, EAnswerDTO.Out.AllPublic.class)).toList();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("@EntityAccessAuthorization.isMeFromLivret(#req, @AnswerRepository.getById(#id))")
-    public EAnswer getAnswer(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, EAnswerException {
+    public EAnswer getAnswer(@PathVariable int id, HttpServletRequest req)
+            throws AuthentificationException, EAnswerException {
         Optional<EAnswer> a = a_repo.findById(id);
         a.orElseThrow(() -> new EAnswerException(HttpStatus.NO_CONTENT, "EAnswer not found."));
 
         return mapper.map(a.get(), EAnswer.class);
     }
 
-
     /// PostMapping
 
     @PostMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #answer)")
-    public EAnswer postAnswer(@RequestBody EAnswer answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
+    public EAnswer postAnswer(@RequestBody EAnswer answer, HttpServletRequest req)
+            throws AuthentificationException, EAnswerException {
         EAnswer a = mapper.map(answer, EAnswer.class);
 
         Optional.ofNullable(a_repo.findById(a.getId()).isPresent() ? null : a)
@@ -90,13 +90,13 @@ public class EAnwserController {
         return a_repo.save(a);
     }
 
-
     /// PutMapping
 
     // For the owner
     @PutMapping("saveProposition")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, @AnswerRepository.getById(#answer.id))")
-    public EAnswer saveWholeAnswer(@RequestBody EAnswerDTO.In.Proposition answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
+    public EAnswer saveWholeAnswer(@RequestBody EAnswerDTO.In.Proposition answer, HttpServletRequest req)
+            throws AuthentificationException, EAnswerException {
         EAnswer a = mapper.map(answer, EAnswer.class);
 
         EAnswer ar = a_repo.findById(a.getId())
@@ -111,7 +111,8 @@ public class EAnwserController {
 
     @PutMapping("saveValue")
     @PreAuthorize("@EntityAccessAuthorization.isAnswerMine(#req, #answer.id)")
-    public EAnswer saveValueAsActor(@RequestBody EAnswerDTO.In.Value answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
+    public EAnswer saveValueAsActor(@RequestBody EAnswerDTO.In.Value answer, HttpServletRequest req)
+            throws AuthentificationException, EAnswerException {
         EAnswer a = mapper.map(answer, EAnswer.class);
 
         EAnswer ar = a_repo.findById(a.getId())
@@ -122,12 +123,11 @@ public class EAnwserController {
         return a_repo.save(ar);
     }
 
-
-
     @Deprecated
     @PutMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isAnswerMine(#req, #answer)")
-    public EAnswer putAnswer(@RequestBody EAnswer answer, HttpServletRequest req) throws AuthentificationException, EAnswerException {
+    public EAnswer putAnswer(@RequestBody EAnswer answer, HttpServletRequest req)
+            throws AuthentificationException, EAnswerException {
         EAnswer a = mapper.map(answer, EAnswer.class);
 
         a_repo.findById(a.getId())
@@ -135,7 +135,6 @@ public class EAnwserController {
 
         return a_repo.save(a);
     }
-
 
     /// DeleteMapping
 
@@ -145,5 +144,5 @@ public class EAnwserController {
     public void deleteAnswer(@PathVariable int id, HttpServletRequest req) throws AuthentificationException {
         a_repo.deleteById(id);
     }
-    
+
 }

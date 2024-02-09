@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
  * <p>
  * A list of DTO to be mapped with an EAnswer.
  * <p>
- * </p> 
+ * </p>
  * Used to filter the informations of a given or taken EAnwser.
  * </p>
  * 
@@ -28,7 +28,7 @@ public class EAnswerDTO {
         @NoArgsConstructor
         public static class Proposition {
             public Integer id;
-            public String proposition;    
+            public String proposition;
         }
 
         /**
@@ -38,7 +38,7 @@ public class EAnswerDTO {
         @NoArgsConstructor
         public static class Value {
             public Integer id;
-            public String value;    
+            public String value;
         }
     }
 
@@ -57,5 +57,5 @@ public class EAnswerDTO {
             private String value;
         }
     }
-    
+
 }

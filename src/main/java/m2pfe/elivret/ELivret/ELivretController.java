@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+
 /**
  * <p>
  * Rest controller for the ELivret entity.
@@ -65,42 +66,43 @@ public class ELivretController {
     }
 
     @GetMapping("/mine")
-    public List<ELivretDTO.Out.AllPublic> getMyLivrets(HttpServletRequest req) throws AuthentificationException, ELivretException {
+    public List<ELivretDTO.Out.AllPublic> getMyLivrets(HttpServletRequest req)
+            throws AuthentificationException, ELivretException {
         EUser me = service.whoAmI(req);
         return l_repo.findByUser(me).stream().map(l -> mapper.map(l, ELivretDTO.Out.AllPublic.class)).toList();
     }
 
     @GetMapping("/mine/tocomplete")
-    public List<ELivretDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req){
+    public List<ELivretDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req) {
         EUser me = service.whoAmI(req);
 
         return l_repo.findAllLivretsUserHasToComplete(me).get()
-            .stream().map(l -> mapper.map(l, ELivretDTO.Out.AllPublic.class)).toList();
+                .stream().map(l -> mapper.map(l, ELivretDTO.Out.AllPublic.class)).toList();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("@EntityAccessAuthorization.isMeFromLivret(#req, #id)")
-    public ELivretDTO.Out.AllPublic getLivret(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, ELivretException {
+    public ELivretDTO.Out.AllPublic getLivret(@PathVariable int id, HttpServletRequest req)
+            throws AuthentificationException, ELivretException {
         Optional<ELivret> l = l_repo.findById(id);
         l.orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found."));
 
         return mapper.map(l.get(), ELivretDTO.Out.AllPublic.class);
     }
 
-
     /// PostMapping
 
     @PostMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret)")
-    public ELivret postLivret(@RequestBody ELivret livret, HttpServletRequest req) throws AuthentificationException, ELivretException {
+    public ELivret postLivret(@RequestBody ELivret livret, HttpServletRequest req)
+            throws AuthentificationException, ELivretException {
         ELivret l = mapper.map(livret, ELivret.class);
 
         Optional.ofNullable(l_repo.findById(l.getId()).isPresent() ? null : l)
-            .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret already exist."));
-        
+                .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret already exist."));
+
         return l_repo.save(l);
     }
-
 
     /// PutMapping
 
@@ -110,36 +112,36 @@ public class ELivretController {
             @RequestParam(required = false, defaultValue = "false") Boolean setStudent,
             @RequestParam(required = false, defaultValue = "false") Boolean setMaster,
             @RequestParam(required = false, defaultValue = "false") Boolean setTutor) {
-        
+
         ELivret l = l_repo.findById(livret.id)
-            .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found"));
+                .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found"));
 
-        if(setStudent)
+        if (setStudent)
             l.setStudent(u_repo.findById(livret.studentId)
-                .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Student not found")));
+                    .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Student not found")));
 
-        if(setMaster)
+        if (setMaster)
             l.setMaster(u_repo.findById(livret.masterId)
-                .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Master not found")));
+                    .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Master not found")));
 
-        if(setTutor)
+        if (setTutor)
             l.setTutor(u_repo.findById(livret.tutorId)
-                .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Tutor not found")));
+                    .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Tutor not found")));
 
         return mapper.map(l_repo.save(l), ELivretDTO.Out.AllPublic.class);
     }
 
     @PutMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret)")
-    public ELivret putLivret(@RequestBody ELivret livret, HttpServletRequest req) throws AuthentificationException, ELivretException {
+    public ELivret putLivret(@RequestBody ELivret livret, HttpServletRequest req)
+            throws AuthentificationException, ELivretException {
         ELivret l = mapper.map(livret, ELivret.class);
 
         l_repo.findById(l.getId())
-            .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found."));
+                .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found."));
 
         return l_repo.save(l);
     }
-
 
     /// DeleteMapping
 

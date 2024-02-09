@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
-import Livret from '../views/Livret.vue'
+import DetailsLivret from '../views/DetailsLivret.vue'
+import ModifyLivret from '../views/ModifyLivret.vue'
+import ListLivrets from '../views/ListLivrets.vue'
 import Login from '../views/Login.vue'
-import Livrets from '../views/Livrets.vue'
-import LivretModify from '../views/ModifyLivret.vue'
 
 
 const routes = [
@@ -19,34 +19,35 @@ const routes = [
         component: About
     },
     {
-        path: '/Livret/:id',
-        name: 'Livret',
-        component: Livret,
+        path: '/Livret/:id/details',
+        name: 'DetailsLivret',
+        component: DetailsLivret,
         props: true
+    },
+    {
+        path: '/Livret/:id/modify',
+        name: 'ModifyLivret',
+        component: ModifyLivret,
+        props: true
+    },
+    {
+        path: '/ListLivrets',
+        name: 'ListLivrets',
+        component: ListLivrets
     },
     {
         path: '/Login',
         name: 'Login',
         component: Login
     },
-    {
-        path: '/Livrets',
-        name: 'Livrets',
-        component: Livrets
-    },
-    {
-        path: '/Livret/:id/modify',
-        name: 'LivretModify',
-        component: LivretModify,
-        props: true
-    },
 ]
 
 const protectedRoutes = [
     "Home",
     "About",
-    "Livret",
-    "Livrets"
+    "DetailsLivret",
+    "ModifyLivret",
+    "ListLivrets"
 ]
 
 const router = createRouter({

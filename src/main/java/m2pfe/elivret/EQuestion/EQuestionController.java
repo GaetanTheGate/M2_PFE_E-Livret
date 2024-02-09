@@ -47,7 +47,6 @@ public class EQuestionController {
      * Mapper for mapping an object to another.
      */
     private ModelMapper mapper = new ModelMapper();
-    
 
     /// GetMapping
 
@@ -59,30 +58,30 @@ public class EQuestionController {
                 .toList();
     }
 
-
     @GetMapping("/mine/tocomplete")
-    public List<EQuestionDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req){
+    public List<EQuestionDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req) {
         EUser me = service.whoAmI(req);
 
         return q_repo.findAllQuestionsUserHasToComplete(me).get()
-            .stream().map(l -> mapper.map(l, EQuestionDTO.Out.AllPublic.class)).toList();
+                .stream().map(l -> mapper.map(l, EQuestionDTO.Out.AllPublic.class)).toList();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("@EntityAccessAuthorization.isMeFromLivret(#req, @QuestionRepository.getById(#id))")
-    public EQuestion getQuestion(@PathVariable int id, HttpServletRequest req) throws AuthentificationException, EQuestionException {
+    public EQuestion getQuestion(@PathVariable int id, HttpServletRequest req)
+            throws AuthentificationException, EQuestionException {
         Optional<EQuestion> q = q_repo.findById(id);
         q.orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "EQuestion not found."));
 
         return mapper.map(q.get(), EQuestion.class);
     }
 
-
     /// PostMapping
 
     @PostMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #question)")
-    public EQuestion postQuestion(@RequestBody EQuestion question, HttpServletRequest req) throws AuthentificationException, EQuestionException {
+    public EQuestion postQuestion(@RequestBody EQuestion question, HttpServletRequest req)
+            throws AuthentificationException, EQuestionException {
         EQuestion q = mapper.map(question, EQuestion.class);
 
         Optional.ofNullable(q_repo.findById(q.getId()).isPresent() ? null : q)
@@ -91,12 +90,12 @@ public class EQuestionController {
         return q_repo.save(q);
     }
 
-
     /// PutMapping
 
     @PutMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #question)")
-    public EQuestion putQuestion(@RequestBody EQuestion question, HttpServletRequest req) throws AuthentificationException, EQuestionException {
+    public EQuestion putQuestion(@RequestBody EQuestion question, HttpServletRequest req)
+            throws AuthentificationException, EQuestionException {
         EQuestion q = mapper.map(question, EQuestion.class);
 
         q_repo.findById(q.getId())
@@ -104,7 +103,6 @@ public class EQuestionController {
 
         return q_repo.save(q);
     }
-
 
     /// DeleteMapping
 

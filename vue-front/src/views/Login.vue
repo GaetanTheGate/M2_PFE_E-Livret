@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import signInForm from '../components/signInForm.vue'
+import signInForm from '../components/login/signInForm.vue'
 export default {
     name: 'LoginPage',
     components: {
@@ -13,7 +13,7 @@ export default {
     },
 
     mounted() {
-        localStorage.removeItem('token');
+        this.$unsetToken();
     },
 }
 </script>

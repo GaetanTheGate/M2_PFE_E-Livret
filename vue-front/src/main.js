@@ -23,11 +23,13 @@ app.config.globalProperties.$axiosLogin = axios.create({
 app.config.globalProperties.$setToken = token => {
     app.config.globalProperties.$axiosApi.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     app.config.globalProperties.$axiosLogin.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+    localStorage.setItem('token', token);
 };
 
 app.config.globalProperties.$unSetToken = () => {
     app.config.globalProperties.$axiosApi.defaults.headers.common['Authorization'] = null;
     app.config.globalProperties.$axiosLogin.defaults.headers.common['Authorization'] = null;
+    localStorage.removeItem('token');
 };
 
 

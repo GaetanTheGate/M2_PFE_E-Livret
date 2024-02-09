@@ -8,8 +8,9 @@ import m2pfe.elivret.ELivret.ELivret;
  * <p>
  * A list of DTO to be mapped with an EUser.
  * <p>
- * </p> 
- * Used to filter the informations of an EUser given or taken from an user of the application.
+ * </p>
+ * Used to filter the informations of an EUser given or taken from an user of
+ * the application.
  * </p>
  * 
  * @see EUser
@@ -41,7 +42,6 @@ public class EUserDTO {
             private String email;
         }
     }
-
 
     /**
      * The DTOs the user will get from the application.

@@ -14,10 +14,9 @@ import org.springframework.web.util.UrlPathHelper;
 
 //import lombok.var;
 
-
 @Configuration
-public class SpringConfiguration extends SpringBootServletInitializer implements WebMvcConfigurer  {
-    @Override
+public class SpringConfiguration extends SpringBootServletInitializer implements WebMvcConfigurer {
+	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(Starter.class);
 	}
@@ -26,7 +25,6 @@ public class SpringConfiguration extends SpringBootServletInitializer implements
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		super.onStartup(servletContext);
 	}
-
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -48,9 +46,9 @@ public class SpringConfiguration extends SpringBootServletInitializer implements
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry
-			.addMapping("/**")
-			.allowedOrigins("*")
-			.allowedMethods("*");
+				.addMapping("/**")
+				.allowedOrigins("*")
+				.allowedMethods("*");
 	}
 
 }

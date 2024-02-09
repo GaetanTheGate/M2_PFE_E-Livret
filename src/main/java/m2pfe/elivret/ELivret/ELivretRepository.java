@@ -16,7 +16,8 @@ import java.util.Optional;
  * Repository (DAO) for the ELivret entity.
  * </p>
  * <p>
- * It is used to access and manipulate the ELivrets in the database, set in the configuration.
+ * It is used to access and manipulate the ELivrets in the database, set in the
+ * configuration.
  * </p>
  * 
  * @see ELivret
@@ -26,9 +27,9 @@ import java.util.Optional;
  * @version 1.1
  */
 @Repository
-@Component(value="LivretRepository")
+@Component(value = "LivretRepository")
 @Transactional
-public interface ELivretRepository  extends JpaRepository<ELivret, Integer> {
+public interface ELivretRepository extends JpaRepository<ELivret, Integer> {
     // TODO : Liste de Optionnal de liste de ELivret partout
 
     List<ELivret> findByStudent(EUser student);
@@ -43,7 +44,7 @@ public interface ELivretRepository  extends JpaRepository<ELivret, Integer> {
     List<ELivret> findByUser(@Param("user") EUser user);
 
     // TODO : plus jolie d'une manière si possible
-        // Remplacer la fin de la query par une méthode
+    // Remplacer la fin de la query par une méthode
     @Query("SELECT DISTINCT(l) FROM ELivret l JOIN l.sections s ON s.livret = l JOIN s.questions q ON q.section = s JOIN q.answers a ON a.question = q WHERE a.value IS NULL AND ( (s.owner = 'STUDENT' AND l.student = :user) OR (s.owner = 'TUTOR' AND l.tutor = :user) OR (s.owner = 'MASTER' AND l.master = :user) OR (s.owner = 'RESPONSABLE' AND l.responsable = :user) )")
-    Optional<List<ELivret>> findAllLivretsUserHasToComplete(@Param("user") EUser user); 
+    Optional<List<ELivret>> findAllLivretsUserHasToComplete(@Param("user") EUser user);
 }

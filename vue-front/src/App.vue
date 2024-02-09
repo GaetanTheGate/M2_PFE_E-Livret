@@ -15,7 +15,7 @@
             </li>
             <li class="nav-item">
                 <a >
-                    <router-link :to="{ name: 'Livrets' }" class="nav-link">Livrets</router-link>
+                    <router-link :to="{ name: 'ListLivrets' }" class="nav-link">Livrets</router-link>
                 </a>
             </li>
             <li class="nav-item">
@@ -64,14 +64,12 @@ export default {
     login: function (email, password) {
       this.$axiosLogin.post("login", { "email": email, "password": password }).then(t => {
         this.$setToken(t.data);
-        localStorage.setItem('token', t.data);
         this.$router.push({ path: "/"})
       })
     },
     logout: function () {
       this.$axiosLogin.post("logout").then(t => {
         this.$setToken(t.data);
-        localStorage.removeItem('token');  // TODO : Mettre dans le $unsetToken
         this.$router.push({ path: "/Login"})
       })
     },

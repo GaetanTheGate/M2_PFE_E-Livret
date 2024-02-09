@@ -47,7 +47,7 @@ public class AuthentificationController {
      * Mapper for mapping an object to another.
      */
     private ModelMapper mapper = new ModelMapper();
-    
+
     /**
      * <p>
      * <b>POST</b> request on path <b>"/login"</b>
@@ -56,7 +56,8 @@ public class AuthentificationController {
      * Allow one to log in with an email and a password.
      * </p>
      * <p>
-     * If the user is known, and the password is correct, creates, saves, and return a token the user will be able to use to tell who he is.
+     * If the user is known, and the password is correct, creates, saves, and return
+     * a token the user will be able to use to tell who he is.
      * </p>
      * 
      * @see EUserDTO.In.AuthentificationInformation
@@ -64,10 +65,11 @@ public class AuthentificationController {
      * @see #AuthentificationService.login(String, String)
      * 
      * @param auth The DTO giving the information of authentification.
-     * @return A response entity with the status of the request containing :<ul>
-     *  <li>The token if it was created successfuly.</li>
-     *  <li>The <i>error message</i> otherwise.</li>
-     * </ul>
+     * @return A response entity with the status of the request containing :
+     *         <ul>
+     *         <li>The token if it was created successfuly.</li>
+     *         <li>The <i>error message</i> otherwise.</li>
+     *         </ul>
      */
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody EUserDTO.In.AuthentificationInformation auth) {
@@ -95,7 +97,8 @@ public class AuthentificationController {
      * @see #AuthentificationService.logout(HttpServletRequest)
      * @see JwtManager
      * 
-     * @param req The header where the token of the user is so that the application can forget it.
+     * @param req The header where the token of the user is so that the application
+     *            can forget it.
      * 
      * @return The responseEntity of the request
      */
@@ -122,7 +125,8 @@ public class AuthentificationController {
      * @see #AuthentificationService.whoAmI(HttpServletRequest)
      * @see JwtManager
      * 
-     * @param req The header where the token of the user is so that the application can find its linked user.
+     * @param req The header where the token of the user is so that the application
+     *            can find its linked user.
      * 
      * @return The responseEntity with the found user.
      */
@@ -130,10 +134,10 @@ public class AuthentificationController {
     public ResponseEntity<EUserDTO.Out.UserInformation> whoAmI(HttpServletRequest req) {
         try {
             EUser me = service.whoAmI(req);
-            return ResponseEntity.ok(mapper.map(me, EUserDTO.Out.UserInformation.class));            
+            return ResponseEntity.ok(mapper.map(me, EUserDTO.Out.UserInformation.class));
         } catch (AuthentificationException e) {
             return ResponseEntity.status(e.getStatusCode()).body(null);
         }
     }
-    
+
 }

@@ -16,7 +16,8 @@ import java.util.Optional;
  * Repository (DAO) for the ESection entity.
  * </p>
  * <p>
- * It is used to access and manipulate the ESections in the database, set in the configuration.
+ * It is used to access and manipulate the ESections in the database, set in the
+ * configuration.
  * </p>
  * 
  * @see ESection
@@ -26,7 +27,7 @@ import java.util.Optional;
  * @version 1.0
  */
 @Repository
-@Component(value="SectionRepository")
+@Component(value = "SectionRepository")
 @Transactional
 public interface ESectionRepository extends JpaRepository<ESection, Integer> {
     @Query("SELECT s FROM ESection s " +
@@ -34,10 +35,9 @@ public interface ESectionRepository extends JpaRepository<ESection, Integer> {
             "WHERE l.student = :user OR l.tutor = :user OR l.master = :user OR l.responsable = :user")
     List<ESection> findByUser(@Param("user") EUser user);
 
-
     // TODO : plus jolie d'une manière si possible
-        // Remplacer la fin de la query par une méthode
+    // Remplacer la fin de la query par une méthode
     @Query("SELECT DISTINCT(s) FROM ELivret l JOIN l.sections s ON s.livret = l JOIN s.questions q ON q.section = s JOIN q.answers a ON a.question = q WHERE a.value IS NULL AND ( (s.owner = 'STUDENT' AND l.student = :user) OR (s.owner = 'TUTOR' AND l.tutor = :user) OR (s.owner = 'MASTER' AND l.master = :user) OR (s.owner = 'RESPONSABLE' AND l.responsable = :user) )")
-    Optional<List<ESection>> findAllSectionsUserHasToComplete(@Param("user") EUser user); 
+    Optional<List<ESection>> findAllSectionsUserHasToComplete(@Param("user") EUser user);
 
 }

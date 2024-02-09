@@ -41,18 +41,18 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         EUser user = ur.findByEmail(email)
-            .orElseThrow(() -> new UsernameNotFoundException("User's email \"" + email +"\" not found."));
+                .orElseThrow(() -> new UsernameNotFoundException("User's email \"" + email + "\" not found."));
 
         List<GrantedAuthority> authorities = List.of();
 
         return User.builder()
-            .username(email)
-            .password(user.getPassword())
-            .authorities(authorities)
-            .accountLocked(false)
-            .credentialsExpired(false)
-            .disabled(false)
-            .build();
+                .username(email)
+                .password(user.getPassword())
+                .authorities(authorities)
+                .accountLocked(false)
+                .credentialsExpired(false)
+                .disabled(false)
+                .build();
     }
-    
+
 }
