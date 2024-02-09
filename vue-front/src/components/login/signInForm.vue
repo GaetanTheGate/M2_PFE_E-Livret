@@ -7,9 +7,8 @@
             <label id="label" class="form-label">Password:</label>
             <input id="input" type="password" required v-model="password" class="form-control">
 
-            <button type="button" v-on:click="this.login(email, password)" class="btn btn-primary">Login</button>
-            <button type="button" v-on:click="whoami()" class="btn btn-secondary">Whoami</button>
-
+            <button type="button" v-on:click="this.$loginService.login(email, password)"
+                class="btn btn-primary">Login</button>
         </form>
     </div>
 </template>
@@ -24,19 +23,10 @@ export default {
     },
     mounted() {
         this.email = null,
-            this.password = null
+        this.password = null
     },
     methods: {
-        login: function (email, password) {
-            this.$axiosLogin.post("login", { "email": email, "password": password }).then(t => {
-                this.$setToken(t.data);
-                localStorage.setItem('token', t.data);
-                this.$router.push({ path: "/" })
-            })
-        },
-        whoami: function () {
-            this.$axiosLogin.get("whoAmI")
-        }
+
     },
 }
 </script>

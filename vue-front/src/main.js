@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import axios from 'axios'
+import LoginService from './services/LoginService.js'
 // import 'bootstrap/dist/css/bootstrap.min.css'
 import '../css/bootstrapStyle.css'
 // import '../css/genericStyle.css'
@@ -20,19 +21,6 @@ app.config.globalProperties.$axiosLogin = axios.create({
     timeout: 5000
 });
 
-app.config.globalProperties.$setToken = token => {
-    app.config.globalProperties.$axiosApi.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-    app.config.globalProperties.$axiosLogin.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-    localStorage.setItem('token', token);
-};
-
-app.config.globalProperties.$unSetToken = () => {
-    app.config.globalProperties.$axiosApi.defaults.headers.common['Authorization'] = null;
-    app.config.globalProperties.$axiosLogin.defaults.headers.common['Authorization'] = null;
-    localStorage.removeItem('token');
-};
-
-
-
+app.config.globalProperties.$loginService = new LoginService();
 
 app.mount('#app')

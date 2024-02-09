@@ -13,7 +13,7 @@ export default {
     },
 
     mounted() {
-        this.$unsetToken();
+        this.$loginService.logout();
     },
 }
 </script>

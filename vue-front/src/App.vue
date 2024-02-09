@@ -20,27 +20,27 @@
         </li>
         <li class="nav-item">
           <a>
-            <button type="button" v-on:click="logout()" class="nav-link">Logout</button>
+            <button type="button" v-on:click="this.$loginService.logout()" class="nav-link">Logout</button>
           </a>
         </li>
         <li class="nav-item">
           <a>
-            <button type="button" v-on:click="login(`etudiant2@mail.com`, `etudiant2`)" class="nav-link">Student</button>
+            <button type="button" v-on:click="this.$loginService.login(`etudiant2@mail.com`, `etudiant2`)" class="nav-link">Student</button>
           </a>
         </li>
         <li class="nav-item">
           <a>
-            <button type="button" v-on:click="login(`maitre@mail.com`, `maitre`)" class="nav-link">Master</button>
+            <button type="button" v-on:click="this.$loginService.login(`maitre@mail.com`, `maitre`)" class="nav-link">Master</button>
           </a>
         </li>
         <li class="nav-item">
           <a>
-            <button type="button" v-on:click="login(`tuteur@mail.com`, `tuteur`)" class="nav-link">Tutor</button>
+            <button type="button" v-on:click="this.$loginService.login(`tuteur@mail.com`, `tuteur`)" class="nav-link">Tutor</button>
           </a>
         </li>
         <li class="nav-item">
           <a>
-            <button type="button" v-on:click="login(`responsable@mail.com`, `responsable`)"
+            <button type="button" v-on:click="this.$loginService.login(`responsable@mail.com`, `responsable`)"
               class="nav-link">Responsable</button>
           </a>
         </li>
@@ -52,49 +52,35 @@
 </template>
 
 <script>
+// import LoginService from './services/LoginService.js'
 
 export default {
   name: 'app',
   components: {
   },
+  data() {
+    this.$loginService.app = this; //  Todo : Si possible, le déplacer dans le main.js
+    return {
+
+    }
+  },
   mounted() {
-    // TODO : un init de l'appli qui vérifie si y a un token, et autre si besoin 
-    // this.login('etudiant@mail.com', 'etudiant')
+    this.init();
   },
   methods: {
-    login: function (email, password) {
-      this.$axiosLogin.post("login", { "email": email, "password": password }).then(t => {
-        this.$setToken(t.data);
-        this.$router.push({ path: "/" })
-      })
+    init: function(){
+      this.setApiToken();
+      this.checkTokenValidity();
     },
-    logout: function () {
-      this.$axiosLogin.post("logout").then(t => {
-        this.$setToken(t.data);
-        this.$router.push({ path: "/Login" })
-      })
+
+    setApiToken: function (){
+      this.$loginService.setToken(localStorage.getItem('token'));
     },
-    loginStudent: function () {
-      this.$axiosLogin.post("login", { "email": "etudiant2@mail.com", "password": "etudiant2" }).then(t => {
-        this.$setToken(t.data);
-        localStorage.setItem('token', t.data);
-        this.$router.push({ path: "/" })
-      })
-    },
-    loginResponsable: function () {
-      this.$axiosLogin.post("login", { "email": "responsable@mail.com", "password": "responsable" }).then(t => {
-        this.$setToken(t.data);
-        localStorage.setItem('token', t.data);
-        this.$router.push({ path: "/" })
-      })
-    },
-    loginTutor: function () {
-      this.$axiosLogin.post("login", { "email": "tuteur@mail.com", "password": "tuteur" }).then(t => {
-        this.$setToken(t.data);
-        localStorage.setItem('token', t.data);
-        this.$router.push({ path: "/" })
-      })
-    },
+
+    checkTokenValidity: function(){
+      // TODO : vérifier que le token fonctionne toujours, si non, unsetToken
+      // TODO : peut etre refresh le token si 
+    }
   }
 }
 </script>
