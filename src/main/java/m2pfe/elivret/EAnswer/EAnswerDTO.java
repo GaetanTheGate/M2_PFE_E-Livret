@@ -27,8 +27,8 @@ public class EAnswerDTO {
         @Data
         @NoArgsConstructor
         public static class Proposition {
-            public Integer id;
-            public String proposition;
+            private Integer id;
+            private String proposition;
         }
 
         /**
@@ -37,8 +37,8 @@ public class EAnswerDTO {
         @Data
         @NoArgsConstructor
         public static class Value {
-            public Integer id;
-            public String value;
+            private Integer id;
+            private String value;
         }
     }
 

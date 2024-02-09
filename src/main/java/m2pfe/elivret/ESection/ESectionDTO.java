@@ -28,8 +28,8 @@ public class ESectionDTO {
         @Data
         @NoArgsConstructor
         public static class Visibility {
-            public Integer id;
-            public Boolean visibility;
+            private Integer id;
+            private Boolean visibility;
         }
     }
 
@@ -43,13 +43,12 @@ public class ESectionDTO {
         @Data
         @NoArgsConstructor
         public static class AllPublic {
-            public Integer id;
-
-            public UserRole owner;
-            public Boolean visibility;
-            public String title;
-            public Integer livretId;
-            public List<EQuestionDTO.Out.AllPublic> questions;
+            private Integer id;
+            private UserRole owner;
+            private Boolean visibility;
+            private String title;
+            private Integer livretId;
+            private List<EQuestionDTO.Out.AllPublic> questions;
         }
     }
 

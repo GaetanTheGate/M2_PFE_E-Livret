@@ -113,19 +113,19 @@ public class ELivretController {
             @RequestParam(required = false, defaultValue = "false") Boolean setMaster,
             @RequestParam(required = false, defaultValue = "false") Boolean setTutor) {
 
-        ELivret l = l_repo.findById(livret.id)
+        ELivret l = l_repo.findById(livret.getId())
                 .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found"));
 
         if (setStudent)
-            l.setStudent(u_repo.findById(livret.studentId)
+            l.setStudent(u_repo.findById(livret.getStudentId())
                     .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Student not found")));
 
         if (setMaster)
-            l.setMaster(u_repo.findById(livret.masterId)
+            l.setMaster(u_repo.findById(livret.getMasterId())
                     .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Master not found")));
 
         if (setTutor)
-            l.setTutor(u_repo.findById(livret.tutorId)
+            l.setTutor(u_repo.findById(livret.getTutorId())
                     .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "Tutor not found")));
 
         return mapper.map(l_repo.save(l), ELivretDTO.Out.AllPublic.class);

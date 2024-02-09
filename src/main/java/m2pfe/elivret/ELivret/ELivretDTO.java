@@ -31,11 +31,10 @@ public class ELivretDTO {
         @Data
         @NoArgsConstructor
         public static class Actors {
-            public Integer id;
-
-            public Integer studentId;
-            public Integer tutorId;
-            public Integer masterId;
+            private Integer id;
+            private Integer studentId;
+            private Integer tutorId;
+            private Integer masterId;
         }
     }
 
@@ -49,13 +48,13 @@ public class ELivretDTO {
         @Data
         @NoArgsConstructor
         public static class AllPublic {
-            public Integer id;
-            public String name;
-            public EUserDTO.Out.UserInformation student;
-            public EUserDTO.Out.UserInformation tutor;
-            public EUserDTO.Out.UserInformation master;
-            public EUserDTO.Out.UserInformation responsable;
-            public List<ESectionDTO.Out.AllPublic> sections;
+            private Integer id;
+            private String name;
+            private EUserDTO.Out.UserInformation student;
+            private EUserDTO.Out.UserInformation tutor;
+            private EUserDTO.Out.UserInformation master;
+            private EUserDTO.Out.UserInformation responsable;
+            private List<ESectionDTO.Out.AllPublic> sections;
         }
     }
 
