@@ -5,6 +5,7 @@ import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import m2pfe.elivret.ESection.ESectionDTO;
+import m2pfe.elivret.EUser.EUserDTO;
 
 /**
  * <p>
@@ -50,10 +51,10 @@ public class ELivretDTO {
         public static class AllPublic {
             public Integer id;
             public String name;
-            public Integer studentId;
-            public Integer tutorId;
-            public Integer masterId;
-            public Integer responsableId;
+            public EUserDTO.Out.UserInformation student;
+            public EUserDTO.Out.UserInformation tutor;
+            public EUserDTO.Out.UserInformation master;
+            public EUserDTO.Out.UserInformation responsable;
             public List<ESectionDTO.Out.AllPublic> sections;
         }
     }

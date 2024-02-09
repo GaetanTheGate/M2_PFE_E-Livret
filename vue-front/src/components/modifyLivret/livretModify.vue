@@ -1,8 +1,8 @@
 <template>
     <div v-if="livret" class="container">
-        <userModify :userId="livret.studentId" @user_clicked="setStudent"   :userType="'Apprenti(e)'" />
-        <userModify :userId="livret.masterId"  @user_clicked="setMaster"    :userType="'Maitre d\'apprentissage'" />
-        <userModify :userId="livret.tutorId"   @user_clicked="setTutor"     :userType="'Tuteur'" />
+        <userModify :userId="livret.student.id" @user_clicked="setStudent"   :userType="'Apprenti(e)'" />
+        <userModify :userId="livret.master.id"  @user_clicked="setMaster"    :userType="'Maitre d\'apprentissage'" />
+        <userModify :userId="livret.tutor.id"   @user_clicked="setTutor"     :userType="'Tuteur'" />
         
         <div v-for="section in livret.sections" :key="section.id" class="myUL">
             {{ section.id }}
@@ -47,38 +47,38 @@ export default {
             let l = {
                 id:         this.livret.id,
                 studentId:  user.id,
-                masterId:   this.livret.masterId,
-                tutorId:    this.livret.tutorId,
+                masterId:   this.livret.master.id,
+                tutorId:    this.livret.tutor.id,
             }
 
             this.$axiosApi.put("livrets/set-actors?setStudent=true", l).then(l => {
-                this.livret.studentId = l.data.studentId;
+                this.livret.student = l.data.student;
             });
         },
 
         setMaster: function(user) {
             let l = {
                 id:         this.livret.id,
-                studentId:  this.livret.studentId,
+                studentId:  this.livret.student.id,
                 masterId:   user.id,
-                tutorId:    this.livret.tutorId,
+                tutorId:    this.livret.tutor.id,
             }
 
             this.$axiosApi.put("livrets/set-actors?setMaster=true", l).then(l => {
-                this.livret.masterId = l.data.masterId;
+                this.livret.master = l.data.master;
             });
         },
 
         setTutor: function(user) {
             let l = {
                 id:         this.livret.id,
-                studentId:  this.livret.studentId,
-                masterId:   this.livret.masterId,
+                studentId:  this.livret.student.id,
+                masterId:   this.livret.master.id,
                 tutorId:    user.id,
             }
 
             this.$axiosApi.put("livrets/set-actors?setTutor=true", l).then(l => {
-                this.livret.tutorId = l.data.tutorId;
+                this.livret.tutor = l.data.tutor;
             });
         },
     },
