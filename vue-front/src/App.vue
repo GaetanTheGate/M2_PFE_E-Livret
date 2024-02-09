@@ -1,45 +1,45 @@
 <template>
-  <nav id="nav" class="navbar navbar-expand-lg bd-navbar sticky-top" style="background-color: lightcoral;">
-      <div class="collapse navbar-collapse">
+  <nav id="nav" class="navbar navbar-expand-lg bd-navbar sticky-top" style="background-color: #712cf9">
+      <div class="mx-auto p-2">
           <ul class="navbar-nav me-auto">
 
             <li class="nav-item">
-                <a class="nav-link active">
+                <a >
                     <router-link to="/" class="nav-link">Home</router-link>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">
+                <a >
                     <router-link :to="{ name: 'About' }" class="nav-link">About</router-link>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">
+                <a >
                     <router-link :to="{ name: 'Livrets' }" class="nav-link">Livrets</router-link>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">
+                <a >
                     <button type="button" v-on:click="logout()" class="nav-link">Logout</button>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">
+                <a >
                     <button type="button" v-on:click="login(`etudiant2@mail.com`, `etudiant2`)" class="nav-link">Student</button>
                 </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link">
+              <a >
                 <button type="button" v-on:click="login(`maitre@mail.com`, `maitre`)" class="nav-link">Master</button>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link">
+              <a>
                 <button type="button" v-on:click="login(`tuteur@mail.com`, `tuteur`)" class="nav-link">Tutor</button>
               </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">
+                <a >
                     <button type="button" v-on:click="login(`responsable@mail.com`, `responsable`)" class="nav-link">Responsable</button>
                 </a>
             </li>
@@ -127,13 +127,12 @@ export default {
 /*  background: crimson;*/
 /*}*/
 
-.bd-navbar {
-
-    color: green; /* Change la couleur du texte au clic */
+.nav-link {
+    color : white;
+}
+.navbar {
+    align-content: center;
 }
 
- div{
-     margin-bottom: 30px;
- }
 
 </style>

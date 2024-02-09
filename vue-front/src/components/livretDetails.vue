@@ -10,7 +10,7 @@
             <li>tutor : {{ livret.tutor }}</li>
             <li>id : {{ livret.id }}</li>
         </ul>
-        <div v-for="section in livret.sections" :key="section.id" class="myUL">
+        <div v-for="section in livret.sections" :key="section.id" class="mb-5">
             <sectionDetails :sectionId="section.id" :editionMode=editionMode />
         </div>
     </div>
@@ -67,7 +67,7 @@ export default {
 /*  text-align: center;*/
 /*}*/
 
-ul.myUL {
-    text-align: left;
-}
+/*ul.myUL {*/
+/*    text-align: left;*/
+/*}*/
 </style>

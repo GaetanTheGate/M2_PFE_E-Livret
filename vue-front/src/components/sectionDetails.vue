@@ -1,6 +1,5 @@
 <template>
     <div v-if="section && displaySection" class="container">
-        <hr />
         <h2>{{ section.title }}</h2>
         <p>This section is owned by {{ section.owner }}</p>
 
@@ -9,7 +8,7 @@
             <input type="checkbox" :id="'section_'+section.id+'_visibility'" v-model="section.visibility" v-on:click="saveVisibility()" class="form-check-input">
         </div>
 
-        <div v-for="question in section.questions" :key="question.id" class="myUL">
+        <div v-for="question in section.questions" :key="question.id" class="mb-2">
             <questionDetails :questionId="question.id" :editionMode="editionMode" @callable="addQuestionChild"/>
         </div>
         <button v-if="editionMode" v-on:click="saveAnswers()" class="btn btn-danger">Sauvegarder</button>
@@ -156,5 +155,7 @@
 </script>
 
 <style>
-
+.mb-5 {
+    background-color: lightgrey;
+}
 </style>
