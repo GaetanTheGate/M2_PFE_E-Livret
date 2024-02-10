@@ -36,6 +36,12 @@ public class ELivretDTO {
             private Integer tutorId;
             private Integer masterId;
         }
+
+        @Data
+        @NoArgsConstructor
+        public static class Basics {
+            private String name;
+        }
     }
 
     /**
@@ -55,6 +61,12 @@ public class ELivretDTO {
             private EUserDTO.Out.UserInformation master;
             private EUserDTO.Out.UserInformation responsable;
             private List<ESectionDTO.Out.AllPublic> sections;
+        }
+
+        @Data
+        @NoArgsConstructor
+        public static class Mimimum {
+            private String name;
         }
     }
 
