@@ -56,6 +56,7 @@ export default {
             this.$axiosApi.post("users/search", { email: mail }).then(u => {
                 this.usersFound = u.data;
             });
+            this.email = "";
         },
         sendUserToParent: function (user) {
             this.$emit('user_clicked', user);

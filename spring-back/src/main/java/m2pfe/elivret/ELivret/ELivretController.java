@@ -104,6 +104,20 @@ public class ELivretController {
         return l_repo.save(l);
     }
 
+    /// PostMapping
+
+    @PostMapping("/create")
+    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret)")
+    public ELivret createLivret(@RequestBody ELivret livret, HttpServletRequest req)
+            throws AuthentificationException, ELivretException {
+        ELivret l = mapper.map(livret, ELivret.class);
+
+        Optional.ofNullable(l_repo.findById(l.getId()).isPresent() ? null : l)
+                .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret already exist."));
+
+        return l_repo.save(l);
+    }
+
     /// PutMapping
 
     @PutMapping("/set-actors")
