@@ -104,6 +104,20 @@ public class ELivretController {
         return l_repo.save(l);
     }
 
+    /// PostMapping
+
+    @PostMapping("/create")
+    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret)")
+    public ELivretDTO.Out.Mimimum createLivret(@RequestBody ELivretDTO.In.Basics livret, HttpServletRequest req)
+            throws AuthentificationException, ELivretException {
+                
+        EUser me = service.whoAmI(req);
+        ELivret l = mapper.map(livret, ELivret.class);
+        l.setResponsable(me);
+
+        return mapper.map(l_repo.save(l), ELivretDTO.Out.Mimimum.class);
+    }
+
     /// PutMapping
 
     @PutMapping("/set-actors")
