@@ -5,16 +5,16 @@ class LoginService {
         this.app = app;
     }
 
-    login(email, password) {
+    login(email, password, then = () => {}) {
         this.app.$axiosLogin.post("login", { "email": email, "password": password }).then(t => {
-            this.setToken(t.data);
+            this.setToken(t.data, then);
             this.app.$router.push({ path: "/" })
         })
     }
 
-    logout() {
+    logout(then = () => {}) {
         this.app.$axiosLogin.post("logout").then(() => {
-            this.unsetToken();
+            this.unsetToken(then);
             this.app.$router.push({ path: "/Login" })
         })
     }
@@ -23,16 +23,20 @@ class LoginService {
         return this.app.$axiosApi.defaults.headers.common['Authorization'] != null;
     }
 
-    setToken(token) {
+    setToken(token, then = () => {}) {
         this.app.$axiosApi.defaults.headers.common['Authorization'] = 'Bearer ' + token;
         this.app.$axiosLogin.defaults.headers.common['Authorization'] = 'Bearer ' + token;
         localStorage.setItem('token', token);
+
+        then();
     }
 
-    unsetToken() {
+    unsetToken(then = () => {}) {
         this.app.$axiosApi.defaults.headers.common['Authorization'] = null;
         this.app.$axiosLogin.defaults.headers.common['Authorization'] = null;
         localStorage.removeItem('token');
+
+        then();
     }
 }
 

@@ -5,6 +5,8 @@ import DetailsLivret from '../views/DetailsLivret.vue'
 import ModifyLivret from '../views/ModifyLivret.vue'
 import ListLivrets from '../views/ListLivrets.vue'
 import Login from '../views/Login.vue'
+import Profile from '../views/Profile.vue'
+import PasswordChanger from '../views/PasswordChanger.vue'
 
 
 const routes = [
@@ -40,6 +42,16 @@ const routes = [
         name: 'Login',
         component: Login
     },
+    {
+        path: '/Profile',
+        name: 'Profile',
+        component: Profile
+    },
+    {
+        path: '/Profile/change-password',
+        name: 'PasswordChanger',
+        component: PasswordChanger
+    },
 ]
 
 const protectedRoutes = [
@@ -47,7 +59,9 @@ const protectedRoutes = [
     "About",
     "DetailsLivret",
     "ModifyLivret",
-    "ListLivrets"
+    "ListLivrets",
+    "Profile",
+    "PasswordChanger",
 ]
 
 const router = createRouter({

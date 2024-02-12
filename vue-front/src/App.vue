@@ -18,29 +18,37 @@
             <router-link :to="{ name: 'ListLivrets' }" class="nav-link">Livrets</router-link>
           </a>
         </li>
-        <li class="nav-item">
+        <li v-if="this.currentUser" class="nav-item">
           <a>
-            <button type="button" v-on:click="this.$loginService.logout()" class="nav-link">Logout</button>
+            <router-link :to="{ name: 'Profile' }" class="nav-link">Mon Profil</router-link>
+          </a>
+        </li>
+        <li v-if="this.currentUser" class="nav-item">
+          <a>
+            <button type="button" v-on:click="this.$loginService.logout(fetchCurrentUser)" class="nav-link">Logout</button>
           </a>
         </li>
         <li class="nav-item">
           <a>
-            <button type="button" v-on:click="this.$loginService.login(`etudiant2@mail.com`, `etudiant2`)" class="nav-link">Student</button>
+            <button type="button" v-on:click="this.$loginService.login(`etudiant2@mail.com`, `etudiant2`, fetchCurrentUser)"
+              class="nav-link">Student</button>
           </a>
         </li>
         <li class="nav-item">
           <a>
-            <button type="button" v-on:click="this.$loginService.login(`maitre@mail.com`, `maitre`)" class="nav-link">Master</button>
+            <button type="button" v-on:click="this.$loginService.login(`maitre@mail.com`, `maitre`, fetchCurrentUser)"
+              class="nav-link">Master</button>
           </a>
         </li>
         <li class="nav-item">
           <a>
-            <button type="button" v-on:click="this.$loginService.login(`tuteur@mail.com`, `tuteur`)" class="nav-link">Tutor</button>
+            <button type="button" v-on:click="this.$loginService.login(`tuteur@mail.com`, `tuteur`, fetchCurrentUser)"
+              class="nav-link">Tutor</button>
           </a>
         </li>
         <li class="nav-item">
           <a>
-            <button type="button" v-on:click="this.$loginService.login(`responsable@mail.com`, `responsable`)"
+            <button type="button" v-on:click="this.$loginService.login(`responsable@mail.com`, `responsable`, fetchCurrentUser)"
               class="nav-link">Responsable</button>
           </a>
         </li>
@@ -61,25 +69,37 @@ export default {
   data() {
     this.$loginService.app = this; //  Todo : Si possible, le déplacer dans le main.js
     return {
-
+      currentUser: null,
     }
   },
   mounted() {
     this.init();
   },
   methods: {
-    init: function(){
+    fetchCurrentUser: function () {
+      this.currentUser = null;
+      this.$axiosLogin.get("whoami").then(u => {
+        this.currentUser = u.data;
+      });
+    },
+
+    init: function () {
       this.setApiToken();
       this.checkTokenValidity();
     },
 
-    setApiToken: function (){
-      this.$loginService.setToken(localStorage.getItem('token'));
+    setApiToken: function () {
+      this.$loginService.setToken(localStorage.getItem('token'), this.fetchCurrentUser);
     },
 
-    checkTokenValidity: function(){
+    checkTokenValidity: function () {
       // TODO : vérifier que le token fonctionne toujours, si non, unsetToken
       // TODO : peut etre refresh le token si 
+    }
+  },
+  watch: {
+    currentUser() {
+      
     }
   }
 }
