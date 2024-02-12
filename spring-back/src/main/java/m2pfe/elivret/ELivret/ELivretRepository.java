@@ -45,6 +45,10 @@ public interface ELivretRepository extends JpaRepository<ELivret, Integer> {
 
     // TODO : plus jolie d'une manière si possible
     // Remplacer la fin de la query par une méthode
-    @Query("SELECT DISTINCT(l) FROM ELivret l JOIN l.sections s ON s.livret = l JOIN s.questions q ON q.section = s JOIN q.answers a ON a.question = q WHERE a.value IS NULL AND ( (s.owner = 'STUDENT' AND l.student = :user) OR (s.owner = 'TUTOR' AND l.tutor = :user) OR (s.owner = 'MASTER' AND l.master = :user) OR (s.owner = 'RESPONSABLE' AND l.responsable = :user) )")
+    @Query("SELECT DISTINCT(l) " +
+            "FROM ELivret l JOIN l.sections s ON s.livret = l JOIN s.questions q ON q.section = s JOIN q.answers a ON a.question = q "
+            +
+            "WHERE s.visibility = true AND (a.value IS NULL OR a.value = '') " +
+            "AND ( (s.owner = 'STUDENT' AND l.student = :user) OR (s.owner = 'TUTOR' AND l.tutor = :user) OR (s.owner = 'MASTER' AND l.master = :user) OR (s.owner = 'RESPONSABLE' AND l.responsable = :user) ) ")
     Optional<List<ELivret>> findAllLivretsUserHasToComplete(@Param("user") EUser user);
 }
