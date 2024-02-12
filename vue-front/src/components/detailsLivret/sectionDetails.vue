@@ -89,22 +89,26 @@ export default {
                 this.$axiosLogin.get("whoami").then(u => {
                     let me = u.data;
 
+                    console.log(me);
+
                     this.$axiosApi.get("/livrets/" + this.section.livretId).then(l => {
                         let livret = l.data;
 
-                        if (livret.tutorId == me.id)
+                        console.log(livret)
+
+                        if (livret.tutor.id == me.id)
                             this.displaySection = true;
 
                         switch (this.section.owner) {
                             case 'STUDENT':
-                                if (livret.studentId != me.id)
+                                if (livret.student.id != me.id)
                                     this.displaySection |= false;
                                 else
                                     this.displaySection = true && this.section.visibility;
                                 break;
 
                             case 'MASTER':
-                                if (livret.masterId != me.id)
+                                if (livret.master.id != me.id)
                                     this.displaySection |= false;
                                 else
                                     this.displaySection = true && this.section.visibility;
@@ -114,6 +118,9 @@ export default {
                             default:
                                 break;
                         }
+
+
+                        console.log(this.displaySection);
                     })
 
                 });
@@ -132,7 +139,7 @@ export default {
                     this.$axiosApi.get("/livrets/" + this.section.livretId).then(l => {
                         let livret = l.data;
 
-                        if (livret.tutorId == me.id)
+                        if (livret.tutor.id == me.id)
                             this.displayVisibility = true;
                         else
                             this.displayVisibility = false;
