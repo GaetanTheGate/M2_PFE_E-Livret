@@ -33,7 +33,7 @@ import m2pfe.elivret.Security.MyUserDetailsService;
  * @see Jwts
  * 
  * @author Gaëtan PUPET
- * @version 1.0
+ * @version 1.1
  */
 @Service
 public class JwtManager {
@@ -141,6 +141,21 @@ public class JwtManager {
     public void forgetToken(String token) throws AuthentificationException {
         if (!authorizedTokens.remove(token))
             throw new AuthentificationException(HttpStatus.NO_CONTENT, "Unknown token to forget");
+    }
+
+    /**
+     * <p>
+     * Forget all tokens linked to a specific email, rendering them useless.
+     * </p>
+     * 
+     * @param token The token to forget.
+     * @throws AuthentificationException
+     */
+    public void forgetTokenLinkedToEmail(String email) {
+        for (String token : authorizedTokens) {
+            if (resolveEmail(token).equals(email))
+                forgetToken(token);
+        }
     }
 
     /**

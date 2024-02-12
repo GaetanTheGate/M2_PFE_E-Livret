@@ -6,12 +6,15 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import m2pfe.elivret.EUser.EUser;
 import m2pfe.elivret.EUser.EUserDTO;
+import m2pfe.elivret.EUser.EUserRepository;
+
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -30,7 +33,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @see JwtManager
  * 
  * @author Gaëtan PUPET
- * @version 1.1
+ * @version 1.2
  */
 @RestController
 @RequestMapping("/authentification")
@@ -42,6 +45,9 @@ public class AuthentificationController {
      */
     @Autowired
     private AuthentificationService service;
+
+    @Autowired
+    private EUserRepository u_repo;
 
     /**
      * Mapper for mapping an object to another.
@@ -140,4 +146,45 @@ public class AuthentificationController {
         }
     }
 
+    /**
+     * <p>
+     * <b>PUT</b> request on path <b>"/change-password"</b>
+     * </p>
+     * <p>
+     * Change the password of the user, and clear all token linked with the old
+     * password.
+     * </p>
+     * <p>
+     * Returns a new token to log the current user.
+     * </p>
+     * 
+     * @see AuthentificationService
+     * @see #AuthentificationService.clearTokensLinkedToUser(String)
+     * @see JwtManager
+     * 
+     * @param userInformations The email, old password, and new password.
+     * @param req              The header where the token of the user is so that the
+     *                         application
+     *                         can find its linked user.
+     * @return A new token to log in.
+     */
+    @PutMapping("/change-password")
+    public ResponseEntity<String> changePassword(@RequestBody EUserDTO.In.ChangePassword userInformations,
+            HttpServletRequest req) {
+        try {
+            EUser user = service.getUserFromMailAndPassword(userInformations.getEmail(),
+                    userInformations.getPassword());
+
+            user.setPassword(userInformations.getNewpassword());
+            user = u_repo.save(user);
+
+            service.clearTokensLinkedToUser(user.getEmail());
+
+            String token = service.login(user.getEmail(), user.getPassword());
+
+            return ResponseEntity.ok(token);
+        } catch (AuthentificationException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
+        }
+    }
 }

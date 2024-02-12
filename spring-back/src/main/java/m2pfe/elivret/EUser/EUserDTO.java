@@ -16,7 +16,7 @@ import m2pfe.elivret.ELivret.ELivret;
  * @see EUser
  * 
  * @author Gaëtan PUPET
- * @version 1.0
+ * @version 1.2
  */
 public class EUserDTO {
     /**
@@ -32,6 +32,18 @@ public class EUserDTO {
             private String email;
             private String password;
         }
+
+        /**
+         * The DTO used when the user wants to authentify.
+         */
+        @Data
+        @NoArgsConstructor
+        public static class ChangePassword {
+            private String email;
+            private String password;
+            private String newpassword;
+        }
+
 
         /**
          * The DTO used for searching users.

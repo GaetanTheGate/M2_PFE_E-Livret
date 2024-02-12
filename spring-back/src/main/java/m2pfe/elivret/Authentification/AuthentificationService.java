@@ -20,7 +20,7 @@ import m2pfe.elivret.EUser.EUserRepository;
  * @see EUserRepository
  * 
  * @author Gaëtan PUPET
- * @version 1.1
+ * @version 1.2
  */
 @Service
 public class AuthentificationService {
@@ -48,6 +48,19 @@ public class AuthentificationService {
     @Autowired
     private EUserRepository ur;
 
+    public EUser getUserFromMailAndPassword(String email, String password) throws AuthentificationException {
+        try {
+            authentication.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+
+            EUser user = ur.findByEmail(email)
+                    .orElseThrow(Exception::new);
+
+            return user;
+        } catch (Exception e) {
+            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Invalid username/password supplied");
+        }
+    }
+
     /**
      * <p>
      * Log in a user from its email and password.
@@ -67,16 +80,9 @@ public class AuthentificationService {
      * @throws AuthentificationException if it couldn't log in the user.
      */
     public String login(String email, String password) throws AuthentificationException {
-        try {
-            authentication.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+        EUser user = getUserFromMailAndPassword(email, password);
 
-            EUser user = ur.findByEmail(email)
-                    .orElseThrow(Exception::new);
-
-            return jwt.createToken(user);
-        } catch (Exception e) {
-            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Invalid username/password supplied");
-        }
+        return jwt.createToken(user);
     }
 
     /**
@@ -154,5 +160,34 @@ public class AuthentificationService {
         String token = jwt.resolveToken(req);
 
         return whoAmI(token);
+    }
+
+    /**
+     * <p>
+     * Makes the application forget the tokens linked to a specific user.
+     * </p>
+     * 
+     * @see JwtManager
+     * 
+     * @param email The email linked to the token to forget.
+     */
+    public void clearTokensLinkedToUser(String email) {
+        jwt.forgetTokenLinkedToEmail(email);
+    }
+
+    /**
+     * <p>
+     * Makes the application forget the tokens linked to a specific user.
+     * </p>
+     * 
+     * @see #clearTokensLinkedToUser(String)
+     * @see JwtManager
+     * 
+     * @param req The request linked to the user to forget.
+     */
+    public void clearTokensLinkedToUser(HttpServletRequest req) {
+        String token = jwt.resolveToken(req);
+
+        clearTokensLinkedToUser(jwt.resolveEmail(token));
     }
 }
