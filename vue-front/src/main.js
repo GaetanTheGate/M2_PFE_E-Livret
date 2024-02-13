@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import axios from 'axios'
 import LoginService from './services/LoginService.js'
+import PageService from './services/PageService.js'
 // import 'bootstrap/dist/css/bootstrap.min.css'
 import '../css/bootstrapStyle.css'
 // import '../css/genericStyle.css'
@@ -21,6 +22,7 @@ app.config.globalProperties.$axiosLogin = axios.create({
     timeout: 30000
 });
 
-app.config.globalProperties.$loginService = new LoginService();
+app.config.globalProperties.$loginService = new LoginService(app.config.globalProperties.$axiosApi, app.config.globalProperties.$axiosLogin);
+app.config.globalProperties.$pageService = new PageService(app.config.globalProperties.$router);
 
 app.mount('#app')

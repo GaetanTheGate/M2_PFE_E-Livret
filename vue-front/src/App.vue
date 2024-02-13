@@ -25,7 +25,7 @@
         </li>
         <li v-if="this.currentUser" class="nav-item">
           <a>
-            <button type="button" v-on:click="this.$loginService.logout(fetchCurrentUser)" class="nav-link">Logout</button>
+            <button type="button" v-on:click="this.$loginService.logout(this.$pageService.gotoLoginPage.bind(this.$pageService))" class="nav-link">Logout</button>
           </a>
         </li>
         <li class="nav-item">
@@ -60,14 +60,12 @@
 </template>
 
 <script>
-// import LoginService from './services/LoginService.js'
 
 export default {
   name: 'app',
   components: {
   },
   data() {
-    this.$loginService.app = this; //  Todo : Si possible, le déplacer dans le main.js
     return {
       currentUser: null,
     }
@@ -95,12 +93,10 @@ export default {
     checkTokenValidity: function () {
       // TODO : vérifier que le token fonctionne toujours, si non, unsetToken
       // TODO : peut etre refresh le token si 
-    }
+    },
   },
   watch: {
-    currentUser() {
-      
-    }
+    
   }
 }
 </script>
