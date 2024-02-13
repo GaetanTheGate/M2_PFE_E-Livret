@@ -2,6 +2,7 @@ package m2pfe.elivret.Authentification;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -152,9 +153,11 @@ public class JwtManager {
      * @throws AuthentificationException
      */
     public void forgetTokenLinkedToEmail(String email) {
-        for (String token : authorizedTokens) {
+        for(Iterator<String> iterator = authorizedTokens.iterator() ; iterator.hasNext();){
+            String token = iterator.next();
+
             if (resolveEmail(token).equals(email))
-                forgetToken(token);
+                iterator.remove();
         }
     }
 
@@ -162,13 +165,13 @@ public class JwtManager {
      * <p>
      * Clean all non-valid tokens.
      * </p>
-     * 
-     * @see #forgetToken(String)
      */
     public void cleanAuthorizedTokens() {
-        for (String token : authorizedTokens) {
+        for(Iterator<String> iterator = authorizedTokens.iterator() ; iterator.hasNext();){
+            String token = iterator.next();
+
             if (!validateToken(token))
-                forgetToken(token);
+                iterator.remove();
         }
     }
 

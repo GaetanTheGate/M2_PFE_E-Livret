@@ -2,6 +2,7 @@ package m2pfe.elivret.Authentification;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,9 @@ public class AuthentificationController {
 
     @Autowired
     private EUserRepository u_repo;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     /**
      * Mapper for mapping an object to another.
@@ -175,12 +179,12 @@ public class AuthentificationController {
             EUser user = service.getUserFromMailAndPassword(userInformations.getEmail(),
                     userInformations.getPassword());
 
-            user.setPassword(userInformations.getNewpassword());
+            user.setPassword(encoder.encode(userInformations.getNewpassword()));
             user = u_repo.save(user);
 
             service.clearTokensLinkedToUser(user.getEmail());
 
-            String token = service.login(user.getEmail(), user.getPassword());
+            String token = service.login(user.getEmail(), userInformations.getNewpassword());
 
             return ResponseEntity.ok(token);
         } catch (AuthentificationException e) {
