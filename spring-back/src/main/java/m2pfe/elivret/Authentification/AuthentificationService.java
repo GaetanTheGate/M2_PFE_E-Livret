@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 
 import m2pfe.elivret.EUser.EUser;
+import m2pfe.elivret.EUser.EUserException;
 import m2pfe.elivret.EUser.EUserRepository;
 
 /**
@@ -189,5 +190,23 @@ public class AuthentificationService {
         String token = jwt.resolveToken(req);
 
         clearTokensLinkedToUser(jwt.resolveEmail(token));
+    }
+
+
+    public String getTokenForUser(EUser user){
+        return jwt.createToken(user);
+    }
+
+    public String getTokenForUser(String email) throws EUserException {
+        EUser user = ur.findByEmail(email)
+                .orElseThrow( () -> new EUserException(HttpStatus.NO_CONTENT, "No user found with email") );
+
+        return getTokenForUser(user);
+    }
+
+    public String getTokenForUser(HttpServletRequest req) throws EUserException, AuthentificationException {
+        String token = jwt.resolveToken(req);
+
+        return getTokenForUser(jwt.resolveEmail(token));
     }
 }

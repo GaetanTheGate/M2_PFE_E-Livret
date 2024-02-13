@@ -34,7 +34,7 @@ public class EUserDTO {
         }
 
         /**
-         * The DTO used when the user wants to authentify.
+         * The DTO used when the user wants to change its password.
          */
         @Data
         @NoArgsConstructor
@@ -44,6 +44,14 @@ public class EUserDTO {
             private String newpassword;
         }
 
+        /**
+         * The DTO used to create a EUser.
+         */
+        @Data
+        @NoArgsConstructor
+        public static class newUser {
+            private String email;
+        }
 
         /**
          * The DTO used for searching users.

@@ -191,4 +191,14 @@ public class AuthentificationController {
             return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
+
+    @PostMapping("/create-user")
+    public ResponseEntity<String> createUser(@RequestBody EUserDTO.In.newUser user, HttpServletRequest req) {
+        EUser newuser = mapper.map(user, EUser.class);
+        newuser.setPassword("\\");
+
+        newuser = u_repo.save(newuser);
+
+        return ResponseEntity.ok(service.getTokenForUser(newuser));
+    }
 }
