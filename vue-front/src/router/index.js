@@ -7,6 +7,7 @@ import ListLivrets from '../views/ListLivrets.vue'
 import Login from '../views/Login.vue'
 import Profile from '../views/Profile.vue'
 import PasswordChanger from '../views/PasswordChanger.vue'
+import CreateUser from '../views/CreateUser.vue'
 
 
 const routes = [
@@ -52,6 +53,11 @@ const routes = [
         name: 'PasswordChanger',
         component: PasswordChanger
     },
+    {
+        path: '/Users/create-user',
+        name: 'CreateUser',
+        component: CreateUser
+    },
 ]
 
 const protectedRoutes = [
@@ -62,6 +68,7 @@ const protectedRoutes = [
     "ListLivrets",
     "Profile",
     "PasswordChanger",
+    "CreateUser",
 ]
 
 const router = createRouter({
