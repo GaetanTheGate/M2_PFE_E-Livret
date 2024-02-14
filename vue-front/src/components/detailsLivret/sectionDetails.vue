@@ -76,7 +76,6 @@ export default {
 
             this.$axiosApi.put("sections/saveVisibility", sec).then(s => {
                 this.section = s.data;
-                console.log(s.data);
             })
         },
 
@@ -89,12 +88,8 @@ export default {
                 this.$axiosLogin.get("whoami").then(u => {
                     let me = u.data;
 
-                    console.log(me);
-
                     this.$axiosApi.get("/livrets/" + this.section.livretId).then(l => {
                         let livret = l.data;
-
-                        console.log(livret)
 
                         if (livret.tutor.id == me.id)
                             this.displaySection = true;
@@ -118,9 +113,6 @@ export default {
                             default:
                                 break;
                         }
-
-
-                        console.log(this.displaySection);
                     })
 
                 });

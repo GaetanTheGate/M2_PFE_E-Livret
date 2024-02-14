@@ -45,10 +45,10 @@ export default {
             });
         },
         redirect: function (livretsId) {
-            this.$router.push({ path: `/Livret/${livretsId}/details` })
+            this.$pageService.gotoLivretDetailsPage(livretsId);
         },
         modifyLivret: function (livretsId) {
-            this.$router.push({ path: `/Livret/${livretsId}/modify` })
+            this.$pageService.gotoLivretModifyPage(livretsId);
         }
     }
 }

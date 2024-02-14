@@ -22,12 +22,10 @@ export default {
 
         checkToken: function(){
             let token = this.$route.query.token;
-            console.log(token)
             if(token){
                 this.$loginService.setToken(token);
 
                 this.$axiosLogin.get("whoami").then(() => {
-                    console.log("passé !")
                     this.$pageService.gotoProfilePage();
                 });
             }

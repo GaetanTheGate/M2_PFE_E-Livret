@@ -7,7 +7,7 @@
             <label id="label" class="form-label">Password:</label>
             <input id="input" type="password" required v-model="password" class="form-control">
 
-            <button type="button" v-on:click="this.$loginService.login(email, password, this.$pageService.gotoProfilePage)"
+            <button type="button" v-on:click="this.$loginService.login(email, password, $pageService.gotoProfilePage.bind($pageService))"
                 class="btn btn-primary">Login</button>
         </form>
     </div>

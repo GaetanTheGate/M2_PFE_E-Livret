@@ -54,11 +54,10 @@ export default {
                     password: this.oldP,
                     newpassword: this.newP,
                 }
-                console.log(information);
+
                 this.$axiosLogin.put("change-password", information).then(t => {
                     this.$loginService.setToken(t.data);
-
-                    this.$router.push({ path : "/Profile"});
+                    this.$pageService.gotoProfilePage();
                 });
             }
         },
