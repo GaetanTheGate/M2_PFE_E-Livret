@@ -14,11 +14,11 @@ class PageService {
     }
 
     gotoLivretDetailsPage(id) {
-        this.router.gotoLivretDetailsPage(id);
+        this.router.push({ path: `/Livret/${id}/details` });
     }
 
     gotoLivretModifyPage(id) {
-        this.router.gotoLivretModifyPage(id);
+        this.router.push({ path: `/Livret/${id}/modify` });
     }
 }
 
