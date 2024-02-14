@@ -1,6 +1,8 @@
 package m2pfe.elivret.EUser;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import m2pfe.elivret.ELivret.ELivret;
 
@@ -54,6 +56,15 @@ public class EUserDTO {
         }
 
         /**
+         * The DTO used to create a password.
+         */
+        @Data
+        @NoArgsConstructor
+        public static class newPassword {
+            private String password;
+        }
+
+        /**
          * The DTO used for searching users.
          */
         @Data
@@ -76,6 +87,14 @@ public class EUserDTO {
             private Integer id;
             private String email;
             private ELivret.UserRole role;
+
+            
+            @Getter(AccessLevel.NONE)
+            private String password;
+
+            public Boolean getIsPasswordSet() {
+                return !password.equals("\\");
+            } 
         }
     }
 }

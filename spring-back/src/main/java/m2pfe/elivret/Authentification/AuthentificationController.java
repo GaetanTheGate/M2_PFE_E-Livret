@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import m2pfe.elivret.EUser.EUser;
 import m2pfe.elivret.EUser.EUserDTO;
+import m2pfe.elivret.EUser.EUserException;
 import m2pfe.elivret.EUser.EUserRepository;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -185,6 +187,50 @@ public class AuthentificationController {
             service.clearTokensLinkedToUser(user.getEmail());
 
             String token = service.login(user.getEmail(), userInformations.getNewpassword());
+
+            return ResponseEntity.ok(token);
+        } catch (AuthentificationException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
+        }
+    }
+
+    /**
+     * <p>
+     * <b>POST</b> request on path <b>"/init-password"</b>
+     * </p>
+     * <p>
+     * Initialize the password of the user if not already done, and clear all token linked with the old
+     * password.
+     * </p>
+     * <p>
+     * Returns a new token to log the current user.
+     * </p>
+     * 
+     * @see AuthentificationService
+     * @see #AuthentificationService.clearTokensLinkedToUser(String)
+     * @see JwtManager
+     * 
+     * @param userInformations The password to set.
+     * @param req              The header where the token of the user is so that the
+     *                         application
+     *                         can find its linked user.
+     * @return A new token to log in.
+     */
+    @PostMapping("/init-password")
+    public ResponseEntity<String> initPassword(@RequestBody EUserDTO.In.newPassword userInformations,
+            HttpServletRequest req) {
+        try {
+            EUser user = service.whoAmI(req);
+
+            if(!user.getPassword().equals("\\"))
+                throw new EUserException(HttpStatus.CREATED, "User's password already set.");
+
+            user.setPassword(encoder.encode(userInformations.getPassword()));
+            user = u_repo.save(user);
+
+            service.clearTokensLinkedToUser(user.getEmail());
+
+            String token = service.login(user.getEmail(), userInformations.getPassword());
 
             return ResponseEntity.ok(token);
         } catch (AuthentificationException e) {
