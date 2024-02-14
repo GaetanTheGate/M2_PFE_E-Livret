@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import m2pfe.elivret.ELivret.ELivret;
+import m2pfe.elivret.EUser.EUser.Permission;
 
 /**
  * <p>
@@ -86,7 +86,7 @@ public class EUserDTO {
         public static class UserInformation {
             private Integer id;
             private String email;
-            private ELivret.UserRole role;
+            private Permission permission;
 
             
             @Getter(AccessLevel.NONE)

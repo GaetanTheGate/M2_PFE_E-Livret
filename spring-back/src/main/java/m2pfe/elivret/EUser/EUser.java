@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import m2pfe.elivret.ELivret.ELivret;
 
 /**
  * <p>
@@ -50,9 +49,12 @@ public class EUser {
     @NotBlank
     private String password;
 
-    // TODO : remove
     @Basic
     @Enumerated(EnumType.STRING)
-    private ELivret.UserRole role;
+    private Permission permission;
+
+    public static enum Permission{
+        RESPONSABLE, USER
+    }
 
 }

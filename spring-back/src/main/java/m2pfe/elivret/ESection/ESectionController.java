@@ -1,6 +1,5 @@
 package m2pfe.elivret.ESection;
 
-import m2pfe.elivret.ELivret.ELivret;
 import m2pfe.elivret.EUser.EUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,32 +124,32 @@ public class ESectionController {
     }
 
     // TODO : Faire avec spring security toute la fonction
-    @Deprecated
-    @PutMapping("")
-    @PreAuthorize("@EntityAccessAuthorization.isMeFromLivret(#req.getLivret(), #section)")
-    public ESection putSection(@RequestBody ESection section, HttpServletRequest req)
-            throws AuthentificationException, ESectionException {
-        EUser me = service.whoAmI(req);
-        /** Tutor ne peux modifier que la visibilité d'une section **/
-        if (me.getRole() == ELivret.UserRole.TUTOR) {
-            ESection sNew = mapper.map(section, ESection.class);
+    // @Deprecated
+    // @PutMapping("")
+    // @PreAuthorize("@EntityAccessAuthorization.isMeFromLivret(#req.getLivret(), #section)")
+    // public ESection putSection(@RequestBody ESection section, HttpServletRequest req)
+    //         throws AuthentificationException, ESectionException {
+    //     EUser me = service.whoAmI(req);
+    //     /** Tutor ne peux modifier que la visibilité d'une section **/
+    //     if (me.getRole() == ELivret.UserRole.TUTOR) {
+    //         ESection sNew = mapper.map(section, ESection.class);
 
-            ESection sOld = s_repo.findById(sNew.getId())
-                    .orElseThrow(() -> new ESectionException(HttpStatus.NO_CONTENT, "Section not found."));
-            sOld.setVisibility(sNew.getVisibility());
+    //         ESection sOld = s_repo.findById(sNew.getId())
+    //                 .orElseThrow(() -> new ESectionException(HttpStatus.NO_CONTENT, "Section not found."));
+    //         sOld.setVisibility(sNew.getVisibility());
 
-            return s_repo.save(sOld);
-        }
-        if (me.getRole() != ELivret.UserRole.RESPONSABLE) {
-            throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
-        }
-        ESection s = mapper.map(section, ESection.class);
+    //         return s_repo.save(sOld);
+    //     }
+    //     if (me.getRole() != ELivret.UserRole.RESPONSABLE) {
+    //         throw new AuthentificationException(HttpStatus.FORBIDDEN, "Not allowed to access this entity.");
+    //     }
+    //     ESection s = mapper.map(section, ESection.class);
 
-        s_repo.findById(s.getId())
-                .orElseThrow(() -> new ESectionException(HttpStatus.NO_CONTENT, "Section not found."));
+    //     s_repo.findById(s.getId())
+    //             .orElseThrow(() -> new ESectionException(HttpStatus.NO_CONTENT, "Section not found."));
 
-        return s_repo.save(s);
-    }
+    //     return s_repo.save(s);
+    // }
 
     /// DeleteMapping
 

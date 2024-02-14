@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -43,7 +44,7 @@ public class MyUserDetailsService implements UserDetailsService {
         EUser user = ur.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User's email \"" + email + "\" not found."));
 
-        List<GrantedAuthority> authorities = List.of();
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getPermission().toString()));
 
         return User.builder()
                 .username(email)

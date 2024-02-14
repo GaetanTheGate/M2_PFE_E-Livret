@@ -24,6 +24,7 @@ import m2pfe.elivret.ESection.ESection;
 import m2pfe.elivret.ESection.ESectionRepository;
 import m2pfe.elivret.EUser.EUser;
 import m2pfe.elivret.EUser.EUserRepository;
+import m2pfe.elivret.EUser.EUser.Permission;
 
 /**
  * <p>
@@ -68,23 +69,23 @@ public class PopulateTesting {
     }
 
     private void createUsers() {
-        createAndSaveUser("email", "password", UserRole.RESPONSABLE);
+        createAndSaveUser("email", "password", Permission.RESPONSABLE);
     }
 
-    private EUser createAndSaveUser(String mail, String password, ELivret.UserRole role) {
+    private EUser createAndSaveUser(String mail, String password, Permission Permission) {
         EUser user = new EUser();
         user.setEmail(mail);
         user.setPassword(encoder.encode(password));
-        user.setRole(role);
+        user.setPermission(Permission);
         return ur.save(user);
     }
 
     private void createELivrets() {
 
-        EUser student = createAndSaveUser("etudiant@mail.com", "etudiant", UserRole.STUDENT);
-        EUser tutor = createAndSaveUser("tuteur@mail.com", "tuteur", UserRole.TUTOR);
-        EUser master = createAndSaveUser("maitre@mail.com", "maitre", UserRole.MASTER);
-        EUser responsable = createAndSaveUser("responsable@mail.com", "responsable", UserRole.RESPONSABLE);
+        EUser student = createAndSaveUser("etudiant@mail.com", "etudiant", Permission.USER);
+        EUser tutor = createAndSaveUser("tuteur@mail.com", "tuteur", Permission.USER);
+        EUser master = createAndSaveUser("maitre@mail.com", "maitre", Permission.USER);
+        EUser responsable = createAndSaveUser("responsable@mail.com", "responsable", Permission.RESPONSABLE);
 
         createAndSaveElivret(student, tutor, master, responsable);
     }
@@ -181,7 +182,7 @@ public class PopulateTesting {
     }
 
     private void createExampleLivret() {
-        EUser student = createAndSaveUser("etudiant2@mail.com", "etudiant2", UserRole.STUDENT);
+        EUser student = createAndSaveUser("etudiant2@mail.com", "etudiant2", Permission.USER);
 
         EUser responsable = ur.findByEmail("responsable@mail.com").get();
         EUser tutor = ur.findByEmail("tuteur@mail.com").get();
