@@ -130,11 +130,8 @@ export default {
 
                     this.$axiosApi.get("/livrets/" + this.section.livretId).then(l => {
                         let livret = l.data;
-
-                        if (livret.tutor.id == me.id)
-                            this.displayVisibility = true;
-                        else
-                            this.displayVisibility = false;
+                        
+                        this.displayVisibility = (livret.tutor.id == me.id)
                     })
 
                 });
