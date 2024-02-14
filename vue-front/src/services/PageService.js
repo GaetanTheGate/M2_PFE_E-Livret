@@ -14,11 +14,11 @@ class PageService {
     }
 
     gotoLivretDetailsPage(id) {
-        this.$pageService.gotoLivretDetailsPage(id);
+        this.router.gotoLivretDetailsPage(id);
     }
 
     gotoLivretModifyPage(id) {
-        this.$pageService.gotoLivretModifyPage(id);
+        this.router.gotoLivretModifyPage(id);
     }
 }
 
