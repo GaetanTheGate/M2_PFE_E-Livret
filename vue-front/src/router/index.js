@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import axios from 'axios'
+
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import DetailsLivret from '../views/DetailsLivret.vue'
@@ -7,6 +9,7 @@ import ListLivrets from '../views/ListLivrets.vue'
 import Login from '../views/Login.vue'
 import Profile from '../views/Profile.vue'
 import PasswordChanger from '../views/PasswordChanger.vue'
+import PasswordInit from '../views/PasswordInit.vue'
 import CreateUser from '../views/CreateUser.vue'
 
 
@@ -54,6 +57,11 @@ const routes = [
         component: PasswordChanger
     },
     {
+        path: '/Profile/init-password',
+        name: 'PasswordInit',
+        component: PasswordInit
+    },
+    {
         path: '/Users/create-user',
         name: 'CreateUser',
         component: CreateUser
@@ -77,16 +85,39 @@ const router = createRouter({
 })
 
 const isLoggedIn = () => {
-    return localStorage.getItem('token')
+    return !!localStorage.getItem('token')
+}
+
+const axiosLogin = axios.create({
+    baseURL: 'http://localhost:8081/authentification/',
+    timeout: 30000,
+});
+
+const isPasswordSet = async () => {
+    if(!isLoggedIn())
+        throw new Error("Cannot check password's state when not authentified")
+    
+    axiosLogin.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+
+    return axiosLogin.get("whoami").then(u => {
+        return u.data.isPasswordSet;
+    });
 }
 
 router.beforeEach(async (to, from, next) => {
     const isProtected = protectedRoutes.includes(to.name)
+
     if (isProtected && !isLoggedIn()) {
         next({
-            path: '/login'
+            name: 'Login',
         })
-    } else next()
+    }
+    else if ((to.name != 'PasswordInit') && isLoggedIn() && !await isPasswordSet()) {
+        next({
+            name: 'PasswordInit',
+        })
+    }
+    else next()
 })
 
 export default router
