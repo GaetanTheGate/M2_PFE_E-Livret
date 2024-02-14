@@ -38,7 +38,7 @@ export default {
                 email: this.email,
             }
 
-            this.$axiosLogin.post("create-user", newuser).then(t => {
+            this.$axiosApi.post("users/create-user", newuser).then(t => {
                 this.url = t.data;
             });
         }
