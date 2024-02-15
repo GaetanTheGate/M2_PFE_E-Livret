@@ -51,7 +51,8 @@ public class EUser {
 
     @Basic
     @Enumerated(EnumType.STRING)
-    private Permission permission;
+    @Builder.Default
+    private Permission permission = Permission.USER;
 
     public static enum Permission{
         RESPONSABLE, USER
