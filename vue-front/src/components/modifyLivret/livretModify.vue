@@ -1,12 +1,14 @@
 <template>
     <div v-if="livret" class="container">
-        <userModify :userId="livret.student.id" @user_clicked="setStudent" :userType="'Apprenti(e)'" />
-        <userModify :userId="livret.master.id" @user_clicked="setMaster" :userType="'Maitre d\'apprentissage'" />
-        <userModify :userId="livret.tutor.id" @user_clicked="setTutor" :userType="'Tuteur'" />
+        <userModify :userId="livret.student ? livret.student.id : null" @user_clicked="setStudent"
+            :userType="'Apprenti(e)'" />
+        <userModify :userId="livret.master ? livret.master.id : null" @user_clicked="setMaster"
+            :userType="'Maitre d\'apprentissage'" />
+        <userModify :userId="livret.tutor ? livret.tutor.id : null" @user_clicked="setTutor" :userType="'Tuteur'" />
 
-        <div v-for="section in livret.sections" :key="section.id" class="myUL">
+        <!-- <div v-for="section in livret.sections" :key="section.id" class="myUL">
             {{ section.id }}
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -50,7 +52,7 @@ export default {
                 masterId: this.livret.master.id,
                 tutorId: this.livret.tutor.id,
             }
-
+            this.livret.student = null;
             this.$axiosApi.put("livrets/set-actors?setStudent=true", l).then(l => {
                 this.livret.student = l.data.student;
             });
