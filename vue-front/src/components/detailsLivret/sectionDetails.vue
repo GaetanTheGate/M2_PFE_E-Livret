@@ -1,25 +1,58 @@
 <template>
     <div v-if="section && displaySection" class="container">
-        <h2>{{ section.title }}</h2>
-        <p>This section is owned by {{ section.owner }}</p>
+        <div class="card rounded-3 m-5">
+            <div  class="card-header btn btn-outline-light list-group-item d-flex  justify-content-between align-items-center p-4 border-0 list-group-item-secondary" data-bs-toggle="collapse" v-bind:data-bs-target="'#sectionCollapse_' + section.id">
+                <div >
+                    <h2>{{ section.title }}</h2>
+                    <p>This section is owned by {{ section.owner }}</p>
+                </div>
+                <div>
+                    <div class="collapse" v-bind:id="'sectionCollapse_' + section.id">
 
-        <div v-if="displayVisibility" class="form-check">
-            <label for="section_visibility" class="form-check-label">Visible</label>
-            <input type="checkbox" :id="'section_' + section.id + '_visibility'" v-model="section.visibility"
-                v-on:click="saveVisibility()" class="form-check-input">
-        </div>
+                        <svg   id="caret_up"
+                               xmlns="http://www.w3.org/2000/svg"
+                               width="24" height="24" fill="black" class="bi bi-caret-up-fill"
+                               viewBox="0 0 16 16" role="img" >
+                            <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                        </svg>
+                    </div>
+                    <div class="collapse show" v-bind:id="'sectionCollapse_' + section.id">
+                        <svg id="caret_down"
+                             xmlns="http://www.w3.org/2000/svg"
+                             width="24" height="24" fill="black" class="bi bi-caret-down-fill"
+                             viewBox="0 0 16 16" role="img" >
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                        </svg>
 
-        <div v-for="question in section.questions" :key="question.id" class="mb-2">
-            <questionDetails :questionId="question.id" :editionMode="editionMode" @callable="addQuestionChild" />
+                    </div>
+                </div>
+
+
+            </div>
+            <div  class="collapse" v-bind:id="'sectionCollapse_' + section.id" >
+                <div class="card-body bg-body-tertiary ">
+                    <div v-if="displayVisibility" class="form-check">
+                        <label for="section_visibility" class="form-check-label">Visible</label>
+                        <input type="checkbox" :id="'section_' + section.id + '_visibility'" v-model="section.visibility"
+                               v-on:click="saveVisibility()" class="form-check-input">
+                    </div>
+
+                    <div v-for="question in section.questions" :key="question.id" class="mb-2">
+                        <questionDetails :questionId="question.id" :editionMode="editionMode" @callable="addQuestionChild" />
+                    </div>
+                    <button v-if="editionMode" v-on:click="saveAnswers()" class="btn btn-danger">Sauvegarder</button>
+                </div>
+            </div>
         </div>
-        <button v-if="editionMode" v-on:click="saveAnswers()" class="btn btn-danger">Sauvegarder</button>
     </div>
 </template>
 
 <script>
 import questionDetails from './questionDetails.vue';
+// import collapse from "bootstrap/js/src/collapse";
 export default {
     name: "sectionDetails",
+
     components: {
         questionDetails
     },
@@ -47,6 +80,11 @@ export default {
     },
 
     methods: {
+
+        // isSectionCollapsed: function(){
+        //     this.sectionCollapsed = document.querySelector(`#sectionCollapse_${sectionId}`).contains('show');
+        // },
+
         fetchSection: function () {
             this.questionChilds = [];
 
@@ -152,8 +190,11 @@ export default {
 }
 </script>
 
+
 <style>
-.mb-5 {
-    background-color: lightgrey;
+.collapsing{
+    #caret_up{
+        visibility: hidden;
+    }
 }
 </style>

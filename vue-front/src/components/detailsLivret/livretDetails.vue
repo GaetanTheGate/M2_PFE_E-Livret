@@ -3,13 +3,13 @@
     <div v-if="livret" class="container">
         <button v-if="!editionMode" v-on:click="setEditionMode(true)" class="btn btn-info">Editer</button>
         <button v-if="editionMode" v-on:click="setEditionMode(false)" class="btn btn-info">Consulter</button>
-        <ul class="myUL">
-            <li>student : {{ livret.student }}</li>
-            <li>master : {{ livret.master }}</li>
-            <li>responsable : {{ livret.responsable }}</li>
-            <li>tutor : {{ livret.tutor }}</li>
-            <li>id : {{ livret.id }}</li>
-        </ul>
+<!--        <ul class="myUL">-->
+<!--            <li>student : {{ livret.student }}</li>-->
+<!--            <li>master : {{ livret.master }}</li>-->
+<!--            <li>responsable : {{ livret.responsable }}</li>-->
+<!--            <li>tutor : {{ livret.tutor }}</li>-->
+<!--            <li>id : {{ livret.id }}</li>-->
+<!--        </ul>-->
         <div v-for="section in livret.sections" :key="section.id" class="mb-5">
             <sectionDetails :sectionId="section.id" :editionMode=editionMode />
         </div>

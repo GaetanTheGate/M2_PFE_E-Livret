@@ -1,0 +1,37 @@
+
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+F
+vue-front/package.json,6\d\6d30c6a9d7275f2297607be426f84a3fd92031fd
+K
+vue-front/package-lock.json,7\2\72559764b3bcbf8ee3589ec2ad291d8d7ffe90e1
+M
+vue-front/src/views/Login.vue,9\b\9be0b79ddf70330111dd3ee532148666a95523e3
+N
+vue-front/css/genericStyle.css,6\f\6f0015089745a21a9207e589d50408cf450cda67
+P
+ vue-front/css/bootstrapStyle.css,f\7\f762ab97f6bd5a508aa865fa9a4551ec78d2a036
+O
+vue-front/src/views/Profile.vue,b\9\b97b087ae5aab4bcf1278d5c0f705ef58bfb2868
+d
+4spring-back/src/main/java/m2pfe/elivret/Starter.java,8\e\8ea849c12f1b77f5783d5720e1dd7863be6c1a52
+�
+\spring-back/src/test/java/m2pfe/elivret/Authentification/TestAuthentificationController.java,3\8\383aa838ae31f7cc2f6ce675f3dd36c94c8f7509
+p
+@spring-back/src/main/java/m2pfe/elivret/SpringConfiguration.java,6\6\663f109ed09fb2b6c111bbff30c6ba1b4c502506
+h
+8vue-front/src/components/detailsLivret/livretDetails.vue,b\9\b900b03bac75cfc3135c2ca5deeac79b75213892
+E
+vue-front/src/App.vue,b\5\b5a9b17252ab155e37d4da70e7f6c63c575419da
+E
+vue-front/src/main.js,7\5\751e3bd2e039cbb7f64da5cdcdd5d2feb1c61eb0
+S
+#vue-front/src/views/ListLivrets.vue,c\9\c9bd6c07cd846505b1145cb55394d4b258d86e49
+G
+vue-front/vue.config.js,3\2\32f5ebedfea17cc647f93fab19669fedb0107ee0
+K
+vue-front/public/index.html,e\0\e0076e699331b570732b763ec7d235814632adad
+U
+%vue-front/src/views/DetailsLivret.vue,3\0\3036c7a0a74a3c3ad33838ff742354a67d99473b
+i
+9vue-front/src/components/detailsLivret/sectionDetails.vue,1\c\1cc2c5beb612a6009b706c4ec1a7ced09d4d1339
