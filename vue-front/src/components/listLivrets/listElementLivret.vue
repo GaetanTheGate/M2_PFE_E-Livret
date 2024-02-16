@@ -1,8 +1,13 @@
 <template>
-    <button v-if="livret" type="button" v-on:click="redirect()"
-        style="filter: drop-shadow(0 0 0.2rem #ddd3ee);"
+    <div v-if="!livret" style="filter: drop-shadow(0 0 0.2rem #f9f8fc);"
+        class="btn-outline-light list-group-item d-flex justify-content-center align-items-center p-4 border-0 rounded-5 list-group-item-secondary m-4">
+        <div class="align-self-center spinner-border" role="status"></div>
+    </div>
+
+    <button v-if="livret" type="button" v-on:click="redirect()" style="filter: drop-shadow(0 0 0.2rem #adb5bd);"
         class="btn btn-outline-light list-group-item d-flex justify-content-between align-items-center p-4 border-0 rounded-5 list-group-item-secondary m-4"
         :key="livret.id" id="livret">
+
         <div class="text-start">
             <div class="fw-bold text-primary fs-5 text-wrap mx-2">Livret {{ livret.id }}</div>
             <hr class="border border-primary" />
@@ -21,7 +26,9 @@
         </div>
 
         <div>
-            <button v-if="showModifyButton" type="button" v-on:click="(event) => { event.stopPropagation() ; modifyLivret() }" style="filter: drop-shadow(0 0 1.0rem #0b6f33);"
+            <button v-if="showModifyButton" type="button"
+                v-on:click="(event) => { event.stopPropagation(); modifyLivret() }"
+                style="filter: drop-shadow(0 0 1.0rem #0b6f33);"
                 class="btn btn-outline-success me-5 p-3 rounded-4 fw-bold border-0 fs-4">Modifier</button>
 
             <a class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="Section(s) à completer">
@@ -53,9 +60,9 @@ export default {
 
     data() {
         return {
-            livret:                 null,
-            livretIdsToComplete:    null,
-            showModifyButton:       null,
+            livret: null,
+            livretIdsToComplete: null,
+            showModifyButton: null,
         }
     },
 
