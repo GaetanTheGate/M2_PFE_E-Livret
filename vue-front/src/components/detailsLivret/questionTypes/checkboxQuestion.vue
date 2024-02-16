@@ -1,9 +1,11 @@
 <template>
-    <div v-if="question">
-        <h4>
-            {{ question.title }}
-        </h4>
-        <fieldset>
+    <div class="container d-flex  justify-content-between align-items-center" v-if="question">
+        <div class="col">
+            <h4>
+                {{ question.title }}
+            </h4>
+        </div>
+        <fieldset class="col ps-3 border-start border-dark border-3">
             <div v-for="answer in question.answers" :key="answer.id" class="form-check">
                 <label for="answer.id" class="form-check-label">{{ answer.proposition }}</label>
                 <input type="checkbox" :name=question.id :id=answer.id class="form-check-input">

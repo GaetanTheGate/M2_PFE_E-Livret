@@ -8,7 +8,6 @@
                 </div>
                 <div>
                     <div class="collapse" v-bind:id="'sectionCollapse_' + section.id">
-
                         <svg   id="caret_up"
                                xmlns="http://www.w3.org/2000/svg"
                                width="24" height="24" fill="black" class="bi bi-caret-up-fill"
@@ -23,7 +22,6 @@
                              viewBox="0 0 16 16" role="img" >
                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                         </svg>
-
                     </div>
                 </div>
 
@@ -37,7 +35,7 @@
                                v-on:click="saveVisibility()" class="form-check-input">
                     </div>
 
-                    <div v-for="question in section.questions" :key="question.id" class="mb-2">
+                    <div v-for="question in section.questions" :key="question.id" class="container my-4">
                         <questionDetails :questionId="question.id" :editionMode="editionMode" @callable="addQuestionChild" />
                     </div>
                     <button v-if="editionMode" v-on:click="saveAnswers()" class="btn btn-danger">Sauvegarder</button>
@@ -80,10 +78,6 @@ export default {
     },
 
     methods: {
-
-        // isSectionCollapsed: function(){
-        //     this.sectionCollapsed = document.querySelector(`#sectionCollapse_${sectionId}`).contains('show');
-        // },
 
         fetchSection: function () {
             this.questionChilds = [];

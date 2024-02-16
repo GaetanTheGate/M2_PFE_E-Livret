@@ -1,11 +1,11 @@
 <template>
-    <div v-if="question">
+    <div class="container" v-if="question">
         <h4>
             {{ question.title }}
         </h4>
-        <div v-for="answer in question.answers" :key="answer.id">
+        <div class="container" v-for="answer in question.answers" :key="answer.id">
             <label v-if="answer.proposition" for="answer.id">{{ answer.proposition }}</label>
-            <input type="text" :name=question.id :id=answer.id class="form-control">
+            <textarea :name=question.id :id=answer.id class="form-control" @input="resizeTextArea(answer.id)" style="height: 17px;resize: none;scrollbar-width: none"></textarea>
         </div>
     </div>
 </template>
@@ -38,6 +38,14 @@ export default {
     },
 
     methods: {
+        resizeTextArea(id) {
+            const textarea = document.getElementById(id);
+            if (textarea) {
+                textarea.style.height = '17px';
+                textarea.style.height = textarea.scrollHeight + 'px';
+            }
+        },
+
         fetchQuestion: function () {
             let id = this["questionId"];
 
