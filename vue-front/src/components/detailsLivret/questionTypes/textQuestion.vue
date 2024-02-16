@@ -5,7 +5,7 @@
         </h4>
         <div class="container" v-for="answer in question.answers" :key="answer.id">
             <label v-if="answer.proposition" for="answer.id">{{ answer.proposition }}</label>
-            <textarea :name=question.id :id=answer.id class="form-control" @input="resizeTextArea(answer.id)" style="height: 17px;resize: none;scrollbar-width: none"></textarea>
+            <textarea :name=question.id :id=answer.id class="form-control"  @input="resizeTextArea(answer.id)" style="height:17px;resize: none;scrollbar-width: none"></textarea>
         </div>
     </div>
 </template>
@@ -32,19 +32,13 @@ export default {
             question: null,
         }
     },
+
     mounted() {
         this.fetchQuestion();
         this.emitCallable();
     },
 
     methods: {
-        resizeTextArea(id) {
-            const textarea = document.getElementById(id);
-            if (textarea) {
-                textarea.style.height = '17px';
-                textarea.style.height = textarea.scrollHeight + 'px';
-            }
-        },
 
         fetchQuestion: function () {
             let id = this["questionId"];
@@ -53,11 +47,28 @@ export default {
                 this.question = q.data
             }).then(() => {
                 this.question.answers.forEach(answer => {
-                    if (document.getElementById(answer.id))
+                    if (document.getElementById(answer.id)){
                         document.getElementById(answer.id).value = answer.value;
+                    }
                 });
-
                 this.setupEditionMode();
+            });
+        },
+
+        resizeTextArea(id) {
+            const textarea = document.getElementById(id);
+            if (textarea) {
+                textarea.style.height = '17px';
+                textarea.style.height = textarea.scrollHeight + 'px';
+            }
+        },
+        resizeAllTextArea() {
+            this.$nextTick(() => {
+                const textAreas = document.querySelectorAll('textarea');
+                textAreas.forEach(textArea => {
+                    textArea.style.height = '17px';
+                    textArea.style.height = textArea.scrollHeight + 'px';
+                });
             });
         },
 
@@ -91,6 +102,14 @@ export default {
         },
     },
     watch: {
+        question: {
+            deep: true,
+            handler() {
+                this.$nextTick(() => {
+                    this.resizeAllTextArea();
+                });
+            }
+        },
         questionId() {
             this.fetchQuestion();
         },
@@ -98,5 +117,6 @@ export default {
             this.setupEditionMode();
         }
     }
+
 }
 </script>
