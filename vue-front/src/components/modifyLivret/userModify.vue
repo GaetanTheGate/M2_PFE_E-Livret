@@ -11,19 +11,19 @@
                     <div class="w-50 d-flex justify-content-between">
                         <input class="input-lg rounded w-75 m-1 p-1" placeholder="Chercher un email" v-model="email"
                             type="text" name="lookForUser">
-                        <button class="btn btn-primary w-25 m-1 p-1" v-on:click="searchUsers(email)">Chercher</button>
+                        <button class="btn btn-warning w-25 m-1 p-1" v-on:click="searchUsers(email)">Chercher</button>
                     </div>
                 </div>
 
-                <div v-if="usersFound && usersFound.length">
-                    <hr class="border border-dark border-1 rounded-5" />
-                    <h5>Sélectionner un utilisateur</h5>
-                    <div class="container p-3 m-2 border-2 border-end border-start rounded-0 row flex-row flex-nowrap overflow-scroll">
-                        <div class="container w-25" v-for="userFound in usersFound" :key="userFound.id" >
-                            <div class="card rounded-3 m-1">
+                <div v-if="usersFound && usersFound.length" class="m-2 pt-3 rounded-3 bg-light" style="filter: drop-shadow(0 0 0.25rem #cccccc);">
+                    <!-- <hr class="border border-dark border-1 rounded-5" /> -->
+                    <h5 class="px-3">Sélectionner un utilisateur</h5>
+                    <div class="d-flex justify-content-start flex-nowrap overflow-scroll">
+                        <div class="container w-25 m-0 pb-3" v-for="userFound in usersFound" :key="userFound.id" >
+                            <div class="card rounded-3 mx-1">
                                 <div class="card-header text-center fs-8 fw-light">{{ userFound.email }}</div>
                                 <div class="card-body">
-                                    <button class="w-100 btn btn-warning"
+                                    <button class="w-100 btn btn-secondary"
                                         v-on:click="sendUserToParent(userFound)">Séléctionner</button>
                                 </div>
                             </div>
