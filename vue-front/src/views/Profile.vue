@@ -5,6 +5,7 @@
         <p><u>Email :</u> {{ currentUser.email }}</p>
 
         <router-link :to="{ name: 'PasswordChanger' }" class="nav-link"><button>Modifier mot de passe</button></router-link>
+        <router-link v-if="currentUser.permission == 'RESPONSABLE'" :to="{ name: 'CreateUser' }" class="nav-link"><button>Créer un utilisateur</button></router-link>
     </div>
 </template>
 
