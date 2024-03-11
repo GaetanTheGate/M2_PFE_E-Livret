@@ -4,8 +4,8 @@
             {{ question.title }}
         </h4>
         <div class="container" v-for="answer in question.answers" :key="answer.id">
-            <label v-if="answer.proposition" for="answer.id">{{ answer.proposition }}</label>
-            <textarea :name=question.id :id=answer.id class="form-control"  @input="resizeTextArea(answer.id)" style="height:17px;resize: none;scrollbar-width: none"></textarea>
+            <textarea :placeholder="answer.proposition" :name=question.id :id=answer.id class="form-control"
+                @input="resizeTextArea(answer.id)" style="height:17px;resize: none;scrollbar-width: none"></textarea>
         </div>
     </div>
 </template>
@@ -47,7 +47,7 @@ export default {
                 this.question = q.data
             }).then(() => {
                 this.question.answers.forEach(answer => {
-                    if (document.getElementById(answer.id)){
+                    if (document.getElementById(answer.id)) {
                         document.getElementById(answer.id).value = answer.value;
                     }
                 });
