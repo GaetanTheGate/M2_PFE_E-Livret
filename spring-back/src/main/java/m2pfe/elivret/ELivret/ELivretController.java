@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import m2pfe.elivret.Authentification.AuthentificationException;
 import m2pfe.elivret.Authentification.AuthentificationService;
+import m2pfe.elivret.EModel.ELivretModel;
 import m2pfe.elivret.EUser.EUser;
 import m2pfe.elivret.EUser.EUserException;
 import m2pfe.elivret.EUser.EUserRepository;
@@ -17,6 +18,9 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * <p>
@@ -84,14 +88,25 @@ public class ELivretController {
     @PreAuthorize("@EntityAccessAuthorization.isMeFromLivret(#req, #id)")
     public ELivretDTO.Out.AllPublic getLivret(@PathVariable int id, HttpServletRequest req)
             throws AuthentificationException, ELivretException {
-        Optional<ELivret> l = l_repo.findById(id);
-        l.orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found."));
+        ELivret livret = l_repo.findById(id)
+                .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found."));
 
-        return mapper.map(l.get(), ELivretDTO.Out.AllPublic.class);
+        return mapper.map(livret, ELivretDTO.Out.AllPublic.class);
+    }
+
+    @GetMapping("/{id}/model")
+    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret)")
+    public ELivretModel getLivretModel(@PathVariable int id, HttpServletRequest req)
+            throws AuthentificationException, ELivretException {
+        ELivret livret = l_repo.findById(id)
+                .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found."));
+
+        return mapper.map(livret, ELivretModel.class);
     }
 
     /// PostMapping
 
+    @Deprecated
     @PostMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret)")
     public ELivret postLivret(@RequestBody ELivret livret, HttpServletRequest req)
@@ -110,7 +125,7 @@ public class ELivretController {
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret)")
     public ELivretDTO.Out.Mimimum createLivret(@RequestBody ELivretDTO.In.Basics livret, HttpServletRequest req)
             throws AuthentificationException, ELivretException {
-                
+
         EUser me = service.whoAmI(req);
         ELivret l = mapper.map(livret, ELivret.class);
         l.setResponsable(me);
@@ -119,6 +134,21 @@ public class ELivretController {
     }
 
     /// PutMapping
+
+    @PutMapping("/{id}/model")
+    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret.id)")
+    public ELivretDTO.Out.AllPublic setModel(@PathVariable int id, @RequestBody ELivretModel model,
+            HttpServletRequest req) {
+        ELivret livret = l_repo.findById(id)
+                .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found"));
+
+        ELivret l_model = mapper.map(model, ELivret.class);
+        livret.setSections(l_model.getSections());
+
+        livret = l_repo.save(livret);
+
+        return mapper.map(livret, ELivretDTO.Out.AllPublic.class);
+    }
 
     @PutMapping("/set-actors")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret.id)")
