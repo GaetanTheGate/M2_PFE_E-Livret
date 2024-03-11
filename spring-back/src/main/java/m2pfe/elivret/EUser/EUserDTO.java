@@ -53,6 +53,8 @@ public class EUserDTO {
         @NoArgsConstructor
         public static class newUser {
             private String email;
+            private String firstName;
+            private String lastName;
         }
 
         /**
@@ -86,15 +88,18 @@ public class EUserDTO {
         public static class UserInformation {
             private Integer id;
             private String email;
+
             private Permission permission;
 
-            
+            private String firstName;
+            private String lastName;
+
             @Getter(AccessLevel.NONE)
             private String password;
 
             public Boolean getIsPasswordSet() {
                 return !password.equals("\\");
-            } 
+            }
         }
     }
 }

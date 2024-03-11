@@ -39,7 +39,8 @@ public class EUser {
      */
     @Basic
     @NotBlank
-    private String email; // TODO: rendre unique
+    @Column(unique = true)
+    private String email;
 
     /**
      * The password of the EUser.
@@ -50,11 +51,19 @@ public class EUser {
     private String password;
 
     @Basic
+    @NotBlank
+    private String firstName;
+
+    @Basic
+    @NotBlank
+    private String lastName;
+
+    @Basic
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Permission permission = Permission.USER;
 
-    public static enum Permission{
+    public static enum Permission {
         RESPONSABLE, USER
     }
 
