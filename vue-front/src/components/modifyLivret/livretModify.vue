@@ -1,5 +1,14 @@
 <template>
     <div v-if="livret" class="container">
+        <div class="my-5 d-flex justify-content-between">
+            <button type="button" class="nav-item btn btn-primary p-3" v-on:click="saveModel()">
+                Exporter la forme du livret
+            </button>
+            <button type="button" class="nav-item btn btn-secondary p-3" v-on:click="setModel()">
+                Importer la forme du livret
+            </button>
+        </div>
+
         <userModify :userId="livret.student ? livret.student.id : null" @user_clicked="setStudent"
             :userType="'Apprenti(e)'" />
         <userModify :userId="livret.master ? livret.master.id : null" @user_clicked="setMaster"
@@ -42,6 +51,21 @@ export default {
             let id = this["livretId"];
             this.$axiosApi.get("livrets/" + id).then(s => {
                 this.livret = s.data
+            });
+        },
+
+        saveModel: function () {
+            this.$axiosApi.get("livrets/" + this.livret.id + "/model").then(m => {
+                this.$download(JSON.stringify(m.data), this.livret.name + "_model.json", "application/json");
+            })
+        },
+
+        setModel: function () {
+            this.$selectFileThen(c => {
+                let model = JSON.parse(c);
+                this.$axiosApi.put("livrets/" + this.livret.id + "/model", model).then(() => {
+                    this.$pageService.gotoLivretDetailsPage(this.livret.id);
+                })
             });
         },
 
