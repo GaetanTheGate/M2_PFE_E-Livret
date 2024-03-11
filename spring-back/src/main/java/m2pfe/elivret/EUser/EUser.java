@@ -44,16 +44,22 @@ public class EUser {
 
     /**
      * The password of the EUser.
-     * It is ised to log in the application.
+     * It is used to log in the application.
      */
     @Basic
     @NotBlank
     private String password;
 
+    /**
+     * The firstname of the EUser.
+     */
     @Basic
     @NotBlank
     private String firstName;
 
+    /**
+     * The lastname of the EUser.
+     */
     @Basic
     @NotBlank
     private String lastName;
