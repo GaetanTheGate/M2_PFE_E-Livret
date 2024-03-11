@@ -14,28 +14,28 @@
 
         <div class="nav-item m-1">
           <button type="button" class="nav-item btn btn-outline-warning p-3"
-              v-on:click="this.$loginService.login(`etudiant2@mail.com`, `etudiant2`, fetchCurrentUser)">
+            v-on:click="this.$loginService.login(`etudiant2@mail.com`, `etudiant2`, fetchCurrentUser)">
             Etudiant
           </button>
         </div>
 
         <div class="nav-item m-1">
           <button type="button" class="nav-item btn btn-outline-warning p-3"
-              v-on:click="this.$loginService.login(`maitre@mail.com`, `maitre`, fetchCurrentUser)">
+            v-on:click="this.$loginService.login(`maitre@mail.com`, `maitre`, fetchCurrentUser)">
             Maitre
           </button>
         </div>
 
         <div class="nav-item m-1">
           <button type="button" class="nav-item btn btn-outline-warning p-3"
-              v-on:click="this.$loginService.login(`tuteur@mail.com`, `tuteur`, fetchCurrentUser)">
+            v-on:click="this.$loginService.login(`tuteur@mail.com`, `tuteur`, fetchCurrentUser)">
             Tuteur
           </button>
         </div>
 
         <div class="nav-item m-1">
           <button type="button" class="nav-item btn btn-outline-warning p-3"
-              v-on:click="this.$loginService.login(`responsable@mail.com`, `responsable`, fetchCurrentUser)">
+            v-on:click="this.$loginService.login(`responsable@mail.com`, `responsable`, fetchCurrentUser)">
             Reponsable
           </button>
         </div>
@@ -54,9 +54,7 @@
         </router-link>
 
         <router-link :to="{ name: 'Profile' }" class="nav-item m-1">
-          <button v-if="this.currentUser" type="button" class="rounded-circle nav-item btn btn-light" style="height: 3pc; width: 3pc;" >
-             TP
-          </button>
+          <userCircle v-if="this.currentUser" :userId="this.currentUser.id" />
         </router-link>
 
         <div class="nav-item m-1">
@@ -76,9 +74,12 @@
 
 <script>
 
+import userCircle from './components/utility/userCircle.vue';
+
 export default {
   name: 'app',
   components: {
+    userCircle
   },
   data() {
     return {
