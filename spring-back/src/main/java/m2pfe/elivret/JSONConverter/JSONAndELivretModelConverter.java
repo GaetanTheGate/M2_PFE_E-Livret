@@ -1,4 +1,4 @@
-package m2pfe.elivret.Json;
+package m2pfe.elivret.JSONConverter;
 
 import javax.annotation.PostConstruct;
 
@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import m2pfe.elivret.EModel.ELivretModel;
 
-@Deprecated
 @Service
 public class JSONAndELivretModelConverter {
     @Autowired

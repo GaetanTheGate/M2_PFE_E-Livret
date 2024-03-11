@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import m2pfe.elivret.Authentification.AuthentificationException;
 import m2pfe.elivret.Authentification.AuthentificationService;
 import m2pfe.elivret.EModel.ELivretModel;
+import m2pfe.elivret.ESection.ESection;
 import m2pfe.elivret.EUser.EUser;
 import m2pfe.elivret.EUser.EUserException;
 import m2pfe.elivret.EUser.EUserRepository;
+import m2pfe.elivret.Populate.EntityManager;
 
 import org.modelmapper.ModelMapper;
 
@@ -56,6 +58,9 @@ public class ELivretController {
     @Autowired
     private EUserRepository u_repo;
 
+    @Autowired
+    private EntityManager entityManager;
+
     /**
      * Mapper for mapping an object to another.
      */
@@ -95,7 +100,7 @@ public class ELivretController {
     }
 
     @GetMapping("/{id}/model")
-    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret)")
+    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #id)")
     public ELivretModel getLivretModel(@PathVariable int id, HttpServletRequest req)
             throws AuthentificationException, ELivretException {
         ELivret livret = l_repo.findById(id)
@@ -136,16 +141,22 @@ public class ELivretController {
     /// PutMapping
 
     @PutMapping("/{id}/model")
-    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret.id)")
+    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #id)")
     public ELivretDTO.Out.AllPublic setModel(@PathVariable int id, @RequestBody ELivretModel model,
             HttpServletRequest req) {
         ELivret livret = l_repo.findById(id)
                 .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found"));
-
         ELivret l_model = mapper.map(model, ELivret.class);
-        livret.setSections(l_model.getSections());
 
-        livret = l_repo.save(livret);
+        for (ESection section : livret.getSections())
+            entityManager.deleteSection(section);
+
+        entityManager.setCurrentLivret(livret);
+        for (ESection section : l_model.getSections())
+            entityManager.saveSection(section);
+
+        livret = l_repo.findById(id)
+                .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found"));
 
         return mapper.map(livret, ELivretDTO.Out.AllPublic.class);
     }
