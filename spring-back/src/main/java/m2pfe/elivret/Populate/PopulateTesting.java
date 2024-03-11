@@ -93,7 +93,7 @@ public class PopulateTesting {
                                 "Jaspar",
                                 "Raux");
 
-                createAndSaveElivret(student, tutor, master, responsable);
+                ELivret livret = createAndSaveElivret(student, tutor, master, responsable);
         }
 
         private ELivret createAndSaveElivret(EUser student, EUser tutor, EUser master, EUser responsable) {
@@ -108,7 +108,7 @@ public class PopulateTesting {
                 createAndSaveESection(livret, UserRole.MASTER, "master Visible", true);
                 createAndSaveESection(livret, UserRole.MASTER, "master Invisible", false);
 
-                return livret;
+                return lr.findById(livret.getId()).get();
         }
 
         private ESection createAndSaveESection(ELivret livret, UserRole owner, String title, boolean visibility) {
@@ -121,7 +121,7 @@ public class PopulateTesting {
                 createAndSaveEQuestion(section, "Question 2 :", QuestionType.CHECKBOX);
                 createAndSaveEQuestion(section, "Question 3 :", QuestionType.RADIO);
 
-                return section;
+                return sr.findById(section.getId()).get();
         }
 
         private EQuestion createAndSaveEQuestion(ESection section, String title, QuestionType type) {
@@ -167,7 +167,7 @@ public class PopulateTesting {
                                 break;
                 }
 
-                return question;
+                return qr.findById(question.getId()).get();
         }
 
         private EAnswer createAndSaveAnswer(String proposition, String value, EQuestion question) {
