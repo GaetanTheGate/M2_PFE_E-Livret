@@ -1,8 +1,7 @@
 <template>
     <!-- <button v-on:click="fetchLivret()">SHOW SECTIONS</button> -->
     <div v-if="livret" class="container">
-        <button v-if="!editionMode" v-on:click="setEditionMode(true)" class="btn btn-info">Editer</button>
-        <button v-if="editionMode" v-on:click="setEditionMode(false)" class="btn btn-info">Consulter</button>
+
 <!--        <ul class="myUL">-->
 <!--            <li>student : {{ livret.student }}</li>-->
 <!--            <li>master : {{ livret.master }}</li>-->
@@ -33,11 +32,9 @@ export default {
     data() {
         return {
             livret: null,
-            editionMode: null,
         }
     },
     mounted() {
-        this.setEditionMode(false);
         this.fetchLivret();
     },
 
@@ -47,11 +44,9 @@ export default {
             this.$axiosApi.get("livrets/" + id).then(s => {
                 this.livret = s.data
             });
-        },
-
-        setEditionMode: function (state) {
-            this.editionMode = state;
         }
+
+
     },
     watch: {
         livretId() {

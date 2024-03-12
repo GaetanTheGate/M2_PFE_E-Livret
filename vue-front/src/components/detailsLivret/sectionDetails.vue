@@ -28,12 +28,15 @@
 
             </div>
             <div  class="collapse" v-bind:id="'sectionCollapse_' + section.id" >
-                <div class="card-body bg-body-tertiary ">
+                <div class="card-body bg-body-tertiary">
+                    <button v-if="!editionMode" v-on:click="setEditionMode(true)" class="btn btn-info">Editer</button>
+                    <button v-if="editionMode" v-on:click="setEditionMode(false)" class="btn btn-info">Consulter</button>
                     <div v-if="displayVisibility" class="form-check">
                         <label for="section_visibility" class="form-check-label">Visible</label>
                         <input type="checkbox" :id="'section_' + section.id + '_visibility'" v-model="section.visibility"
                                v-on:click="saveVisibility()" class="form-check-input">
                     </div>
+
 
                     <div v-for="question in section.questions" :key="question.id" class="container my-4">
                         <questionDetails :questionId="question.id" :editionMode="editionMode" @callable="addQuestionChild" />
@@ -58,11 +61,8 @@ export default {
         sectionId: {
             type: Number,
             required: true,
-        },
-        editionMode: {
-            type: Boolean,
-            default: false,
         }
+
     },
 
     data() {
@@ -71,9 +71,11 @@ export default {
             displaySection: null,
             displayVisibility: null,
             questionChilds: null,
+            editionMode: false,
         }
     },
     mounted() {
+        this.setEditionMode(false);
         this.fetchSection();
     },
 
@@ -88,6 +90,9 @@ export default {
                 this.computeDisplaySection();
                 this.computeDisplayVisibility();
             });
+        },
+        setEditionMode: function (state) {
+            this.editionMode = state;
         },
 
         addQuestionChild: function (child) {
