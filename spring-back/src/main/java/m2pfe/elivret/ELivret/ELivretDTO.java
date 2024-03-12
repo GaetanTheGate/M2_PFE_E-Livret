@@ -39,7 +39,7 @@ public class ELivretDTO {
 
         @Data
         @NoArgsConstructor
-        public static class Basics {
+        public static class Create {
             private String name;
         }
     }

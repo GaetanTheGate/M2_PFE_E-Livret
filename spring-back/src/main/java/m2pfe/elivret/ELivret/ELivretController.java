@@ -127,15 +127,15 @@ public class ELivretController {
     /// PostMapping
 
     @PostMapping("/create")
-    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret)")
-    public ELivretDTO.Out.Mimimum createLivret(@RequestBody ELivretDTO.In.Basics livret, HttpServletRequest req)
+    @PreAuthorize("hasAuthority('RESPONSABLE')")
+    public ELivretDTO.Out.AllPublic createLivret(@RequestBody ELivretDTO.In.Create livret, HttpServletRequest req)
             throws AuthentificationException, ELivretException {
 
         EUser me = service.whoAmI(req);
         ELivret l = mapper.map(livret, ELivret.class);
         l.setResponsable(me);
 
-        return mapper.map(l_repo.save(l), ELivretDTO.Out.Mimimum.class);
+        return mapper.map(entityManager.saveLivret(l), ELivretDTO.Out.AllPublic.class);
     }
 
     /// PutMapping
@@ -151,9 +151,10 @@ public class ELivretController {
         for (ESection section : livret.getSections())
             entityManager.deleteSection(section);
 
-        entityManager.setCurrentLivret(livret);
-        for (ESection section : l_model.getSections())
+        for (ESection section : l_model.getSections()) {
+            section.setLivret(livret);
             entityManager.saveSection(section);
+        }
 
         livret = l_repo.findById(id)
                 .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found"));
@@ -186,6 +187,7 @@ public class ELivretController {
         return mapper.map(l_repo.save(l), ELivretDTO.Out.AllPublic.class);
     }
 
+    @Deprecated
     @PutMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #livret)")
     public ELivret putLivret(@RequestBody ELivret livret, HttpServletRequest req)

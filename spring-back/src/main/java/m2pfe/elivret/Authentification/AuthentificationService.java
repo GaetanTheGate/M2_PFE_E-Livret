@@ -192,14 +192,13 @@ public class AuthentificationService {
         clearTokensLinkedToUser(jwt.resolveEmail(token));
     }
 
-
-    public String getTokenForUser(EUser user){
+    public String getTokenForUser(EUser user) {
         return jwt.createToken(user);
     }
 
     public String getTokenForUser(String email) throws EUserException {
         EUser user = ur.findByEmail(email)
-                .orElseThrow( () -> new EUserException(HttpStatus.NO_CONTENT, "No user found with email") );
+                .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "No user found with email"));
 
         return getTokenForUser(user);
     }

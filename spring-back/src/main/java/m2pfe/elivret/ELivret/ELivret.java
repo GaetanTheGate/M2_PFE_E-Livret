@@ -50,7 +50,7 @@ public class ELivret {
     /**
      * Student linked to the livret.
      */
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private EUser student;
 

@@ -12,10 +12,15 @@ import m2pfe.elivret.EQuestion.EQestionRepository;
 import m2pfe.elivret.EQuestion.EQuestion;
 import m2pfe.elivret.ESection.ESection;
 import m2pfe.elivret.ESection.ESectionRepository;
+import m2pfe.elivret.EUser.EUser;
+import m2pfe.elivret.EUser.EUserRepository;
 
 @Service
 @Data
 public class EntityManager {
+    @Autowired
+    private EUserRepository ur;
+
     @Autowired
     private ELivretRepository lr;
 
@@ -28,47 +33,52 @@ public class EntityManager {
     @Autowired
     private EAnswerRepository ar;
 
-    private ELivret currentLivret;
-    private ESection currentSection;
-    private EQuestion currentQuestion;
-    private EAnswer currentAnswer;
+    public EUser saveUser(EUser user) {
+        return ur.save(user);
+    }
 
     public ELivret saveLivret(ELivret livret) {
-        currentLivret = lr.save(livret);
+        ELivret currentLivret = lr.save(livret);
 
-        for (ESection section : currentLivret.getSections())
-            saveSection(section);
+        if (livret.getSections() != null)
+            for (ESection section : livret.getSections()) {
+                section.setLivret(currentLivret);
+                saveSection(section);
+            }
 
         return currentLivret;
     }
 
     public ESection saveSection(ESection section) {
-        section.setLivret(currentLivret);
+        ESection currentSection = sr.save(section);
 
-        currentSection = sr.save(section);
-
-        for (EQuestion question : section.getQuestions())
-            saveQuestion(question);
+        if (section.getQuestions() != null)
+            for (EQuestion question : section.getQuestions()) {
+                question.setSection(currentSection);
+                saveQuestion(question);
+            }
 
         return currentSection;
     }
 
     public EQuestion saveQuestion(EQuestion question) {
-        question.setSection(currentSection);
+        EQuestion currentQuestion = qr.save(question);
 
-        currentQuestion = qr.save(question);
-
-        for (EAnswer answer : question.getAnswers())
-            saveAnswer(answer);
+        if (question.getAnswers() != null)
+            for (EAnswer answer : question.getAnswers()) {
+                answer.setQuestion(currentQuestion);
+                saveAnswer(answer);
+            }
 
         return currentQuestion;
     }
 
     public EAnswer saveAnswer(EAnswer answer) {
-        answer.setQuestion(currentQuestion);
+        return ar.save(answer);
+    }
 
-        currentAnswer = ar.save(answer);
-        return currentAnswer;
+    public void deleteUser(EUser user) {
+        ur.delete(user);
     }
 
     public void deleteLivret(ELivret livret) {
@@ -76,7 +86,6 @@ public class EntityManager {
             deleteSection(section);
 
         lr.delete(livret);
-        currentLivret = null;
     }
 
     public void deleteSection(ESection section) {
@@ -84,7 +93,6 @@ public class EntityManager {
             deleteQuestion(question);
 
         sr.delete(section);
-        currentSection = null;
     }
 
     public void deleteQuestion(EQuestion question) {
@@ -92,11 +100,9 @@ public class EntityManager {
             deleteAnswer(answer);
 
         qr.delete(question);
-        currentQuestion = null;
     }
 
     public void deleteAnswer(EAnswer answer) {
         ar.delete(answer);
-        currentAnswer = null;
     }
 }

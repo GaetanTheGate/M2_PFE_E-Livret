@@ -66,6 +66,5 @@ public class EAnswer {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id", referencedColumnName = "id")
     @JsonBackReference
-    @NonNull
     private EQuestion question;
 }
