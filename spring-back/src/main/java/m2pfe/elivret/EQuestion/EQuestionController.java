@@ -82,6 +82,7 @@ public class EQuestionController {
 
     /// PostMapping
 
+    @Deprecated
     @PostMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #question)")
     public EQuestion postQuestion(@RequestBody EQuestion question, HttpServletRequest req)
@@ -96,6 +97,7 @@ public class EQuestionController {
 
     /// PutMapping
 
+    @Deprecated
     @PutMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #question)")
     public EQuestion putQuestion(@RequestBody EQuestion question, HttpServletRequest req)

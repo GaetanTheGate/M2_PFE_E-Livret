@@ -100,6 +100,7 @@ public class ESectionController {
 
     /// PostMapping
 
+    @Deprecated
     @PostMapping("")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req.getLivret(), #section)")
     public ESection postSection(@RequestBody ESection section, HttpServletRequest req)
