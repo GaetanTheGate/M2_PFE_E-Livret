@@ -8,6 +8,18 @@
                     <input v-model="email" type="email" name="email" placeholder="Email du nouvel utilisateur"
                         class="input-lg form-control rounded">
                     <br />
+                    <div class="d-flex justify-content-center">
+                        <div class="m-2">
+                            <label for="firstName" class="fw-light fs-5">Prénom de l'utilisateur :</label>
+                            <input v-model="firstName" type="firstName" name="firstName"
+                                placeholder="Prénom du nouvel utilisateur" class="input-lg form-control rounded">
+                        </div>
+                        <div class="m-2">
+                            <label for="lastName" class="fw-light fs-5">Nom de l'utilisateur :</label>
+                            <input v-model="lastName" type="lastName" name="lastName"
+                                placeholder="Nom du nouvel utilisateur" class="input-lg form-control rounded">
+                        </div>
+                    </div>
                 </div>
                 <div class="m-3 d-flex flex-row-reverse">
                     <button v-on:click="createUser()" style="filter: drop-shadow(0 0 0.25rem #efa31d);"
@@ -36,6 +48,8 @@ export default {
     data() {
         return {
             email: null,
+            firstName: null,
+            lastName: null,
             url: null,
         }
     },
@@ -46,6 +60,8 @@ export default {
         createUser: function () {
             let newuser = {
                 email: this.email,
+                firstName: this.firstName,
+                lastName: this.lastName,
             }
 
             this.$axiosApi.post("users/create-user", newuser).then(t => {
