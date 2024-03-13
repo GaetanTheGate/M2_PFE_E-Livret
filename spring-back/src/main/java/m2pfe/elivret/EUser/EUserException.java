@@ -1,7 +1,7 @@
 package m2pfe.elivret.EUser;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * <p>
@@ -17,7 +17,7 @@ import org.springframework.web.client.HttpStatusCodeException;
  * @author Gaëtan PUPET
  * @version 1.0
  */
-public class EUserException extends HttpStatusCodeException {
+public class EUserException extends ResponseStatusException {
     /**
      * <p>
      * Constructor of the EUserException class.

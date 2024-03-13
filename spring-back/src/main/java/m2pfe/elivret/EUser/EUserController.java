@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import m2pfe.elivret.Authentification.AuthentificationService;
+import m2pfe.elivret.Populate.EntityManager;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -45,6 +46,9 @@ public class EUserController {
 
     @Autowired
     private EUserRepository u_repo;
+
+    @Autowired
+    private EntityManager entityManager;
 
     /**
      * Mapper for mapping an object to another.
@@ -76,7 +80,7 @@ public class EUserController {
         EUser newuser = mapper.map(user, EUser.class);
         newuser.setPassword("\\");
 
-        newuser = u_repo.save(newuser);
+        newuser = entityManager.saveUser(newuser);
 
         return ResponseEntity.ok(service.getTokenForUser(newuser));
     }

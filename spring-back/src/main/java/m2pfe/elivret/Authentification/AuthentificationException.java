@@ -1,7 +1,7 @@
 package m2pfe.elivret.Authentification;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * <p>
@@ -17,7 +17,7 @@ import org.springframework.web.client.HttpStatusCodeException;
  * @author Gaëtan PUPET
  * @version 2.0
  */
-public class AuthentificationException extends HttpStatusCodeException {
+public class AuthentificationException extends ResponseStatusException {
     /**
      * <p>
      * Constructor of the AuthentificationException class.

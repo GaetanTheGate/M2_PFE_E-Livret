@@ -3,6 +3,7 @@ package m2pfe.elivret.EAnswer;
 import m2pfe.elivret.Authentification.AuthentificationException;
 import m2pfe.elivret.Authentification.AuthentificationService;
 import m2pfe.elivret.EUser.EUser;
+import m2pfe.elivret.Populate.EntityManager;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -43,6 +44,9 @@ public class EAnwserController {
      **/
     @Autowired
     private EAnswerRepository a_repo;
+
+    @Autowired
+    private EntityManager entityManager;
 
     /**
      * Mapper for mapping an object to another.
@@ -140,9 +144,12 @@ public class EAnwserController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, @AnswerRepository.getById(#id))")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAnswer(@PathVariable int id, HttpServletRequest req) throws AuthentificationException {
-        a_repo.deleteById(id);
+    public void deleteAnswer(@PathVariable int id, HttpServletRequest req) throws AuthentificationException,
+            EAnswerException {
+        EAnswer answer = a_repo.findById(id)
+                .orElseThrow(() -> new EAnswerException(HttpStatus.NO_CONTENT, "EAnswer not found."));
+
+        entityManager.deleteAnswer(answer);
     }
 
 }

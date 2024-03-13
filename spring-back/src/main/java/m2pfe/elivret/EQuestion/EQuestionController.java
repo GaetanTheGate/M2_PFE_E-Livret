@@ -6,6 +6,7 @@ import java.util.Optional;
 import m2pfe.elivret.Authentification.AuthentificationException;
 import m2pfe.elivret.Authentification.AuthentificationService;
 import m2pfe.elivret.EUser.EUser;
+import m2pfe.elivret.Populate.EntityManager;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class EQuestionController {
      */
     @Autowired
     private EQestionRepository q_repo;
+
+    @Autowired
+    private EntityManager entityManager;
 
     /**
      * Mapper for mapping an object to another.
@@ -108,9 +112,12 @@ public class EQuestionController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req,  @QuestionRepository.getById(#id))")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteQuestion(@PathVariable int id, HttpServletRequest req) throws AuthentificationException {
-        q_repo.deleteById(id);
+    public void deleteQuestion(@PathVariable int id, HttpServletRequest req) throws AuthentificationException,
+            EQuestionException {
+        EQuestion question = q_repo.findById(id)
+                .orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "EQuestion not found."));
+
+        entityManager.deleteQuestion(question);
     }
 
 }

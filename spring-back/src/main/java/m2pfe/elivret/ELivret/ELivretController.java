@@ -85,8 +85,9 @@ public class ELivretController {
     public List<ELivretDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req) {
         EUser me = service.whoAmI(req);
 
-        return l_repo.findAllLivretsUserHasToComplete(me).get()
-                .stream().map(l -> mapper.map(l, ELivretDTO.Out.AllPublic.class)).toList();
+        List<ELivret> list = l_repo.findAllLivretsUserHasToComplete(me).get();
+
+        return list.stream().map(l -> mapper.map(l, ELivretDTO.Out.AllPublic.class)).toList();
     }
 
     @GetMapping("/{id}")
@@ -156,10 +157,9 @@ public class ELivretController {
             entityManager.saveSection(section);
         }
 
-        livret = l_repo.findById(id)
-                .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found"));
+        livret.setSections(l_model.getSections());
 
-        return mapper.map(livret, ELivretDTO.Out.AllPublic.class);
+        return getLivret(id, req);
     }
 
     @PutMapping("/set-actors")
@@ -204,8 +204,10 @@ public class ELivretController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #id)")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteLivret(@PathVariable int id, HttpServletRequest req) throws AuthentificationException {
-        l_repo.deleteById(id);
+    public void deleteLivret(@PathVariable int id, HttpServletRequest req) throws AuthentificationException,
+            ELivretException {
+        ELivret livret = l_repo.findById(id)
+                .orElseThrow(() -> new ELivretException(HttpStatus.NO_CONTENT, "Livret not found."));
+        entityManager.deleteLivret(livret);
     }
 }

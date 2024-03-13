@@ -1,7 +1,7 @@
 package m2pfe.elivret.EQuestion;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * <p>
@@ -17,7 +17,7 @@ import org.springframework.web.client.HttpStatusCodeException;
  * @author Gaëtan PUPET
  * @version 1.0
  */
-public class EQuestionException extends HttpStatusCodeException {
+public class EQuestionException extends ResponseStatusException {
     /**
      * <p>
      * Constructor of the EQuestion class.

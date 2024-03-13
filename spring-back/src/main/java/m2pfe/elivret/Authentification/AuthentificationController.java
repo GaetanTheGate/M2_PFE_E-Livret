@@ -90,7 +90,7 @@ public class AuthentificationController {
 
             return ResponseEntity.ok(token);
         } catch (AuthentificationException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
+            return ResponseEntity.status(e.getStatus()).body(e.getMessage());
         }
     }
 
@@ -121,7 +121,7 @@ public class AuthentificationController {
 
             return ResponseEntity.ok(null);
         } catch (AuthentificationException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
+            return ResponseEntity.status(e.getStatus()).body(e.getMessage());
         }
     }
 
@@ -148,7 +148,7 @@ public class AuthentificationController {
             EUser me = service.whoAmI(req);
             return ResponseEntity.ok(mapper.map(me, EUserDTO.Out.UserInformation.class));
         } catch (AuthentificationException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(null);
+            return ResponseEntity.status(e.getStatus()).body(null);
         }
     }
 
@@ -190,7 +190,7 @@ public class AuthentificationController {
 
             return ResponseEntity.ok(token);
         } catch (AuthentificationException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
+            return ResponseEntity.status(e.getStatus()).body(e.getMessage());
         }
     }
 
@@ -199,7 +199,8 @@ public class AuthentificationController {
      * <b>POST</b> request on path <b>"/init-password"</b>
      * </p>
      * <p>
-     * Initialize the password of the user if not already done, and clear all token linked with the old
+     * Initialize the password of the user if not already done, and clear all token
+     * linked with the old
      * password.
      * </p>
      * <p>
@@ -222,7 +223,7 @@ public class AuthentificationController {
         try {
             EUser user = service.whoAmI(req);
 
-            if(!user.getPassword().equals("\\"))
+            if (!user.getPassword().equals("\\"))
                 throw new EUserException(HttpStatus.CREATED, "User's password already set.");
 
             user.setPassword(encoder.encode(userInformations.getPassword()));
@@ -234,7 +235,7 @@ public class AuthentificationController {
 
             return ResponseEntity.ok(token);
         } catch (AuthentificationException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
+            return ResponseEntity.status(e.getStatus()).body(e.getMessage());
         }
     }
 }
