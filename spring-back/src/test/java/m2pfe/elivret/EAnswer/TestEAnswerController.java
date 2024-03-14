@@ -2,9 +2,12 @@ package m2pfe.elivret.EAnswer;
 
 import javax.annotation.PostConstruct;
 
+import m2pfe.elivret.EQuestion.EQuestionDTO;
+import m2pfe.elivret.ESection.ESectionDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import m2pfe.elivret.Starter;
@@ -19,6 +22,11 @@ import m2pfe.elivret.EUser.EUser;
 import m2pfe.elivret.EUser.EUser.Permission;
 import m2pfe.elivret.Populate.EntityManager;
 import m2pfe.elivret.UtilityForTest.RestErrorHandlerNoThrows;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest(classes = Starter.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class TestEAnswerController {
@@ -141,17 +149,97 @@ public class TestEAnswerController {
         /// GET
         @Test
         public void getFromIdTest() {
+                // Given
+                EAnswer a = buildAnswerBase("getFromIdTest","test",UserRole.MASTER,true,QuestionType.TEXT).build();
+                a = manager.saveAnswer(a);
 
+                String PATH_URL = a.getId().toString();
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Authorization", "");
+
+                // When
+                headers.set("Authorization", "Bearer " + token_student);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_student = rest.exchange(BASE_URL + PATH_URL, HttpMethod.GET,
+                        new HttpEntity<>(headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_master);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_master = rest.exchange(BASE_URL + PATH_URL, HttpMethod.GET,
+                        new HttpEntity<>(headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_tutor);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_tutor = rest.exchange(BASE_URL + PATH_URL, HttpMethod.GET,
+                        new HttpEntity<>(headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_responsable);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_responsable = rest.exchange(BASE_URL + PATH_URL, HttpMethod.GET,
+                        new HttpEntity<>(headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_someone);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_someone = rest.exchange(BASE_URL + PATH_URL, HttpMethod.GET,
+                        new HttpEntity<>(headers), EAnswerDTO.Out.AllPublic.class);
+
+                // Then
+                assertEquals(HttpStatus.OK, r_student.getStatusCode());
+                assertEquals(a.getId(), r_student.getBody().getId());
+
+                assertEquals(HttpStatus.OK, r_master.getStatusCode());
+                assertEquals(a.getId(), r_master.getBody().getId());
+
+                assertEquals(HttpStatus.OK, r_tutor.getStatusCode());
+                assertEquals(a.getId(), r_tutor.getBody().getId());
+
+                assertEquals(HttpStatus.OK, r_responsable.getStatusCode());
+                assertEquals(a.getId(), r_responsable.getBody().getId());
+
+                assertEquals(HttpStatus.FORBIDDEN, r_someone.getStatusCode());
+                assertNull(r_someone.getBody());
         }
 
         @Test
         public void getFromIdNonExistentTest() {
+                // Given
+                String PATH_URL = "0";
 
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Authorization", "");
+
+                // When
+                headers.set("Authorization", "Bearer " + token_student);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_student = rest.exchange(BASE_URL + PATH_URL, HttpMethod.GET,
+                        new HttpEntity<>(headers), EAnswerDTO.Out.AllPublic.class);
+
+                // Then
+                assertEquals(HttpStatus.NO_CONTENT, r_student.getStatusCode());
+                assertNull(r_student.getBody());
         }
 
         @Test
         public void getMineToCompleteTest() {
+                //Given
+                EAnswer a1 = buildAnswerBase("getMineToCompleteTest1","test",UserRole.STUDENT,true,QuestionType.TEXT).build();
+                EAnswer a2 = buildAnswerBase("getMineToCompleteTest2","",UserRole.STUDENT,false,QuestionType.TEXT).build();
+                EAnswer a3 = buildAnswerBase("getMineToCompleteTest3","",UserRole.STUDENT,true,QuestionType.TEXT).build();
+                EAnswer a4 = buildAnswerBase("getMineToCompleteTest4",null,UserRole.STUDENT,true,QuestionType.TEXT).build();
 
+                a1 = manager.saveAnswer(a1);
+                a2 = manager.saveAnswer(a2);
+                a3 = manager.saveAnswer(a3);
+                a4 = manager.saveAnswer(a4);
+
+                String PATH_URL = "/mine/tocomplete";
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Authorization", "");
+
+                // When
+                headers.set("Authorization", "Bearer " + token_student);
+                ResponseEntity<List> r_student = rest.exchange(BASE_URL + PATH_URL, HttpMethod.GET,
+                        new HttpEntity<>(headers), List.class);
+
+                // Then
+                assertEquals(HttpStatus.OK, r_student.getStatusCode());
+                assertEquals(2, r_student.getBody().size());
         }
 
         /// POST
@@ -161,32 +249,227 @@ public class TestEAnswerController {
         /// PUT
         @Test
         public void putPropositionTest() {
+                //Given
+                EAnswer a = buildAnswerBase("putPropositionTest","test",UserRole.STUDENT,false,QuestionType.TEXT).build();
 
+                a = manager.saveAnswer(a);
+
+                String PATH_URL ="/saveProposition";
+
+                EAnswerDTO.In.Proposition answer = new EAnswerDTO.In.Proposition();
+                answer.setId(a.getId());
+                answer.setProposition("newProposition");
+
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Authorization", "");
+
+                // When
+                headers.set("Authorization", "Bearer " + token_student);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_student = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_tutor);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_tutor = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_someone);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_someone = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_responsable);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_responsable = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                //Then
+                assertEquals(HttpStatus.FORBIDDEN, r_student.getStatusCode());
+                assertEquals(HttpStatus.FORBIDDEN, r_someone.getStatusCode());
+                assertEquals(HttpStatus.FORBIDDEN, r_tutor.getStatusCode());
+                assertEquals(HttpStatus.OK, r_responsable.getStatusCode());
+
+                assertEquals("newProposition", r_responsable.getBody().getProposition());
         }
 
         @Test
         public void putPropositionInNonExistentAnswerTest() {
+                //Given
+                String PATH_URL ="/saveProposition";
 
+                EAnswerDTO.In.Proposition answer = new EAnswerDTO.In.Proposition();
+                answer.setId(0);
+                answer.setProposition("newProposition");
+
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Authorization", "");
+
+                // When
+                headers.set("Authorization", "Bearer " + token_student);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_student = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_tutor);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_tutor = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_someone);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_someone = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_responsable);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_responsable = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                //Then
+                assertEquals(HttpStatus.NO_CONTENT, r_student.getStatusCode());
+                assertEquals(HttpStatus.NO_CONTENT, r_someone.getStatusCode());
+                assertEquals(HttpStatus.NO_CONTENT, r_tutor.getStatusCode());
+                assertEquals(HttpStatus.NO_CONTENT, r_responsable.getStatusCode());
         }
 
         @Test
         public void putValueTest() {
+                //Given
+                EAnswer a = buildAnswerBase("putValueTest","test",UserRole.STUDENT,false,QuestionType.TEXT).build();
 
+                a = manager.saveAnswer(a);
+
+                String PATH_URL ="/saveValue";
+
+                EAnswerDTO.In.Value answer = new EAnswerDTO.In.Value();
+                answer.setId(a.getId());
+                answer.setValue("newValue");
+
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Authorization", "");
+
+                // When
+                headers.set("Authorization", "Bearer " + token_student);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_student = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_tutor);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_tutor = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_someone);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_someone = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_responsable);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_responsable = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                //Then
+                assertEquals(HttpStatus.OK, r_student.getStatusCode());
+                assertEquals(HttpStatus.FORBIDDEN, r_someone.getStatusCode());
+                assertEquals(HttpStatus.FORBIDDEN, r_tutor.getStatusCode());
+                assertEquals(HttpStatus.FORBIDDEN, r_responsable.getStatusCode());
+
+                assertEquals("newValue", r_student.getBody().getValue());
         }
 
         @Test
         public void putValueInNonExistentAnswerTest() {
+                //Given
+                String PATH_URL ="/saveValue";
+
+                EAnswerDTO.In.Value answer = new EAnswerDTO.In.Value();
+                answer.setId(0);
+                answer.setValue("newValue");
+
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Authorization", "");
+
+                // When
+                headers.set("Authorization", "Bearer " + token_student);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_student = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_tutor);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_tutor = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_someone);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_someone = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                headers.set("Authorization", "Bearer " + token_responsable);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_responsable = rest.exchange(BASE_URL + PATH_URL, HttpMethod.PUT,
+                        new HttpEntity<>(answer,headers), EAnswerDTO.Out.AllPublic.class);
+
+                //Then
+                assertEquals(HttpStatus.NO_CONTENT, r_student.getStatusCode());
+                assertEquals(HttpStatus.NO_CONTENT, r_someone.getStatusCode());
+                assertEquals(HttpStatus.NO_CONTENT, r_tutor.getStatusCode());
+                assertEquals(HttpStatus.NO_CONTENT, r_responsable.getStatusCode());
+
 
         }
 
         /// DELETE
         @Test
         public void deleteAnswerFromId() {
+                //Given
+                EAnswer a = buildAnswerBase("deleteAnswerFromId","test",UserRole.STUDENT,true, QuestionType.TEXT).build();
 
+                a = manager.saveAnswer(a);
+
+                String PATH_URL = a.getId().toString();
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Authorization", "");
+                // When
+                headers.set("Authorization", "Bearer " + token_responsable);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_responsable_get1 = rest.exchange(BASE_URL + PATH_URL, HttpMethod.GET,
+                        new HttpEntity<>(headers), EAnswerDTO.Out.AllPublic.class);
+
+                System.out.println("SUPPRESION 1");
+                headers.set("Authorization", "Bearer " + token_student);
+                ResponseEntity<Void> r_student = rest.exchange(BASE_URL + PATH_URL, HttpMethod.DELETE,
+                        new HttpEntity<>(headers), Void.class);
+
+                System.out.println("SUPPRESION 2");
+                headers.set("Authorization", "Bearer " + token_someone);
+                ResponseEntity<Void> r_someone = rest.exchange(BASE_URL + PATH_URL, HttpMethod.DELETE,
+                        new HttpEntity<>(headers), Void.class);
+
+                System.out.println("SUPPRESION 3");
+                headers.set("Authorization", "Bearer " + token_responsable);
+                ResponseEntity<Void> r_responsable = rest.exchange(BASE_URL + PATH_URL, HttpMethod.DELETE,
+                        new HttpEntity<>(headers), Void.class);
+
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_responsable_get2 = rest.exchange(BASE_URL + PATH_URL, HttpMethod.GET,
+                        new HttpEntity<>(headers), EAnswerDTO.Out.AllPublic.class);
+
+                // Then
+                assertEquals(HttpStatus.OK, r_responsable_get1.getStatusCode());
+                assertEquals(a.getId(), r_responsable_get1.getBody().getId());
+
+                assertEquals(HttpStatus.FORBIDDEN, r_student.getStatusCode());
+                assertEquals(HttpStatus.FORBIDDEN, r_someone.getStatusCode());
+                assertEquals(HttpStatus.OK, r_responsable.getStatusCode());
+
+
+                assertEquals(HttpStatus.NO_CONTENT, r_responsable_get2.getStatusCode());
         }
 
         @Test
         public void deleteAnswerFromIdNonExistent() {
+                // Given
+                String PATH_URL = "0";
 
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Authorization", "");
+
+                // When
+                headers.set("Authorization", "Bearer " + token_responsable);
+                ResponseEntity<EAnswerDTO.Out.AllPublic> r_get = rest.exchange(BASE_URL + PATH_URL, HttpMethod.GET,
+                        new HttpEntity<>(headers), EAnswerDTO.Out.AllPublic.class);
+
+                // Then
+                assertEquals(HttpStatus.NO_CONTENT, r_get.getStatusCode());
         }
 }

@@ -102,7 +102,8 @@ public class ESectionController {
 
     @Deprecated
     @PostMapping("")
-    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req.getLivret(), #section)")
+//    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req.getLivret(), #section)")
+    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #section)")
     public ESection postSection(@RequestBody ESection section, HttpServletRequest req)
             throws AuthentificationException, ESectionException {
         ESection s = mapper.map(section, ESection.class);
@@ -165,7 +166,8 @@ public class ESectionController {
     /// DeleteMapping
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req.getLivret(), @SectionRepository.getById(#id))")
+//    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req.getLivret(), @SectionRepository.getById(#id))")
+    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, @SectionRepository.getById(#id))")
     public void deleteSection(@PathVariable int id, HttpServletRequest req) throws AuthentificationException,
             ESectionException {
         ESection section = s_repo.findById(id)
