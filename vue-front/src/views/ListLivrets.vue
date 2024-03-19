@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="card rounded-3 m-5">
-            <div class="card-header text-center fs-6">Livrets en cours</div>
+            <div class="card-header text-center fs-2 fw-bold">Livrets en cours</div>
             <div class="card-body">
                 <div v-if="!livrets" class="d-flex justify-content-center">
                     <div class="align-self-center spinner-border" role="status"></div>

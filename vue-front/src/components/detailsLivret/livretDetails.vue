@@ -9,9 +9,14 @@
 <!--            <li>tutor : {{ livret.tutor }}</li>-->
 <!--            <li>id : {{ livret.id }}</li>-->
 <!--        </ul>-->
-        <div v-for="section in this.livret.sections.sort((a, b) => a.id - b.id)" :key="section.id" class="mb-5">
-<!--            <sectionDetails :sectionId="section.id" :editionMode=editionMode />-->
-            <sectionDetails :sectionId="section.id" />
+        <div class="card rounded-3 m-5">
+            <div class="card-header text-center fs-2 fw-bold">{{ livret.name }}</div>
+            <div class="card-body">
+                <div v-for="section in this.livret.sections.sort((a, b) => a.id - b.id)" :key="section.id" class="mb-5">
+        <!--            <sectionDetails :sectionId="section.id" :editionMode=editionMode />-->
+                    <sectionDetails :sectionId="section.id" />
+                </div>
+            </div>
         </div>
     </div>
 </template>
