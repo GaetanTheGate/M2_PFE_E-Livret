@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <button v-if="amIResponsable" v-on:click="createEmptyLivret()">Créer un livret vide</button>
         <div class="card rounded-3 m-5">
             <div class="card-header text-center fs-6">Livrets en cours</div>
             <div class="card-body">
@@ -28,11 +29,13 @@ export default {
         return {
             livrets: null,
             livretIdsToComplete: null,
+            amIResponsable: null
         }
     },
 
     mounted() {
         this.fetchLivrets();
+        
     },
 
     methods: {
@@ -40,8 +43,28 @@ export default {
             this.livrets = [];
             this.$axiosApi.get("livrets/mine").then(l => {
                 this.livrets = l.data;
+                this.computeAmIResponsable();
+            });
+            
+        },
+        computeAmIResponsable: function () {
+            this.amIResponsable = false;
+
+            this.$axiosLogin.get("whoami").then(u => {
+                let me = u.data;
+
+                this.amIResponsable = (me.permission == "RESPONSABLE")
             });
         },
+
+        createEmptyLivret: function() {
+            let liv = {
+                name: "test"
+            };
+            this.$axiosApi.post("livrets/create", liv).then(l => {
+                this.livret = l.data;
+            });
+        }
     }
 }
 </script>
