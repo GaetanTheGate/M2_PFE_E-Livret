@@ -32,7 +32,8 @@ import java.util.Optional;
 public interface ESectionRepository extends JpaRepository<ESection, Integer> {
     @Query("SELECT s FROM ESection s " +
             "JOIN s.livret l " +
-            "WHERE l.student = :user OR l.tutor = :user OR l.master = :user OR l.responsable = :user")
+//            "WHERE ( l.student = :user) OR ( l.tutor = :user) OR ( l.master = :user) OR ( l.responsable = :user)")
+            "WHERE (s.owner = 'STUDENT' AND l.student = :user) OR (s.owner = 'TUTOR' AND l.tutor = :user) OR (s.owner = 'MASTER' AND l.master = :user) OR (s.owner = 'RESPONSABLE' AND l.responsable = :user)")
     List<ESection> findByUser(@Param("user") EUser user);
 
     // TODO : plus jolie d'une manière si possible

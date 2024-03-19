@@ -9,8 +9,9 @@
 <!--            <li>tutor : {{ livret.tutor }}</li>-->
 <!--            <li>id : {{ livret.id }}</li>-->
 <!--        </ul>-->
-        <div v-for="section in livret.sections" :key="section.id" class="mb-5">
-            <sectionDetails :sectionId="section.id" :editionMode=editionMode />
+        <div v-for="section in this.livret.sections.sort((a, b) => a.id - b.id)" :key="section.id" class="mb-5">
+<!--            <sectionDetails :sectionId="section.id" :editionMode=editionMode />-->
+            <sectionDetails :sectionId="section.id" />
         </div>
     </div>
 </template>
