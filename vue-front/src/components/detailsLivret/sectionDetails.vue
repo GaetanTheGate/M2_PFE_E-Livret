@@ -81,6 +81,7 @@ export default {
         }
     },
     mounted() {
+
         this.setEditionMode(false);
         this.fetchSection();
     },
@@ -126,14 +127,13 @@ export default {
 
         computeDisplaySection: function () {
             this.displaySection = this.section.visibility;
-
             this.$axiosLogin.get("whoami").then(u => {
                 let me = u.data;
 
                 this.$axiosApi.get("/livrets/" + this.section.livretId).then(l => {
                     let livret = l.data;
 
-                    if (livret.tutor.id == me.id)
+                    if (livret.tutor.id === me.id)
                         this.displaySection = true;
                 })
             });
@@ -149,9 +149,9 @@ export default {
                     let livret = l.data;
 
                     // Todo : Améliorer parce que affreux !
-                    console.log(livret)
-                    console.log(this.section)
-                    console.log(me)
+                    // console.log(livret)
+                    // console.log(this.section)
+                    // console.log(me)
                     switch (this.section.owner) {
                         case 'STUDENT':
                             this.displayEditionButton = me.id == livret.student.id;
@@ -170,8 +170,8 @@ export default {
                             break;
                     }
 
-                    if (livret.tutor.id == me.id)
-                        this.displaySection = true;
+                    // if (livret.tutor.id == me.id)
+                    //     this.displaySection = true;
                 })
             });
         },

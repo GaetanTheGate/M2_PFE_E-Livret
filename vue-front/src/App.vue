@@ -47,11 +47,11 @@
           <button type="button" class="btn btn-light p-3">Se connecter</button>
         </router-link>
 
-        <router-link :to="{ name: 'Profile' }" class="nav-item m-1">
-          <button v-if="this.currentUser" type="button" class="nav-item btn btn-light p-3">
-            Mon profile
-          </button>
-        </router-link>
+<!--        <router-link :to="{ name: 'Profile' }" class="nav-item m-1">-->
+<!--          <button v-if="this.currentUser" type="button" class="nav-item btn btn-light p-3">-->
+<!--            Mon profile-->
+<!--          </button>-->
+<!--        </router-link>-->
 
         <router-link :to="{ name: 'Profile' }" class="nav-item m-1">
           <userCircle v-if="this.currentUser" :userId="this.currentUser.id" />

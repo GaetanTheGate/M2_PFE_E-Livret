@@ -9,7 +9,7 @@
         :key="livret.id" id="livret">
 
         <div class="text-start">
-            <div class="fw-bold text-primary fs-5 text-wrap mx-2">Livret {{ livret.id }}</div>
+            <div class="fw-bold text-primary fs-5 text-wrap mx-2">{{ livret.name }}</div>
             <hr class="border border-primary" />
             <div class="fw-light text-secondary fs-8 text-wrap mt-3 mx-4">
                 <div>

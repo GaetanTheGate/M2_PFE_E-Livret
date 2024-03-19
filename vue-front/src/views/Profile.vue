@@ -1,11 +1,23 @@
 <template>
-    <div v-if="currentUser">
-        <h1>Page utilisateur</h1>
+    <div class="container" v-if="currentUser">
+        <div class="card rounded-3 m-5">
 
-        <p><u>Email :</u> {{ currentUser.email }}</p>
+            <div class="card-header text-center fs-2 fw-bold">Page utilisateur</div>
+            <div class="card-body">
+                <div class="container mb-3">
+                    <label for="oldpassword" class="fw-light fs-5">Email : {{ currentUser.email }}</label>
+                </div>
+                <div class="container mb-3">
+                    <router-link :to="{ name: 'PasswordChanger' }" class="nav-link"><button class="btn btn-primary">Modifier mot de passe</button></router-link>
+                </div>
+                <div class="container">
+                    <router-link v-if="currentUser.permission == 'RESPONSABLE'" :to="{ name: 'CreateUser' }" class="nav-link"><button class="btn btn-primary">Créer un utilisateur</button></router-link>
+                </div>
+            </div>
+        </div>
 
-        <router-link :to="{ name: 'PasswordChanger' }" class="nav-link"><button>Modifier mot de passe</button></router-link>
-        <router-link v-if="currentUser.permission == 'RESPONSABLE'" :to="{ name: 'CreateUser' }" class="nav-link"><button>Créer un utilisateur</button></router-link>
+
+
     </div>
 </template>
 
