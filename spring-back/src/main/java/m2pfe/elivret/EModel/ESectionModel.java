@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class ESectionModel {
     public String owner;
+    public Integer location;
     public Boolean visibility;
     private String title;
 
