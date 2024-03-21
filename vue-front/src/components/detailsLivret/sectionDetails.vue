@@ -44,7 +44,7 @@
 
                     <div v-for="question in section.questions" :key="question.id" class="container my-4">
                         <questionDetails :questionId="question.id" :editionMode="editionMode"
-                            @callable="addQuestionChild" />
+                            @callable="addQuestionChild"/>
                     </div>
                     <button v-if="editionMode" v-on:click="saveAnswers()" class="btn btn-danger">Sauvegarder</button>
                 </div>
@@ -126,15 +126,17 @@ export default {
         },
 
         computeDisplaySection: function () {
-            this.displaySection = this.section.visibility;
             this.$axiosLogin.get("whoami").then(u => {
                 let me = u.data;
 
                 this.$axiosApi.get("/livrets/" + this.section.livretId).then(l => {
                     let livret = l.data;
 
-                    if (livret.tutor.id === me.id)
+                    if (livret.tutor.id === me.id){
                         this.displaySection = true;
+                    }else{
+                        this.displaySection = this.section.visibility;
+                    }
                 })
             });
         },

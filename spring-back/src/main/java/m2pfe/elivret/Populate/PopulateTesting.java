@@ -106,13 +106,13 @@ public class PopulateTesting {
                 createAndSaveESection(livret, UserRole.TUTOR, "tutor Visible", true);
                 createAndSaveESection(livret, UserRole.TUTOR, "tutor Invisible", false);
                 createAndSaveESection(livret, UserRole.MASTER, "master Visible", true);
-                createAndSaveESection(livret, UserRole.MASTER, "master Invisible", false);
+                createAndSaveESection(livret,UserRole.MASTER, "master Invisible", false);
 
                 return lr.findById(livret.getId()).get();
         }
 
         private ESection createAndSaveESection(ELivret livret, UserRole owner, String title, boolean visibility) {
-                ESection section = new ESection(0, owner, visibility, title, livret, null);
+                ESection section = new ESection(0,null, owner, visibility, title, livret, null);
 
                 section = sr.save(section);
 
@@ -200,58 +200,58 @@ public class PopulateTesting {
                                 new ELivret(0, "Livret d'apprentissage", student, tutor, master, responsable, null));
 
                 ESection s_ident_student = sr
-                                .save(new ESection(0, UserRole.STUDENT, true, "Fiche d'identité de l'apprenti(e)",
+                                .save(new ESection(0, 0,UserRole.STUDENT, true, "Fiche d'identité de l'apprenti(e)",
                                                 livret, null));
                 ESection s_ident_company = sr
-                                .save(new ESection(0, UserRole.MASTER, true, "Informations sur l'entreprise d'accueil",
+                                .save(new ESection(0, 1,UserRole.MASTER, true, "Informations sur l'entreprise d'accueil",
                                                 livret, null));
                 ESection s_ident_master = sr.save(
-                                new ESection(0, UserRole.MASTER, true, "Fiche d'identité du maitre d'apprentissage",
+                                new ESection(0,  2,UserRole.MASTER, true, "Fiche d'identité du maitre d'apprentissage",
                                                 livret, null));
                 ESection s_ident_fomatation = sr.save(
-                                new ESection(0, UserRole.TUTOR, true, "Informations sur la formation de l'apprenti(e)",
+                                new ESection(0,3, UserRole.TUTOR, true, "Informations sur la formation de l'apprenti(e)",
                                                 livret, null));
                 ESection s_ident_tutor = sr
-                                .save(new ESection(0, UserRole.TUTOR, true, "Fiche d'identité de tuteur pédagogique",
+                                .save(new ESection(0, 4,UserRole.TUTOR, true, "Fiche d'identité de tuteur pédagogique",
                                                 livret, null));
 
                 ESection s_present_forma = sr
-                                .save(new ESection(0, UserRole.TUTOR, true, "Présentation de la formation", livret,
+                                .save(new ESection(0,5, UserRole.TUTOR, true, "Présentation de la formation", livret,
                                                 null));
                 ESection s_calendar = sr
-                                .save(new ESection(0, UserRole.TUTOR, true, "Le calendrier d'alterance", livret, null));
+                                .save(new ESection(0, 6,UserRole.TUTOR, true, "Le calendrier d'alterance", livret, null));
 
                 ESection s_suivi_1_sem = sr
-                                .save(new ESection(0, UserRole.MASTER, true, "Fiche de suivi du 1er semestre", livret,
+                                .save(new ESection(0,7, UserRole.MASTER, true, "Fiche de suivi du 1er semestre", livret,
                                                 null));
-                ESection s_observ_master_1 = sr.save(new ESection(0, UserRole.MASTER, true,
+                ESection s_observ_master_1 = sr.save(new ESection(0,8, UserRole.MASTER, true,
                                 "Observations du maître d’apprentissage du 2ème semestre", livret, null));
-                ESection s_comment_master_1 = sr.save(new ESection(0, UserRole.MASTER, true,
+                ESection s_comment_master_1 = sr.save(new ESection(0,9, UserRole.MASTER, true,
                                 "Commentaire du maitre d'apprentissage du 1er semestre", livret, null));
                 ESection s_comment_stud_1 = sr.save(
-                                new ESection(0, UserRole.STUDENT, true, "Commentaire de l'apprenti(e) du 1er semestre",
+                                new ESection(0, 10,UserRole.STUDENT, true, "Commentaire de l'apprenti(e) du 1er semestre",
                                                 livret, null));
-                ESection s_comment_tutor_1 = sr.save(new ESection(0, UserRole.TUTOR, true,
+                ESection s_comment_tutor_1 = sr.save(new ESection(0,11, UserRole.TUTOR, true,
                                 "Commentaire du tuteur pédagogique du 1er semestre", livret, null));
 
                 ESection s_suivi_2_sem = sr
-                                .save(new ESection(0, UserRole.MASTER, true, "Fiche de suivi du 2ème semestre", livret,
+                                .save(new ESection(0,12, UserRole.MASTER, true, "Fiche de suivi du 2ème semestre", livret,
                                                 null));
-                ESection s_observ_master_2 = sr.save(new ESection(0, UserRole.MASTER, true,
+                ESection s_observ_master_2 = sr.save(new ESection(0,13, UserRole.MASTER, true,
                                 "Observations du maître d’apprentissage du 2ème semestre", livret, null));
-                ESection s_comment_master_2 = sr.save(new ESection(0, UserRole.MASTER, true,
+                ESection s_comment_master_2 = sr.save(new ESection(0,14, UserRole.MASTER, true,
                                 "Commentaire du maitre d'apprentissage du 2ème semestre", livret, null));
                 ESection s_comment_stud_2 = sr.save(
-                                new ESection(0, UserRole.STUDENT, true, "Commentaire de l'apprenti(e) du 2ème semestre",
+                                new ESection(0,15,UserRole.STUDENT, true, "Commentaire de l'apprenti(e) du 2ème semestre",
                                                 livret, null));
-                ESection s_comment_tutor_2 = sr.save(new ESection(0, UserRole.TUTOR, true,
+                ESection s_comment_tutor_2 = sr.save(new ESection(0,16, UserRole.TUTOR, true,
                                 "Commentaire du tuteur pédagogique du 2ème semestre", livret, null));
 
                 ESection s_eval_student = sr.save(
-                                new ESection(0, UserRole.STUDENT, true, "Evaluation de la formation par les apprentis",
+                                new ESection(0,17,UserRole.STUDENT, true, "Evaluation de la formation par les apprentis",
                                                 livret, null));
                 ESection s_eval_company = sr.save(
-                                new ESection(0, UserRole.MASTER, true, "Evaluation de la formation par l'entreprise",
+                                new ESection(0, 18,UserRole.MASTER, true, "Evaluation de la formation par l'entreprise",
                                                 livret, null));
 
                 EQuestion q_ident_student_1 = qr

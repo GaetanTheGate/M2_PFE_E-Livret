@@ -38,6 +38,15 @@ public class ESection {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Basic
+    private Integer location;
+
+    @PostLoad
+    protected void onCreate(){
+        if(this.location == null){
+            this.location = this.id;
+        }
+    }
     /**
      * The owner of the section.
      */

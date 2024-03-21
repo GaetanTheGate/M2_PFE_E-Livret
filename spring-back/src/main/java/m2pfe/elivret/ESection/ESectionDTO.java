@@ -44,6 +44,7 @@ public class ESectionDTO {
         @NoArgsConstructor
         public static class AllPublic {
             private Integer id;
+            private Integer location;
             private UserRole owner;
             private Boolean visibility;
             private String title;

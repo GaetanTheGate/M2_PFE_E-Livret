@@ -12,7 +12,7 @@
         <div class="card rounded-3 m-5">
             <div class="card-header text-center fs-2 fw-bold">{{ livret.name }}</div>
             <div class="card-body">
-                <div v-for="section in this.livret.sections.sort((a, b) => a.id - b.id)" :key="section.id" class="mb-5">
+                <div v-for="section in this.livret.sections" :key="section.id" class="mb-5">
         <!--            <sectionDetails :sectionId="section.id" :editionMode=editionMode />-->
                     <sectionDetails :sectionId="section.id" />
                 </div>
@@ -49,6 +49,7 @@ export default {
             let id = this["livretId"]
             this.$axiosApi.get("livrets/" + id).then(s => {
                 this.livret = s.data
+                console.log(this.livret.sections);
             });
         }
 

@@ -83,6 +83,7 @@ public class ELivret {
      */
     @OneToMany(mappedBy = "livret")
     @JsonManagedReference
+    @OrderBy("location asc")
     private List<ESection> sections;
 
     /**
