@@ -9,11 +9,31 @@
             </button>
         </div>
 
-        <userModify :userId="livret.student ? livret.student.id : null" @user_clicked="setStudent"
+        <userModify :userId="livret.student ? livret.student.id : null" @user_clicked="openModal($event,'STUDENT')"
             :userType="'Apprenti(e)'" />
-        <userModify :userId="livret.master ? livret.master.id : null" @user_clicked="setMaster"
+        <userModify :userId="livret.master ? livret.master.id : null" @user_clicked="openModal($event,'MASTER')"
             :userType="'Maitre d\'apprentissage'" />
-        <userModify :userId="livret.tutor ? livret.tutor.id : null" @user_clicked="setTutor" :userType="'Tuteur'" />
+        <userModify :userId="livret.tutor ? livret.tutor.id : null" @user_clicked="openModal($event,'TUTOR')" :userType="'Tuteur'" />
+
+        <div class="modal" tabindex="-1" role="dialog" id="confirmModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmer votre choix</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Êtes-vous sûr de vouloir choisir cet utilisateur ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="button" class="btn btn-primary" @click="confirmModal">Confirmer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- <div v-for="section in livret.sections" :key="section.id" class="myUL">
             {{ section.id }}
@@ -40,18 +60,29 @@ export default {
     data() {
         return {
             livret: null,
+            selectedUser : null,
+            selectedRole : null,
+            modal: null,
+
         }
     },
     mounted() {
         this.fetchLivret();
     },
 
+    watch: {
+        livretId() {
+            this.fetchLivret();
+        }
+    },
     methods: {
         fetchLivret: function () {
             let id = this["livretId"];
             this.$axiosApi.get("livrets/" + id).then(s => {
                 this.livret = s.data
             });
+
+
         },
 
         saveModel: function () {
@@ -107,11 +138,33 @@ export default {
                 this.livret.tutor = l.data.tutor;
             });
         },
-    },
-    watch: {
-        livretId() {
-            this.fetchLivret();
+
+        openModal: function(user,role) {
+            this.selectedRole = role;
+            this.selectedUser = user;
+            this.modal = new window.bootstrap.Modal(document.getElementById("confirmModal"));
+            this.modal.show();
+        },
+        confirmModal : function() {
+            switch (this.selectedRole){
+                case "STUDENT":
+                    this.setStudent(this.selectedUser);
+                    break;
+                case "MASTER":
+                    this.setMaster(this.selectedUser);
+                    break;
+                case "TUTOR":
+                    this.setTutor(this.selectedUser);
+                    break;
+            }
+            this.selectedUser = null;
+            this.selectedRole = null;
+            this.modal.hide();
         }
+
+
+
+
     }
 }
 </script>

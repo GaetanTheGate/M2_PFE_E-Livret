@@ -1,10 +1,11 @@
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import { createApp } from 'vue'
 import axios from 'axios'
 import LoginService from './services/LoginService.js'
 import PageService from './services/PageService.js'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+
 
 import router from './router'
 import App from './App.vue'
@@ -60,5 +61,7 @@ app.config.globalProperties.$selectFileThen = (then) => {
     };
     input.click();
 }
+window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
+
 
 app.mount('#app')
