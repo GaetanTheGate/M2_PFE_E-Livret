@@ -31,6 +31,9 @@ public class TestAuthentificationController {
     @Autowired
     public PasswordEncoder encoder;
 
+    @Autowired
+    public JwtManager manager;
+
     private RestTemplate rest = new RestTemplate();
     private static String BASE_URL = "http://localhost:8081/authentification/";
 
@@ -167,8 +170,124 @@ public class TestAuthentificationController {
         ResponseEntity<String> r_logout = rest.exchange(BASE_URL + "/logout", HttpMethod.POST,
                 new HttpEntity<>(headers), String.class);
 
-        // TODO : WhoAmi
-
         assertEquals(HttpStatus.NO_CONTENT, r_logout.getStatusCode());
+    }
+
+    @Test
+    public void testChangePassword() {
+        String oldPassword = password;
+        String newPassword = "new_password";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "");
+
+        EUserDTO.In.ChangePassword infos = new EUserDTO.In.ChangePassword();
+        infos.setEmail(email);
+        infos.setPassword(oldPassword);
+        infos.setNewpassword(newPassword);
+
+        EUserDTO.In.AuthentificationInformation old_login = new EUserDTO.In.AuthentificationInformation();
+        EUserDTO.In.AuthentificationInformation new_login = new EUserDTO.In.AuthentificationInformation();
+
+        old_login.setEmail(email);
+        new_login.setEmail(email);
+
+        old_login.setPassword(oldPassword);
+        new_login.setPassword(newPassword);
+
+        ResponseEntity<String> r_login_old_before = rest.exchange(BASE_URL + "/login", HttpMethod.POST,
+                new HttpEntity<>(old_login, headers), String.class);
+
+        ResponseEntity<String> r_change = rest.exchange(BASE_URL + "/change-password", HttpMethod.PUT,
+                new HttpEntity<>(infos, headers), String.class);
+
+        ResponseEntity<String> r_login_old_after = rest.exchange(BASE_URL + "/login", HttpMethod.POST,
+                new HttpEntity<>(old_login, headers), String.class);
+
+        ResponseEntity<String> r_login_new = rest.exchange(BASE_URL + "/login", HttpMethod.POST,
+                new HttpEntity<>(new_login, headers), String.class);
+
+        assertEquals(HttpStatus.OK, r_change.getStatusCode());
+
+        assertEquals(HttpStatus.OK, r_login_old_before.getStatusCode());
+        assertEquals(HttpStatus.OK, r_login_new.getStatusCode());
+        assertEquals(HttpStatus.FORBIDDEN, r_login_old_after.getStatusCode());
+
+        assertNotNull(r_change.getBody());
+    }
+
+    @Test
+    public void testInitPassword() {
+        String newPassword = "new_password";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "");
+
+        EUserDTO.In.newPassword infos = new EUserDTO.In.newPassword();
+        infos.setPassword(newPassword);
+
+        EUserDTO.In.AuthentificationInformation new_login = new EUserDTO.In.AuthentificationInformation();
+        new_login.setEmail("new_user" + this.hashCode());
+        new_login.setPassword(newPassword);
+
+        EUserDTO.In.NewUser info_user = new EUserDTO.In.NewUser();
+        info_user.setEmail("createUserTest" + this.hashCode());
+        info_user.setFirstName("createUserTest" + this.hashCode());
+        info_user.setLastName("createUserTest" + this.hashCode());
+
+        // Create new user
+        EUser new_u = u_repo.save(
+                EUser.builder().email("new_user" + this.hashCode()).password("\\").firstName("TEST").lastName("TEST")
+                        .build());
+
+        String token = manager.createToken(new_u);
+        headers.set("Authorization", "Bearer " + token);
+        // Create new user end
+
+        ResponseEntity<String> r_init = rest.exchange(BASE_URL + "/init-password", HttpMethod.POST,
+                new HttpEntity<>(infos, headers), String.class);
+
+        ResponseEntity<String> r_login_then = rest.exchange(BASE_URL + "/login", HttpMethod.POST,
+                new HttpEntity<>(new_login, headers), String.class);
+
+        assertEquals(HttpStatus.OK, r_init.getStatusCode());
+        assertEquals(HttpStatus.OK, r_login_then.getStatusCode());
+
+        assertNotNull(r_init.getBody());
+    }
+
+    @Test
+    public void testInitPasswordAlreadyInit() {
+        String newPassword = "new_password";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "");
+
+        EUserDTO.In.newPassword infos = new EUserDTO.In.newPassword();
+        infos.setPassword(newPassword);
+
+        EUserDTO.In.AuthentificationInformation new_login = new EUserDTO.In.AuthentificationInformation();
+        new_login.setEmail("new_user" + this.hashCode());
+        new_login.setPassword(newPassword);
+
+        EUserDTO.In.NewUser info_user = new EUserDTO.In.NewUser();
+        info_user.setEmail("createUserTest" + this.hashCode());
+        info_user.setFirstName("createUserTest" + this.hashCode());
+        info_user.setLastName("createUserTest" + this.hashCode());
+
+        // Create new user
+        EUser new_u = u_repo.save(
+                EUser.builder().email("new_user" + this.hashCode()).password("STRING").firstName("TEST")
+                        .lastName("TEST")
+                        .build());
+
+        String token = manager.createToken(new_u);
+        headers.set("Authorization", "Bearer " + token);
+        // Create new user end
+
+        ResponseEntity<String> r_init = rest.exchange(BASE_URL + "/init-password", HttpMethod.POST,
+                new HttpEntity<>(infos, headers), String.class);
+
+        assertEquals(HttpStatus.CREATED, r_init.getStatusCode());
     }
 }
