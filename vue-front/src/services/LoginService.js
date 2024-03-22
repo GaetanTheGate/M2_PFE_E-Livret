@@ -11,6 +11,7 @@ class LoginService {
         this.axiosLogin.post("login", { "email": email, "password": password }).then(t => {
             this.setToken(t.data, then);
         })
+            .catch(err => alert(err));
     }
 
     logout(then = () => {}) {

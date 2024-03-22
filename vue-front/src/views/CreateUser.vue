@@ -88,7 +88,8 @@ export default {
 
             this.$axiosApi.post("users/create-user", newuser).then(t => {
                 this.url = `http://localhost:8080/Login?token=${t.data}`;
-            });
+            })
+                .catch(err => alert(err));
         },
         copyToClipBoard: async function () {
             try {
