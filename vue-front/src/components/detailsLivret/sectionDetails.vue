@@ -46,11 +46,33 @@
                         <questionDetails :questionId="question.id" :editionMode="editionMode"
                             @callable="addQuestionChild"/>
                     </div>
-                    <button v-if="editionMode" v-on:click="saveAnswers()" class="btn btn-danger">Sauvegarder</button>
+
+                    <button type="button" v-if="editionMode" data-bs-toggle="modal" v-bind:data-bs-target="'#modalSave_'+ section.id" class="btn btn-danger" >Sauvegarder</button>
                 </div>
             </div>
+
+            <div class="modal" v-bind:id="'modalSave_'+ section.id" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Confirmer votre choix</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Êtes-vous sûr de vouloir sauvegarder ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" v-on:click="saveAnswers">Confirmer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
     </div>
+
 </template>
 
 <script>
@@ -59,32 +81,6 @@ import questionDetails from './questionDetails.vue';
 export default {
     name: "sectionDetails",
 
-    components: {
-        questionDetails
-    },
-    props: {
-        sectionId: {
-            type: Number,
-            required: true,
-        }
-
-    },
-
-    data() {
-        return {
-            section: null,
-            displaySection: null,
-            displayEditionButton: null,
-            displayVisibility: null,
-            questionChilds: null,
-            editionMode: false,
-        }
-    },
-    mounted() {
-
-        this.setEditionMode(false);
-        this.fetchSection();
-    },
 
     methods: {
 
@@ -110,8 +106,8 @@ export default {
         saveAnswers: function () {
             this.questionChilds.forEach(child => {
                 child.saveAnswers();
-                this.editionMode = false;
             });
+            this.setEditionMode(false);
         },
 
         saveVisibility: function () {
@@ -191,6 +187,33 @@ export default {
 
             });
         }
+    },
+    components: {
+        questionDetails
+    },
+
+    props: {
+        sectionId: {
+            type: Number,
+            required: true,
+        }
+
+    },
+    data() {
+        return {
+            section: null,
+            displaySection: null,
+            displayEditionButton: null,
+            displayVisibility: null,
+            questionChilds: null,
+            editionMode: false,
+        }
+    },
+
+    mounted() {
+
+        this.setEditionMode(false);
+        this.fetchSection();
     },
     watch: {
         sectionId() {

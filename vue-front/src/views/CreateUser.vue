@@ -21,15 +21,37 @@
                         </div>
                     </div>
                 </div>
+<!--                <div class="m-3 d-flex flex-row-reverse">-->
+<!--                    <button v-on:click="createUser()" style="filter: drop-shadow(0 0 0.25rem #efa31d);"-->
+<!--                        class="rounded-pill btn btn-warning">Créer l'utilisateur</button>-->
+<!--                </div>-->
                 <div class="m-3 d-flex flex-row-reverse">
-                    <button v-on:click="createUser()" style="filter: drop-shadow(0 0 0.25rem #efa31d);"
-                        class="rounded-pill btn btn-warning">Créer l'utilisateur</button>
+                    <button data-bs-toggle="modal" data-bs-target="#modalCreateUser" style="filter: drop-shadow(0 0 0.25rem #efa31d);"
+                            class="rounded-pill btn btn-warning">Créer l'utilisateur</button>
                 </div>
             </div>
             <div v-if="url" class="card-body">
                 <hr />
                 <p class="user-select-all">{{ url }}</p>
                 <button v-on:click="copyToClipBoard()" class="rounded-pill btn btn-success">Copy to Clipboard</button>
+            </div>
+
+            <div class="modal" id="modalCreateUser" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Confirmer votre choix</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Êtes-vous sûr de vouloir créer cet utilisateur ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" v-on:click="createUser">Confirmer</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
