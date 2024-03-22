@@ -68,7 +68,8 @@ export default {
                 this.$axiosLogin.put("change-password", information).then(t => {
                     this.$loginService.setToken(t.data);
                     this.$pageService.gotoProfilePage();
-                });
+                })
+                    .catch(err => alert(err));
             }
         },
     }
