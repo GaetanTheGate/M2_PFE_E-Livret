@@ -51,7 +51,7 @@ public class EUserDTO {
          */
         @Data
         @NoArgsConstructor
-        public static class newUser {
+        public static class NewUser {
             private String email;
             private String firstName;
             private String lastName;
@@ -71,7 +71,7 @@ public class EUserDTO {
          */
         @Data
         @NoArgsConstructor
-        public static class searchInformation {
+        public static class SearchInformation {
             private String email;
         }
     }

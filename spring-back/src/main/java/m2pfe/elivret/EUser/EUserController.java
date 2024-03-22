@@ -64,7 +64,7 @@ public class EUserController {
     }
 
     @PostMapping("/search")
-    public List<EUserDTO.Out.UserInformation> searchSimilarUsers(@RequestBody EUserDTO.In.searchInformation user) {
+    public List<EUserDTO.Out.UserInformation> searchSimilarUsers(@RequestBody EUserDTO.In.SearchInformation user) {
         List<EUser> users = u_repo.findSimilarTo(user.getEmail())
                 .get();
 
@@ -73,7 +73,7 @@ public class EUserController {
 
     @PostMapping("/create-user")
     @PreAuthorize("hasAuthority('RESPONSABLE')")
-    public ResponseEntity<String> createUser(@RequestBody EUserDTO.In.newUser user, HttpServletRequest req) {
+    public ResponseEntity<String> createUser(@RequestBody EUserDTO.In.NewUser user, HttpServletRequest req) {
         EUser u = service.whoAmI(req);
         System.out.println(u.getPermission());
 
