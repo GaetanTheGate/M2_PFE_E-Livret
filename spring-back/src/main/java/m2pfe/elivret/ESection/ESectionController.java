@@ -102,7 +102,8 @@ public class ESectionController {
 
     @Deprecated
     @PostMapping("")
-//    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req.getLivret(), #section)")
+    // @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req.getLivret(),
+    // #section)")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #section)")
     public ESection postSection(@RequestBody ESection section, HttpServletRequest req)
             throws AuthentificationException, ESectionException {
@@ -117,10 +118,13 @@ public class ESectionController {
     /// PutMapping
 
     @PutMapping("saveVisibility")
-    @PreAuthorize("this.service.whoAmI(#req).id == @SectionRepository.getById(#section.id).livret.tutor.id")
+    @PreAuthorize("@EntityAccessAuthorization.amITutorFromSection(#req, #section.id)")
     public ESectionDTO.Out.AllPublic putVisibilitySection(@RequestBody ESectionDTO.In.Visibility section,
             HttpServletRequest req) throws AuthentificationException, ESectionException {
         ESection sec = mapper.map(section, ESection.class);
+
+        System.out.println(this.service.whoAmI(req).getId());
+        System.out.println(s_repo.getById(section.getId()).getLivret().getTutor().getId());
 
         ESection s = s_repo.findById(sec.getId())
                 .orElseThrow(() -> new ESectionException(HttpStatus.NO_CONTENT, "Section not found."));
@@ -166,7 +170,8 @@ public class ESectionController {
     /// DeleteMapping
 
     @DeleteMapping("/{id}")
-//    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req.getLivret(), @SectionRepository.getById(#id))")
+    // @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req.getLivret(),
+    // @SectionRepository.getById(#id))")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, @SectionRepository.getById(#id))")
     public void deleteSection(@PathVariable int id, HttpServletRequest req) throws AuthentificationException,
             ESectionException {
