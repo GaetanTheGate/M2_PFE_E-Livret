@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import axios from 'axios'
 
-import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import DetailsLivret from '../views/DetailsLivret.vue'
 import ModifyLivret from '../views/ModifyLivret.vue'
@@ -17,7 +16,7 @@ const routes = [
     {
         path: '/',
         name: 'Home',
-        component: Home
+        component: ListLivrets
     },
     {
         path: '/about',
@@ -69,7 +68,6 @@ const routes = [
 ]
 
 const protectedRoutes = [
-    "Home",
     "About",
     "DetailsLivret",
     "ModifyLivret",
