@@ -103,7 +103,7 @@ export default {
     },
 
     setApiToken: function () {
-      this.$loginService.setToken(localStorage.getItem('token'), this.fetchCurrentUser);
+      if (localStorage.getItem('token') != null) this.$loginService.setToken(localStorage.getItem('token'), this.fetchCurrentUser);
     },
 
     checkTokenValidity: function () {

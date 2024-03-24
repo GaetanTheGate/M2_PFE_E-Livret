@@ -68,6 +68,7 @@ const routes = [
 ]
 
 const protectedRoutes = [
+    "Home",
     "About",
     "DetailsLivret",
     "ModifyLivret",
@@ -75,6 +76,7 @@ const protectedRoutes = [
     "Profile",
     "PasswordChanger",
     "CreateUser",
+    "PasswordInit"
 ]
 
 const router = createRouter({
@@ -110,9 +112,16 @@ router.beforeEach(async (to, from, next) => {
             name: 'Login',
         })
     }
+
     else if ((to.name != 'PasswordInit') && isLoggedIn() && !await isPasswordSet()) {
         next({
             name: 'PasswordInit',
+        })
+    }
+
+    else if ((to.name == 'Login') && isLoggedIn()) {
+        next({
+            name: 'ListLivrets'
         })
     }
     else next()
