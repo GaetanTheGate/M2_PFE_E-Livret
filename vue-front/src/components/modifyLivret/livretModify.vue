@@ -87,7 +87,7 @@ export default {
 
         saveModel: function () {
             this.$axiosApi.get("livrets/" + this.livret.id + "/model").then(m => {
-                this.$download(JSON.stringify(m.data), this.livret.name + "_model.json", "application/json");
+                this.$download(JSON.stringify(m.data, undefined, 4), this.livret.name + "_model.json", "application/json");
             })
         },
 

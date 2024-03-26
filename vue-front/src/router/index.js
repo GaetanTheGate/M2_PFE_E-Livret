@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import axios from 'axios'
 
-import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import DetailsLivret from '../views/DetailsLivret.vue'
 import ModifyLivret from '../views/ModifyLivret.vue'
@@ -17,7 +16,7 @@ const routes = [
     {
         path: '/',
         name: 'Home',
-        component: Home
+        component: ListLivrets
     },
     {
         path: '/about',
@@ -77,6 +76,7 @@ const protectedRoutes = [
     "Profile",
     "PasswordChanger",
     "CreateUser",
+    "PasswordInit"
 ]
 
 const router = createRouter({
@@ -112,9 +112,16 @@ router.beforeEach(async (to, from, next) => {
             name: 'Login',
         })
     }
+
     else if ((to.name != 'PasswordInit') && isLoggedIn() && !await isPasswordSet()) {
         next({
             name: 'PasswordInit',
+        })
+    }
+
+    else if ((to.name == 'Login') && isLoggedIn()) {
+        next({
+            name: 'Profile'
         })
     }
     else next()

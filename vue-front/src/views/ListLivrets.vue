@@ -1,6 +1,8 @@
 <template>
     <div class="container">
-        <button v-if="amIResponsable" v-on:click="createEmptyLivret()">Créer un livret vide</button>
+        <div class="my-5 d-flex justify-content-between">
+        <button type="button" class="nav-item btn btn-primary p-3" v-if="amIResponsable" v-on:click="createEmptyLivret()">Créer un livret vide</button>
+        </div>
         <div class="card rounded-3 m-5">
             <div class="card-header text-center fs-2 fw-bold">Livrets en cours</div>
             <div class="card-body">
