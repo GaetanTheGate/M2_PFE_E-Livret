@@ -37,7 +37,7 @@ import m2pfe.elivret.JSONConverter.JSONAndELivretModelConverter;
  * </p>
  * 
  * @author Gaëtan PUPET
- * @version 1.0
+ * @version 1.3
  */
 @Profile("testing")
 @Configuration
@@ -69,6 +69,10 @@ public class PopulateTesting {
 
         private ModelMapper mapper = new ModelMapper();
 
+        /**
+         * On the construct of the application, create the livrets and users for the
+         * tests.
+         */
         @PostConstruct
         public void initTest() throws IOException {
                 System.out.println("-----------------");

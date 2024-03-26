@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  * @see EQuestion
  * 
  * @author Gaëtan PUPET
- * @version 1.
+ * @version 1.1
  */
 @RestController
 @RequestMapping("/api/questions")
@@ -44,6 +44,9 @@ public class EQuestionController {
     @Autowired
     private EQestionRepository q_repo;
 
+    /**
+     * Service used to manage the entity in the Database.
+     */
     @Autowired
     private EntityManager entityManager;
 
@@ -54,26 +57,41 @@ public class EQuestionController {
 
     /// GetMapping
 
-    // TODO: Comments.
-    @Deprecated
-    @GetMapping("/getAll")
-    public List<EQuestion> getQuestions() {
-        return q_repo.findAll().stream().map(q -> mapper.map(q, EQuestion.class))
-                .toList();
-    }
-
+    /**
+     * <p>
+     * Fetch all the questions the current user has to complete.
+     * </p>
+     * 
+     * @param req
+     * @return The list of questions found.
+     * @throws AuthentificationException if authentication wrong
+     */
     @GetMapping("/mine/tocomplete")
-    public List<EQuestionDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req) {
+    public List<EQuestionDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req)
+            throws AuthentificationException {
         EUser me = service.whoAmI(req);
 
         return q_repo.findAllQuestionsUserHasToComplete(me).get()
                 .stream().map(l -> mapper.map(l, EQuestionDTO.Out.AllPublic.class)).toList();
     }
 
+    /**
+     * <p>
+     * Fetch a question from its id.
+     * </p>
+     * <p>
+     * Must be a member of the livret to access.
+     * </p>
+     * 
+     * @param id  the id of the question
+     * @param req
+     * @return the found question
+     * @throws EQuestionException if no question was found.
+     */
     @GetMapping("/{id}")
     @PreAuthorize("@EntityAccessAuthorization.isMeFromLivret(#req, @QuestionRepository.getById(#id))")
     public EQuestion getQuestion(@PathVariable int id, HttpServletRequest req)
-            throws AuthentificationException, EQuestionException {
+            throws EQuestionException {
         Optional<EQuestion> q = q_repo.findById(id);
         q.orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "EQuestion not found."));
 
@@ -82,40 +100,25 @@ public class EQuestionController {
 
     /// PostMapping
 
-    @Deprecated
-    @PostMapping("")
-    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #question)")
-    public EQuestion postQuestion(@RequestBody EQuestion question, HttpServletRequest req)
-            throws AuthentificationException, EQuestionException {
-        EQuestion q = mapper.map(question, EQuestion.class);
-
-        Optional.ofNullable(q_repo.findById(q.getId()).isPresent() ? null : q)
-                .orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "EQuestion already exist."));
-
-        return q_repo.save(q);
-    }
-
     /// PutMapping
-
-    @Deprecated
-    @PutMapping("")
-    @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #question)")
-    public EQuestion putQuestion(@RequestBody EQuestion question, HttpServletRequest req)
-            throws AuthentificationException, EQuestionException {
-        EQuestion q = mapper.map(question, EQuestion.class);
-
-        q_repo.findById(q.getId())
-                .orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "EQuestion not found."));
-
-        return q_repo.save(q);
-    }
 
     /// DeleteMapping
 
+    /**
+     * <p>
+     * Delete a question from its id and anything it contains.
+     * </p>
+     * <p>
+     * Must be the owner of the livret to access.
+     * </p>
+     * 
+     * @param id  The id of the question to delete
+     * @param req
+     * @throws EQuestionException if no question was found.
+     */
     @DeleteMapping("/{id}")
     @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req,  @QuestionRepository.getById(#id))")
-    public void deleteQuestion(@PathVariable int id, HttpServletRequest req) throws AuthentificationException,
-            EQuestionException {
+    public void deleteQuestion(@PathVariable int id, HttpServletRequest req) throws EQuestionException {
         EQuestion question = q_repo.findById(id)
                 .orElseThrow(() -> new EQuestionException(HttpStatus.NO_CONTENT, "EQuestion not found."));
 

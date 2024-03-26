@@ -24,7 +24,7 @@ import java.util.List;
  * </p>
  * 
  * @author Gaëtan PUPET
- * @version 1.1
+ * @version 1.2
  */
 @Entity
 @Data

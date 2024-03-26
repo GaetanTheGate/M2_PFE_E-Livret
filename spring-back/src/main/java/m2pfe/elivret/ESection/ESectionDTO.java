@@ -25,6 +25,9 @@ public class ESectionDTO {
      * The DTOs the user will give to the application.
      */
     public static class In {
+        /**
+         * The DTO used to set the visibility of a section
+         */
         @Data
         @NoArgsConstructor
         public static class Visibility {

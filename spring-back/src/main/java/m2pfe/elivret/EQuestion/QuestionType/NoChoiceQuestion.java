@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import m2pfe.elivret.EAnswer.EAnswer;
 import m2pfe.elivret.EQuestion.EQuestion;
 
+/// Is deprecated
+
 /**
  * <p>
  * Entity used to represent a question with no answer.

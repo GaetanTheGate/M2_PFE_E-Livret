@@ -49,9 +49,15 @@ public class AuthentificationController {
     @Autowired
     private AuthentificationService service;
 
+    /**
+     * Service used to save EUser in the DB.
+     */
     @Autowired
     private EUserRepository u_repo;
 
+    /**
+     * Service used to encode a password.
+     */
     @Autowired
     private PasswordEncoder encoder;
 

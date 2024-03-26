@@ -64,11 +64,17 @@ public class EUser {
     @NotBlank
     private String lastName;
 
+    /**
+     * The level of permission of the user.
+     */
     @Basic
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Permission permission = Permission.USER;
 
+    /**
+     * The different level of permission a user can have in the application.
+     */
     public static enum Permission {
         RESPONSABLE, USER
     }

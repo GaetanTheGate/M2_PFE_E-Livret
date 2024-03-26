@@ -3,8 +3,6 @@ package m2pfe.elivret.EUser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -18,10 +16,6 @@ import org.springframework.web.client.RestTemplate;
 
 import m2pfe.elivret.Starter;
 import m2pfe.elivret.Authentification.AuthentificationService;
-import m2pfe.elivret.EAnswer.EAnswer;
-import m2pfe.elivret.EAnswer.EAnswerDTO;
-import m2pfe.elivret.ELivret.ELivret.UserRole;
-import m2pfe.elivret.EQuestion.EQuestion.QuestionType;
 import m2pfe.elivret.EUser.EUser.Permission;
 import m2pfe.elivret.Populate.EntityManager;
 import m2pfe.elivret.UtilityForTest.RestErrorHandlerNoThrows;
@@ -45,7 +39,9 @@ public class TestEUserController {
         private EUser someone;
 
         private String token_student;
+        @SuppressWarnings("unused")
         private String token_master;
+        @SuppressWarnings("unused")
         private String token_tutor;
         private String token_responsable;
         private String token_someone;
@@ -154,6 +150,7 @@ public class TestEUserController {
                 assertEquals(HttpStatus.NO_CONTENT, r_student.getStatusCode());
         }
 
+        @SuppressWarnings("rawtypes")
         @Test
         public void postSearchUser() {
                 // Given

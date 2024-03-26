@@ -42,7 +42,7 @@ import m2pfe.elivret.EUser.EUserRepository;
  * @see EAnswerRepository
  * 
  * @author Gaëtan PUPET
- * @version 1.2
+ * @version 1.3
  */
 @Component(value = "EntityAccessAuthorization")
 public class EntityAccessAuthorization {

@@ -38,15 +38,24 @@ public class ESection {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    /**
+     * Number representing where a section should be in a livret depending on the
+     * location of other.
+     */
     @Basic
     private Integer location;
 
+    // TODO : Should not be permanent.
+    /**
+     * When creating a section, set its location to its id.
+     */
     @PostLoad
-    protected void onCreate(){
-        if(this.location == null){
+    protected void onCreate() {
+        if (this.location == null) {
             this.location = this.id;
         }
     }
+
     /**
      * The owner of the section.
      */

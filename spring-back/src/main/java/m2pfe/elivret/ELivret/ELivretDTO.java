@@ -18,7 +18,7 @@ import m2pfe.elivret.EUser.EUserDTO;
  * @see ELivret
  * 
  * @author Gaëtan PUPET
- * @version 1.0
+ * @version 1.2
  */
 public class ELivretDTO {
     /**
@@ -37,6 +37,9 @@ public class ELivretDTO {
             private Integer masterId;
         }
 
+        /**
+         * The DTO used to create an new livret.
+         */
         @Data
         @NoArgsConstructor
         public static class Create {
@@ -61,12 +64,6 @@ public class ELivretDTO {
             private EUserDTO.Out.UserInformation master;
             private EUserDTO.Out.UserInformation responsable;
             private List<ESectionDTO.Out.AllPublic> sections;
-        }
-
-        @Data
-        @NoArgsConstructor
-        public static class Mimimum {
-            private String name;
         }
     }
 

@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
  * @see EAnswer
  * 
  * @author Gaëtan PUPET
- * @version 1.2
+ * @version 1.3
  */
 @RestController
 @RequestMapping("/api/answers")
@@ -41,10 +41,13 @@ public class EAnswerController {
 
         /**
          * Repository for the EAnswer entities.
-         **/
+         */
         @Autowired
         private EAnswerRepository a_repo;
 
+        /**
+         * Service used to manage the entity in the Database.
+         */
         @Autowired
         private EntityManager entityManager;
 
@@ -55,25 +58,41 @@ public class EAnswerController {
 
         /// GetMapping
 
-        // TODO: COMMENTS.
-        @GetMapping("/getAll")
-        public List<EAnswer> getAnswers() {
-                return a_repo.findAll().stream().map(a -> mapper.map(a, EAnswer.class))
-                                .toList();
-        }
-
+        /**
+         * <p>
+         * Fetch all the answers the current user has to complete.
+         * </p>
+         * 
+         * @param req
+         * @return The list of answers found.
+         * @throws AuthentificationException if authentication wrong
+         */
         @GetMapping("/mine/tocomplete")
-        public List<EAnswerDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req) {
+        public List<EAnswerDTO.Out.AllPublic> getMyLivretToComplete(HttpServletRequest req)
+                        throws AuthentificationException {
                 EUser me = service.whoAmI(req);
 
                 return a_repo.findAllAnswersUserHasToComplete(me).get()
                                 .stream().map(l -> mapper.map(l, EAnswerDTO.Out.AllPublic.class)).toList();
         }
 
+        /**
+         * <p>
+         * Fetch an answer from its id
+         * </p>
+         * <p>
+         * Must be a member of the livret to access.
+         * </p>
+         * 
+         * @param id  the id of the answer
+         * @param req
+         * @return The answer found
+         * @throws EAnswerException if no answer was found
+         */
         @GetMapping("/{id}")
         @PreAuthorize("@EntityAccessAuthorization.isMeFromLivret(#req, @AnswerRepository.getById(#id))")
         public EAnswer getAnswer(@PathVariable int id, HttpServletRequest req)
-                        throws AuthentificationException, EAnswerException {
+                        throws EAnswerException {
                 Optional<EAnswer> a = a_repo.findById(id);
                 a.orElseThrow(() -> new EAnswerException(HttpStatus.NO_CONTENT, "EAnswer not found."));
 
@@ -82,27 +101,26 @@ public class EAnswerController {
 
         /// PostMapping
 
-        @Deprecated
-        @PostMapping("")
-        @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, #answer)")
-        public EAnswer postAnswer(@RequestBody EAnswer answer, HttpServletRequest req)
-                        throws AuthentificationException, EAnswerException {
-                EAnswer a = mapper.map(answer, EAnswer.class);
-
-                Optional.ofNullable(a_repo.findById(a.getId()).isPresent() ? null : a)
-                                .orElseThrow(() -> new EAnswerException(HttpStatus.NO_CONTENT,
-                                                "EAnswer already exist."));
-
-                return a_repo.save(a);
-        }
-
         /// PutMapping
 
         // For the owner
+        /**
+         * <p>
+         * Save the proposition of the answer.
+         * </p>
+         * <p>
+         * Must be the owner of the livret to access.
+         * </p>
+         * 
+         * @param answer
+         * @param req
+         * @return The new answer.
+         * @throws EAnswerException if no answer was found.
+         */
         @PutMapping("saveProposition")
         @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, @AnswerRepository.getById(#answer.id))")
         public EAnswer saveWholeAnswer(@RequestBody EAnswerDTO.In.Proposition answer, HttpServletRequest req)
-                        throws AuthentificationException, EAnswerException {
+                        throws EAnswerException {
                 EAnswer a = mapper.map(answer, EAnswer.class);
 
                 EAnswer ar = a_repo.findById(a.getId())
@@ -114,11 +132,23 @@ public class EAnswerController {
         }
 
         // For the actors
-
+        /**
+         * <p>
+         * Save the value of the answer.
+         * </p>
+         * <p>
+         * Must be the owner of the answer to access.
+         * </p>
+         * 
+         * @param answer
+         * @param req
+         * @return The new answer.
+         * @throws EAnswerException if no answer was found.
+         */
         @PutMapping("saveValue")
         @PreAuthorize("@EntityAccessAuthorization.isAnswerMine(#req, #answer.id)")
         public EAnswer saveValueAsActor(@RequestBody EAnswerDTO.In.Value answer, HttpServletRequest req)
-                        throws AuthentificationException, EAnswerException {
+                        throws EAnswerException {
                 EAnswer a = mapper.map(answer, EAnswer.class);
 
                 EAnswer ar = a_repo.findById(a.getId())
@@ -129,25 +159,23 @@ public class EAnswerController {
                 return a_repo.save(ar);
         }
 
-        @Deprecated
-        @PutMapping("")
-        @PreAuthorize("@EntityAccessAuthorization.isAnswerMine(#req, #answer)")
-        public EAnswer putAnswer(@RequestBody EAnswer answer, HttpServletRequest req)
-                        throws AuthentificationException, EAnswerException {
-                EAnswer a = mapper.map(answer, EAnswer.class);
-
-                a_repo.findById(a.getId())
-                                .orElseThrow(() -> new EAnswerException(HttpStatus.NO_CONTENT, "EAnswer not found."));
-
-                return a_repo.save(a);
-        }
-
         /// DeleteMapping
 
+        /**
+         * <p>
+         * Delete an answer
+         * </p>
+         * <p>
+         * Must be the owner of the livret to access.
+         * </p>
+         * 
+         * @param id  The id of the answer
+         * @param req
+         * @throws EAnswerException if no answer was found.
+         */
         @DeleteMapping("/{id}")
         @PreAuthorize("@EntityAccessAuthorization.isLivretMine(#req, @AnswerRepository.getById(#id))")
-        public void deleteAnswer(@PathVariable int id, HttpServletRequest req) throws AuthentificationException,
-                        EAnswerException {
+        public void deleteAnswer(@PathVariable int id, HttpServletRequest req) throws EAnswerException {
                 EAnswer answer = a_repo.findById(id)
                                 .orElseThrow(() -> new EAnswerException(HttpStatus.NO_CONTENT, "EAnswer not found."));
 

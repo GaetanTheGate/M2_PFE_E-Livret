@@ -49,6 +49,19 @@ public class AuthentificationService {
     @Autowired
     private EUserRepository ur;
 
+    /**
+     * <p>
+     * Returns the user linked to the email and the password, if the password is
+     * correct.
+     * </p>
+     * 
+     * @see AuthenticationManager
+     * 
+     * @param email
+     * @param password
+     * @return The found user
+     * @throws AuthentificationException
+     */
     public EUser getUserFromMailAndPassword(String email, String password) throws AuthentificationException {
         try {
             authentication.authenticate(new UsernamePasswordAuthenticationToken(email, password));
@@ -192,10 +205,31 @@ public class AuthentificationService {
         clearTokensLinkedToUser(jwt.resolveEmail(token));
     }
 
+    /**
+     * <p>
+     * Create a token for a user.
+     * </p>
+     * 
+     * @see JwtManager
+     * 
+     * @param user
+     * @return The created token
+     */
     public String getTokenForUser(EUser user) {
         return jwt.createToken(user);
     }
 
+    /**
+     * <p>
+     * Create a token for a user, from its email.
+     * </p>
+     * 
+     * @see #getTokenForUser(EUser)
+     * 
+     * @param email
+     * @return The created token
+     * @throws EUserException
+     */
     public String getTokenForUser(String email) throws EUserException {
         EUser user = ur.findByEmail(email)
                 .orElseThrow(() -> new EUserException(HttpStatus.NO_CONTENT, "No user found with email"));
@@ -203,6 +237,18 @@ public class AuthentificationService {
         return getTokenForUser(user);
     }
 
+    /**
+     * <p>
+     * Create a token for the current user.
+     * </p>
+     * 
+     * @see #getTokenForUser(String)
+     * @see JwtManager
+     * 
+     * @param email
+     * @return The created token
+     * @throws EUserException
+     */
     public String getTokenForUser(HttpServletRequest req) throws EUserException, AuthentificationException {
         String token = jwt.resolveToken(req);
 

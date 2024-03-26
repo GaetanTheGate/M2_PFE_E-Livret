@@ -547,17 +547,14 @@ public class TestELivretController {
 		headers.add("Authorization", "");
 
 		// When
-		System.out.println("SUPPRESION 1");
 		headers.set("Authorization", "Bearer " + token_responsable);
 		ResponseEntity<AllPublic> r_responsable_get1 = rest.exchange(BASE_URL + PATH_URL, HttpMethod.GET,
 				new HttpEntity<>(headers), AllPublic.class);
 
-		System.out.println("SUPPRESION 2");
 		headers.set("Authorization", "Bearer " + token_student);
 		ResponseEntity<Void> r_student = rest.exchange(BASE_URL + PATH_URL, HttpMethod.DELETE,
 				new HttpEntity<>(headers), Void.class);
 
-		System.out.println("SUPPRESION 3");
 		headers.set("Authorization", "Bearer " + token_someone);
 		ResponseEntity<Void> r_someone = rest.exchange(BASE_URL + PATH_URL, HttpMethod.DELETE,
 				new HttpEntity<>(headers), Void.class);

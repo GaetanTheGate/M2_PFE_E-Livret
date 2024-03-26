@@ -2,8 +2,6 @@ package m2pfe.elivret.EAnswer;
 
 import javax.annotation.PostConstruct;
 
-import m2pfe.elivret.EQuestion.EQuestionDTO;
-import m2pfe.elivret.ESection.ESectionDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -215,6 +213,7 @@ public class TestEAnswerController {
                 assertNull(r_student.getBody());
         }
 
+        @SuppressWarnings("rawtypes")
         @Test
         public void getMineToCompleteTest() {
                 // Given
@@ -433,17 +432,14 @@ public class TestEAnswerController {
                                 HttpMethod.GET,
                                 new HttpEntity<>(headers), EAnswerDTO.Out.AllPublic.class);
 
-                System.out.println("SUPPRESION 1");
                 headers.set("Authorization", "Bearer " + token_student);
                 ResponseEntity<Void> r_student = rest.exchange(BASE_URL + PATH_URL, HttpMethod.DELETE,
                                 new HttpEntity<>(headers), Void.class);
 
-                System.out.println("SUPPRESION 2");
                 headers.set("Authorization", "Bearer " + token_someone);
                 ResponseEntity<Void> r_someone = rest.exchange(BASE_URL + PATH_URL, HttpMethod.DELETE,
                                 new HttpEntity<>(headers), Void.class);
 
-                System.out.println("SUPPRESION 3");
                 headers.set("Authorization", "Bearer " + token_responsable);
                 ResponseEntity<Void> r_responsable = rest.exchange(BASE_URL + PATH_URL, HttpMethod.DELETE,
                                 new HttpEntity<>(headers), Void.class);

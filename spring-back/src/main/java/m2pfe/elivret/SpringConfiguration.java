@@ -12,20 +12,39 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.util.UrlPathHelper;
 
-//import lombok.var;
-
+/**
+ * <p>
+ * Service used to configure the security of the web application.
+ * </p>
+ * <p>
+ * This service allows authentifcated user to access or not certain controller.
+ * </p>
+ * 
+ * @author Gaëtan PUPET
+ * @version 1.1
+ */
 @Configuration
 public class SpringConfiguration extends SpringBootServletInitializer implements WebMvcConfigurer {
+
+	/**
+	 * Configure the source of the application.
+	 */
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(Starter.class);
 	}
 
+	/**
+	 * On startup, set the servlet context to the one passed by parameters.
+	 */
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		super.onStartup(servletContext);
 	}
 
+	/**
+	 * Configure the path for the resources
+	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		System.out.println("--- addResourceHandlers");
@@ -33,6 +52,9 @@ public class SpringConfiguration extends SpringBootServletInitializer implements
 				.addResourceLocations("/webjars/");
 	}
 
+	/**
+	 * Configure so the application can use the Matrix Variables
+	 */
 	@Override
 	// Pour activer les variables matrix
 	public void configurePathMatch(PathMatchConfigurer configurer) {
@@ -42,7 +64,10 @@ public class SpringConfiguration extends SpringBootServletInitializer implements
 		configurer.setUrlPathHelper(urlPathHelper);
 	}
 
-	// TODO : Faire dans spring security config.
+	// TODO : Should be in the configuration method of Spring security
+	/**
+	 * Configure CORS mapping to allow any source to use the API.
+	 */
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry
