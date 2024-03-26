@@ -10,48 +10,16 @@
 
       </div>
 
-      <div class=" d-flex justify-content-start">
-
-        <div class="nav-item m-1">
-          <button type="button" class="nav-item btn btn-outline-warning p-3"
-            v-on:click="this.$loginService.login(`etudiant2@mail.com`, `etudiant2`, fetchCurrentUser)">
-            Etudiant
-          </button>
-        </div>
-
-        <div class="nav-item m-1">
-          <button type="button" class="nav-item btn btn-outline-warning p-3"
-            v-on:click="this.$loginService.login(`maitre@mail.com`, `maitre`, fetchCurrentUser)">
-            Maitre
-          </button>
-        </div>
-
-        <div class="nav-item m-1">
-          <button type="button" class="nav-item btn btn-outline-warning p-3"
-            v-on:click="this.$loginService.login(`tuteur@mail.com`, `tuteur`, fetchCurrentUser)">
-            Tuteur
-          </button>
-        </div>
-
-        <div class="nav-item m-1">
-          <button type="button" class="nav-item btn btn-outline-warning p-3"
-            v-on:click="this.$loginService.login(`responsable@mail.com`, `responsable`, fetchCurrentUser)">
-            Reponsable
-          </button>
-        </div>
-
-      </div>
-
       <div class="d-flex justify-content-start align-items-center">
         <router-link v-if="!this.currentUser" :to="{ name: 'Login' }" class="nav-item m-1">
           <button type="button" class="btn btn-light p-3">Se connecter</button>
         </router-link>
 
-<!--        <router-link :to="{ name: 'Profile' }" class="nav-item m-1">-->
-<!--          <button v-if="this.currentUser" type="button" class="nav-item btn btn-light p-3">-->
-<!--            Mon profile-->
-<!--          </button>-->
-<!--        </router-link>-->
+        <!--        <router-link :to="{ name: 'Profile' }" class="nav-item m-1">-->
+        <!--          <button v-if="this.currentUser" type="button" class="nav-item btn btn-light p-3">-->
+        <!--            Mon profile-->
+        <!--          </button>-->
+        <!--        </router-link>-->
 
         <router-link :to="{ name: 'Profile' }" class="nav-item m-1">
           <userCircle v-if="this.currentUser" :userId="this.currentUser.id" />
