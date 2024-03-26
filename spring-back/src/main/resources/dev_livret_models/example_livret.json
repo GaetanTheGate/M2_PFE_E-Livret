@@ -1,0 +1,1092 @@
+{
+    "sections": [
+        {
+            "owner": "STUDENT",
+            "visibility": true,
+            "title": "Fiche d'identité de l'apprenti(e)",
+            "questions": [
+                {
+                    "type": "RADIO",
+                    "title": "Civilité",
+                    "answers": [
+                        {
+                            "proposition": "Homme"
+                        },
+                        {
+                            "proposition": "Femme"
+                        },
+                        {
+                            "proposition": "Autre"
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Nom",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Prénom",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Date de naissance",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Adresse",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Téléphone",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Mail",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Dates de contrat",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "MASTER",
+            "visibility": true,
+            "title": "Informations sur l'entreprise d'accueil",
+            "questions": [
+                {
+                    "type": "TEXT",
+                    "title": "Nom",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Adresse",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "MASTER",
+            "visibility": true,
+            "title": "Fiche d'identité du maitre d'apprentissage",
+            "questions": [
+                {
+                    "type": "TEXT",
+                    "title": "Nom",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Prénom",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Fonction",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Téléphone",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Mail",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "TUTOR",
+            "visibility": true,
+            "title": "Informations sur la formation de l'apprenti(e)",
+            "questions": [
+                {
+                    "type": "TEXT",
+                    "title": "Mail",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Adresse",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "TUTOR",
+            "visibility": true,
+            "title": "Fiche d'identité de tuteur pédagogique",
+            "questions": [
+                {
+                    "type": "TEXT",
+                    "title": "Nom",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Prénom",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Fonction",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Téléphone",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Mail",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "TUTOR",
+            "visibility": true,
+            "title": "Présentation de la formation",
+            "questions": [
+                {
+                    "type": "LABEL",
+                    "title": "Le document complet de présentation de la formation est disponible à cette adresse",
+                    "answers": []
+                },
+                {
+                    "type": "LABEL",
+                    "title": "https://jean-luc-massat.pedaweb.univ-amu.fr/ens/alternance-en-m2idl/",
+                    "answers": []
+                }
+            ]
+        },
+        {
+            "owner": "TUTOR",
+            "visibility": true,
+            "title": "Le calendrier d'alterance",
+            "questions": [
+                {
+                    "type": "LABEL",
+                    "title": "Le calendrier d’alternance de la formation est disponible à cette adresse",
+                    "answers": []
+                },
+                {
+                    "type": "LABEL",
+                    "title": "https://jean-luc-massat.pedaweb.univ-amu.fr/ens/alternance-en-m2idl/",
+                    "answers": []
+                }
+            ]
+        },
+        {
+            "owner": "MASTER",
+            "visibility": true,
+            "title": "Fiche de suivi du 1er semestre",
+            "questions": [
+                {
+                    "type": "LABEL",
+                    "title": "Le présent document de suivi est à remplir par le Maître d’apprentissage en présence de l’apprenti. NB : ce document compte pour l'obtention du diplôme.",
+                    "answers": []
+                },
+                {
+                    "type": "LABEL",
+                    "title": "Critères d'application.",
+                    "answers": []
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Efficacité au travail (ponctuel, opérationnel, actif, sens du travail bien fait...)",
+                    "answers": [
+                        {
+                            "proposition": "A - 16/20"
+                        },
+                        {
+                            "proposition": "B - 14/20"
+                        },
+                        {
+                            "proposition": "C - 12/20"
+                        },
+                        {
+                            "proposition": "D - 10/20"
+                        },
+                        {
+                            "proposition": "E - 08/20"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Compréhension et assimilation (niveau de connaissances, rapidité à intégrer des éléments nouveaux...)",
+                    "answers": [
+                        {
+                            "proposition": "A - 16/20"
+                        },
+                        {
+                            "proposition": "B - 14/20"
+                        },
+                        {
+                            "proposition": "C - 12/20"
+                        },
+                        {
+                            "proposition": "D - 10/20"
+                        },
+                        {
+                            "proposition": "E - 08/20"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Curiosité d'esprit (dynamisme, initiative, anticipation...)",
+                    "answers": [
+                        {
+                            "proposition": "A - 16/20"
+                        },
+                        {
+                            "proposition": "B - 14/20"
+                        },
+                        {
+                            "proposition": "C - 12/20"
+                        },
+                        {
+                            "proposition": "D - 10/20"
+                        },
+                        {
+                            "proposition": "E - 08/20"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Coopération (volonté d'apprendre, polyvalence, interroge ses formateurs)",
+                    "answers": [
+                        {
+                            "proposition": "A - 16/20"
+                        },
+                        {
+                            "proposition": "B - 14/20"
+                        },
+                        {
+                            "proposition": "C - 12/20"
+                        },
+                        {
+                            "proposition": "D - 10/20"
+                        },
+                        {
+                            "proposition": "E - 08/20"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Relations avec le personnel, esprit d'équipe (aptitude à communiquer, oral et écrit, sens du contact, intégration dans l'équipe)",
+                    "answers": [
+                        {
+                            "proposition": "A - 16/20"
+                        },
+                        {
+                            "proposition": "B - 14/20"
+                        },
+                        {
+                            "proposition": "C - 12/20"
+                        },
+                        {
+                            "proposition": "D - 10/20"
+                        },
+                        {
+                            "proposition": "E - 08/20"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Disponibilité (esprit d'équipe, prêt à rendre service sollicite travail et responsabilités, adaptabilité)",
+                    "answers": [
+                        {
+                            "proposition": "A - 16/20"
+                        },
+                        {
+                            "proposition": "B - 14/20"
+                        },
+                        {
+                            "proposition": "C - 12/20"
+                        },
+                        {
+                            "proposition": "D - 10/20"
+                        },
+                        {
+                            "proposition": "E - 08/20"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "APPRÉCIATION GÉNÉRALE",
+                    "answers": [
+                        {
+                            "proposition": "A - 16/20"
+                        },
+                        {
+                            "proposition": "B - 14/20"
+                        },
+                        {
+                            "proposition": "C - 12/20"
+                        },
+                        {
+                            "proposition": "D - 10/20"
+                        },
+                        {
+                            "proposition": "E - 08/20"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "MASTER",
+            "visibility": true,
+            "title": "Observations du maître d’apprentissage du 2ème semestre",
+            "questions": [
+                {
+                    "type": "TEXT",
+                    "title": "Points forts",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Points à améliorer",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "MASTER",
+            "visibility": true,
+            "title": "Commentaire du maitre d'apprentissage du 1er semestre",
+            "questions": [
+                {
+                    "type": "LABEL",
+                    "title": "A la fin de chaque période en entreprise, l’apprenti-e doit formuler ci-après, ses remarques, ses questions, ses difficultés, en ce qui concerne :\n• la définition des objectifs,\n• les moyens mis en œuvre,\n• l’adéquation entre le sujet proposé et l’apprentissage réel,\n• les connaissances requises ou acquises,\n• le vécu relationnel.",
+                    "answers": []
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Ecrire un commentaire",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "STUDENT",
+            "visibility": true,
+            "title": "Commentaire de l'apprenti(e) du 1er semestre",
+            "questions": [
+                {
+                    "type": "LABEL",
+                    "title": "A la fin de chaque période en entreprise, l’apprenti-e doit formuler ci-après, ses remarques, ses questions, ses difficultés, en ce qui concerne :\n• la définition des objectifs,\n• les moyens mis en œuvre,\n• l’adéquation entre le sujet proposé et l’apprentissage réel,\n• les connaissances requises ou acquises,\n• le vécu relationnel.",
+                    "answers": []
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Ecrire un commentaire",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "TUTOR",
+            "visibility": true,
+            "title": "Commentaire du tuteur pédagogique du 1er semestre",
+            "questions": [
+                {
+                    "type": "LABEL",
+                    "title": "A la fin de chaque période en entreprise, l’apprenti-e doit formuler ci-après, ses remarques, ses questions, ses difficultés, en ce qui concerne :\n• la définition des objectifs,\n• les moyens mis en œuvre,\n• l’adéquation entre le sujet proposé et l’apprentissage réel,\n• les connaissances requises ou acquises,\n• le vécu relationnel.",
+                    "answers": []
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Ecrire un commentaire",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "MASTER",
+            "visibility": true,
+            "title": "Fiche de suivi du 2ème semestre",
+            "questions": [
+                {
+                    "type": "LABEL",
+                    "title": "Le présent document de suivi est à remplir par le Maître d’apprentissage en présence de l’apprenti. NB : ce document compte pour l'obtention du diplôme.",
+                    "answers": []
+                },
+                {
+                    "type": "LABEL",
+                    "title": "Critères d'application.",
+                    "answers": []
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Efficacité au travail (ponctuel, opérationnel, actif, sens du travail bien fait...)",
+                    "answers": [
+                        {
+                            "proposition": "A - 16/20"
+                        },
+                        {
+                            "proposition": "B - 14/20"
+                        },
+                        {
+                            "proposition": "C - 12/20"
+                        },
+                        {
+                            "proposition": "D - 10/20"
+                        },
+                        {
+                            "proposition": "E - 08/20"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Compréhension et assimilation (niveau de connaissances, rapidité à intégrer des éléments nouveaux...)",
+                    "answers": [
+                        {
+                            "proposition": "A - 16/20"
+                        },
+                        {
+                            "proposition": "B - 14/20"
+                        },
+                        {
+                            "proposition": "C - 12/20"
+                        },
+                        {
+                            "proposition": "D - 10/20"
+                        },
+                        {
+                            "proposition": "E - 08/20"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Curiosité d'esprit (dynamisme, initiative, anticipation...)",
+                    "answers": [
+                        {
+                            "proposition": "A - 16/20"
+                        },
+                        {
+                            "proposition": "B - 14/20"
+                        },
+                        {
+                            "proposition": "C - 12/20"
+                        },
+                        {
+                            "proposition": "D - 10/20"
+                        },
+                        {
+                            "proposition": "E - 08/20"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Coopération (volonté d'apprendre, polyvalence, interroge ses formateurs)",
+                    "answers": [
+                        {
+                            "proposition": "A - 16/20"
+                        },
+                        {
+                            "proposition": "B - 14/20"
+                        },
+                        {
+                            "proposition": "C - 12/20"
+                        },
+                        {
+                            "proposition": "D - 10/20"
+                        },
+                        {
+                            "proposition": "E - 08/20"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Relations avec le personnel, esprit d'équipe (aptitude à communiquer, oral et écrit, sens du contact, intégration dans l'équipe)",
+                    "answers": [
+                        {
+                            "proposition": "A - 16/20"
+                        },
+                        {
+                            "proposition": "B - 14/20"
+                        },
+                        {
+                            "proposition": "C - 12/20"
+                        },
+                        {
+                            "proposition": "D - 10/20"
+                        },
+                        {
+                            "proposition": "E - 08/20"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Disponibilité (esprit d'équipe, prêt à rendre service sollicite travail et responsabilités, adaptabilité)",
+                    "answers": [
+                        {
+                            "proposition": "A - 16/20"
+                        },
+                        {
+                            "proposition": "B - 14/20"
+                        },
+                        {
+                            "proposition": "C - 12/20"
+                        },
+                        {
+                            "proposition": "D - 10/20"
+                        },
+                        {
+                            "proposition": "E - 08/20"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "APPRÉCIATION GÉNÉRALE",
+                    "answers": [
+                        {
+                            "proposition": "A - 16/20"
+                        },
+                        {
+                            "proposition": "B - 14/20"
+                        },
+                        {
+                            "proposition": "C - 12/20"
+                        },
+                        {
+                            "proposition": "D - 10/20"
+                        },
+                        {
+                            "proposition": "E - 08/20"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "MASTER",
+            "visibility": true,
+            "title": "Observations du maître d’apprentissage du 2ème semestre",
+            "questions": [
+                {
+                    "type": "TEXT",
+                    "title": "Points forts",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Points à améliorer",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "MASTER",
+            "visibility": true,
+            "title": "Commentaire du maitre d'apprentissage du 2ème semestre",
+            "questions": [
+                {
+                    "type": "LABEL",
+                    "title": "A la fin de chaque période en entreprise, l’apprenti-e doit formuler ci-après, ses remarques, ses questions,\nses difficultés, en ce qui concerne :\n• la définition des objectifs,\n• les moyens mis en œuvre,\n• l’adéquation entre le sujet proposé et l’apprentissage réel,\n• les connaissances requises ou acquises,\n• le vécu relationnel.",
+                    "answers": []
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Ecrire un commentaire",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "STUDENT",
+            "visibility": true,
+            "title": "Commentaire de l'apprenti(e) du 2ème semestre",
+            "questions": [
+                {
+                    "type": "LABEL",
+                    "title": "A la fin de chaque période en entreprise, l’apprenti-e doit formuler ci-après, ses remarques, ses questions,\nses difficultés, en ce qui concerne :\n• la définition des objectifs,\n• les moyens mis en œuvre,\n• l’adéquation entre le sujet proposé et l’apprentissage réel,\n• les connaissances requises ou acquises,\n• le vécu relationnel.",
+                    "answers": []
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Ecrire un commentaire",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "TUTOR",
+            "visibility": true,
+            "title": "Commentaire du tuteur pédagogique du 2ème semestre",
+            "questions": [
+                {
+                    "type": "LABEL",
+                    "title": "A la fin de chaque période en entreprise, l’apprenti-e doit formuler ci-après, ses remarques, ses questions,\nses difficultés, en ce qui concerne :\n• la définition des objectifs,\n• les moyens mis en œuvre,\n• l’adéquation entre le sujet proposé et l’apprentissage réel,\n• les connaissances requises ou acquises,\n• le vécu relationnel.",
+                    "answers": []
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Ecrire un commentaire",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "STUDENT",
+            "visibility": true,
+            "title": "Evaluation de la formation par les apprentis",
+            "questions": [
+                {
+                    "type": "LABEL",
+                    "title": "1) Évaluation des enseignements par les apprentis",
+                    "answers": []
+                },
+                {
+                    "type": "LABEL",
+                    "title": "Le responsable de la formation doit mettre en œuvre un questionnaire permettant aux apprentis d’évaluer les enseignements (il existe des modèles disponibles à FORMASUP PACA/CFA Épure Méditerranée).",
+                    "answers": []
+                },
+                {
+                    "type": "LABEL",
+                    "title": "2) Enquête de satisfaction des apprentis (enquête FORMASUP PACA/CFA Épure Méditerranée)",
+                    "answers": []
+                },
+                {
+                    "type": "LABEL",
+                    "title": "Entre mars et juillet, les apprentis doivent se connecter sur la plateforme collaborative du CFA pour répondre aux enquêtes à l’adresse URL : https://espace.cfa-epure.com/",
+                    "answers": []
+                },
+                {
+                    "type": "LABEL",
+                    "title": "Chaque responsable de formation à accès au questionnaire de FORMASUP PACA/CFA Épure Méditerranée en se connectant sur la plateforme collaborative.",
+                    "answers": []
+                },
+                {
+                    "type": "LABEL",
+                    "title": "3) Questionnaire de fin d’année à l’attention des apprentis (modèle !)",
+                    "answers": []
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Les connaissances acquises vous semblent-elles utilisables en pratique ?",
+                    "answers": [
+                        {
+                            "proposition": "Oui"
+                        },
+                        {
+                            "proposition": "Non"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Le rythme d'alternance vous paraît-il satisfaisant ?",
+                    "answers": [
+                        {
+                            "proposition": "Oui"
+                        },
+                        {
+                            "proposition": "Non"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Êtes-vous satisfait du secrétariat de la formation en alternance et de la communication des informations ?",
+                    "answers": [
+                        {
+                            "proposition": "Oui"
+                        },
+                        {
+                            "proposition": "Non"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Êtes-vous satisfait des locaux et équipements mis à disposition par l'Université ?",
+                    "answers": [
+                        {
+                            "proposition": "Oui"
+                        },
+                        {
+                            "proposition": "Non"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Êtes-vous satisfait des services associés (restauration universitaire, logement étudiant, bibliothèque...) ?",
+                    "answers": [
+                        {
+                            "proposition": "Oui"
+                        },
+                        {
+                            "proposition": "Non"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Avez-vous rencontré des difficultés autres durant l'année universitaire ?",
+                    "answers": [
+                        {
+                            "proposition": "Oui"
+                        },
+                        {
+                            "proposition": "Non"
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Commentaire général",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "owner": "MASTER",
+            "visibility": true,
+            "title": "Evaluation de la formation par l'entreprise",
+            "questions": [
+                {
+                    "type": "LABEL",
+                    "title": "Contenu et organisation",
+                    "answers": [
+                        {
+                            "proposition": "Très satisfait"
+                        },
+                        {
+                            "proposition": "Satisfait"
+                        },
+                        {
+                            "proposition": "Peu satisfait"
+                        },
+                        {
+                            "proposition": "Pas satisfait"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Apport des enseignements en rapport avec le métier",
+                    "answers": [
+                        {
+                            "proposition": "Très satisfait"
+                        },
+                        {
+                            "proposition": "Satisfait"
+                        },
+                        {
+                            "proposition": "Peu satisfait"
+                        },
+                        {
+                            "proposition": "Pas satisfait"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Rythme de l'alternance",
+                    "answers": [
+                        {
+                            "proposition": "Très satisfait"
+                        },
+                        {
+                            "proposition": "Satisfait"
+                        },
+                        {
+                            "proposition": "Peu satisfait"
+                        },
+                        {
+                            "proposition": "Pas satisfait"
+                        }
+                    ]
+                },
+                {
+                    "type": "LABEL",
+                    "title": "Relation avec la Formation",
+                    "answers": []
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Informations par courrier, mails, téléphone",
+                    "answers": [
+                        {
+                            "proposition": "Très satisfait"
+                        },
+                        {
+                            "proposition": "Satisfait"
+                        },
+                        {
+                            "proposition": "Peu satisfait"
+                        },
+                        {
+                            "proposition": "Pas satisfait"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Relation administratives",
+                    "answers": [
+                        {
+                            "proposition": "Très satisfait"
+                        },
+                        {
+                            "proposition": "Satisfait"
+                        },
+                        {
+                            "proposition": "Peu satisfait"
+                        },
+                        {
+                            "proposition": "Pas satisfait"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Rencontre avec la formation",
+                    "answers": [
+                        {
+                            "proposition": "Très satisfait"
+                        },
+                        {
+                            "proposition": "Satisfait"
+                        },
+                        {
+                            "proposition": "Peu satisfait"
+                        },
+                        {
+                            "proposition": "Pas satisfait"
+                        }
+                    ]
+                },
+                {
+                    "type": "LABEL",
+                    "title": "Suivi de l’apprenti",
+                    "answers": []
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Communication par le livret d'alternance",
+                    "answers": [
+                        {
+                            "proposition": "Très satisfait"
+                        },
+                        {
+                            "proposition": "Satisfait"
+                        },
+                        {
+                            "proposition": "Peu satisfait"
+                        },
+                        {
+                            "proposition": "Pas satisfait"
+                        }
+                    ]
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Visites du tuteur universitaire",
+                    "answers": [
+                        {
+                            "proposition": "Très satisfait"
+                        },
+                        {
+                            "proposition": "Satisfait"
+                        },
+                        {
+                            "proposition": "Peu satisfait"
+                        },
+                        {
+                            "proposition": "Pas satisfait"
+                        }
+                    ]
+                },
+                {
+                    "type": "LABEL",
+                    "title": "Évaluation globale",
+                    "answers": []
+                },
+                {
+                    "type": "RADIO",
+                    "title": "Sur l'année universitaire",
+                    "answers": [
+                        {
+                            "proposition": "Très satisfait"
+                        },
+                        {
+                            "proposition": "Satisfait"
+                        },
+                        {
+                            "proposition": "Peu satisfait"
+                        },
+                        {
+                            "proposition": "Pas satisfait"
+                        }
+                    ]
+                },
+                {
+                    "type": "TEXT",
+                    "title": "Commentaires",
+                    "answers": [
+                        {
+                            "proposition": null
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
