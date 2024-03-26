@@ -121,7 +121,7 @@ router.beforeEach(async (to, from, next) => {
 
     else if ((to.name == 'Login') && isLoggedIn()) {
         next({
-            name: 'ListLivrets'
+            name: 'Profile'
         })
     }
     else next()
