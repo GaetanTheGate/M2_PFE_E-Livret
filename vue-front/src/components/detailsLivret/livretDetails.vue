@@ -1,19 +1,10 @@
 <template>
-    <!-- <button v-on:click="fetchLivret()">SHOW SECTIONS</button> -->
     <div v-if="livret" class="container">
 
-<!--        <ul class="myUL">-->
-<!--            <li>student : {{ livret.student }}</li>-->
-<!--            <li>master : {{ livret.master }}</li>-->
-<!--            <li>responsable : {{ livret.responsable }}</li>-->
-<!--            <li>tutor : {{ livret.tutor }}</li>-->
-<!--            <li>id : {{ livret.id }}</li>-->
-<!--        </ul>-->
         <div class="card rounded-3 m-5">
             <div class="card-header text-center fs-2 fw-bold">{{ livret.name }}</div>
             <div class="card-body">
                 <div v-for="section in this.livret.sections" :key="section.id" class="mb-5">
-        <!--            <sectionDetails :sectionId="section.id" :editionMode=editionMode />-->
                     <sectionDetails :sectionId="section.id" />
                 </div>
             </div>
@@ -49,7 +40,6 @@ export default {
             let id = this["livretId"]
             this.$axiosApi.get("livrets/" + id).then(s => {
                 this.livret = s.data
-                console.log(this.livret.sections);
             });
         }
 

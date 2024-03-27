@@ -9,11 +9,12 @@
             </button>
         </div>
 
-        <userModify :userId="livret.student ? livret.student.id : null" @user_clicked="openModal($event,'STUDENT')"
+        <userModify :userId="livret.student ? livret.student.id : null" @user_clicked="openModal($event, 'STUDENT')"
             :userType="'Apprenti(e)'" />
-        <userModify :userId="livret.master ? livret.master.id : null" @user_clicked="openModal($event,'MASTER')"
+        <userModify :userId="livret.master ? livret.master.id : null" @user_clicked="openModal($event, 'MASTER')"
             :userType="'Maitre d\'apprentissage'" />
-        <userModify :userId="livret.tutor ? livret.tutor.id : null" @user_clicked="openModal($event,'TUTOR')" :userType="'Tuteur'" />
+        <userModify :userId="livret.tutor ? livret.tutor.id : null" @user_clicked="openModal($event, 'TUTOR')"
+            :userType="'Tuteur'" />
 
         <div class="modal" tabindex="-1" role="dialog" id="confirmModal">
             <div class="modal-dialog" role="document">
@@ -34,10 +35,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- <div v-for="section in livret.sections" :key="section.id" class="myUL">
-            {{ section.id }}
-        </div> -->
     </div>
 </template>
 
@@ -60,8 +57,8 @@ export default {
     data() {
         return {
             livret: null,
-            selectedUser : null,
-            selectedRole : null,
+            selectedUser: null,
+            selectedRole: null,
             modal: null,
 
         }
@@ -139,14 +136,14 @@ export default {
             });
         },
 
-        openModal: function(user,role) {
+        openModal: function (user, role) {
             this.selectedRole = role;
             this.selectedUser = user;
             this.modal = new window.bootstrap.Modal(document.getElementById("confirmModal"));
             this.modal.show();
         },
-        confirmModal : function() {
-            switch (this.selectedRole){
+        confirmModal: function () {
+            switch (this.selectedRole) {
                 case "STUDENT":
                     this.setStudent(this.selectedUser);
                     break;

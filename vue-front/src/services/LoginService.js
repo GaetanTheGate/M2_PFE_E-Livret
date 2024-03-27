@@ -7,24 +7,25 @@ class LoginService {
         this.axiosLogin = axiosLogin;
     }
 
-    login(email, password, then = () => {}) {
+    login(email, password, then = () => { }) {
         this.axiosLogin.post("login", { "email": email, "password": password }).then(t => {
             this.setToken(t.data, then);
         })
-            .catch(err => alert(err));
+            .catch(() => alert("Mauvais identifiants de connexion."));
     }
 
-    logout(then = () => {}) {
+    logout(then = () => { }) {
         this.axiosLogin.post("logout").then(() => {
             this.unsetToken(then);
         })
+            .catch(() => void (0));
     }
 
     isLoggedIn() {
         return this.axiosApi.defaults.headers.common['Authorization'] != null;
     }
 
-    setToken(token, then = () => {}) {
+    setToken(token, then = () => { }) {
         this.axiosApi.defaults.headers.common['Authorization'] = 'Bearer ' + token;
         this.axiosLogin.defaults.headers.common['Authorization'] = 'Bearer ' + token;
         localStorage.setItem('token', token);
@@ -32,7 +33,7 @@ class LoginService {
         then();
     }
 
-    unsetToken(then = () => {}) {
+    unsetToken(then = () => { }) {
         this.axiosApi.defaults.headers.common['Authorization'] = null;
         this.axiosLogin.defaults.headers.common['Authorization'] = null;
         localStorage.removeItem('token');

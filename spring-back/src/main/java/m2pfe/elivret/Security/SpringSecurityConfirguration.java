@@ -85,7 +85,7 @@ public class SpringSecurityConfirguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(basic -> basic.disable())
                 .authorizeRequests(requests -> requests
-                        .antMatchers("/api/**").authenticated()
+                        // .antMatchers("/api/**").authenticated()
                         .anyRequest().permitAll())
                 .apply(new JwtFiltrerConfigurer(jwt));
     }

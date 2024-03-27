@@ -21,13 +21,14 @@
                         </div>
                     </div>
                 </div>
-<!--                <div class="m-3 d-flex flex-row-reverse">-->
-<!--                    <button v-on:click="createUser()" style="filter: drop-shadow(0 0 0.25rem #efa31d);"-->
-<!--                        class="rounded-pill btn btn-warning">Créer l'utilisateur</button>-->
-<!--                </div>-->
+                <!--                <div class="m-3 d-flex flex-row-reverse">-->
+                <!--                    <button v-on:click="createUser()" style="filter: drop-shadow(0 0 0.25rem #efa31d);"-->
+                <!--                        class="rounded-pill btn btn-warning">Créer l'utilisateur</button>-->
+                <!--                </div>-->
                 <div class="m-3 d-flex flex-row-reverse">
-                    <button data-bs-toggle="modal" data-bs-target="#modalCreateUser" style="filter: drop-shadow(0 0 0.25rem #efa31d);"
-                            class="rounded-pill btn btn-warning">Créer l'utilisateur</button>
+                    <button data-bs-toggle="modal" data-bs-target="#modalCreateUser"
+                        style="filter: drop-shadow(0 0 0.25rem #efa31d);" class="rounded-pill btn btn-warning">Créer
+                        l'utilisateur</button>
                 </div>
             </div>
             <div v-if="url" class="card-body">
@@ -48,7 +49,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" v-on:click="createUser">Confirmer</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                v-on:click="createUser">Confirmer</button>
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,10 @@ class PageService {
         this.router = router;
     }
 
+    refresh() {
+        this.router.go();
+    }
+
     gotoLoginPage() {
         this.router.push({ path: "/Login" });
     }

@@ -27,7 +27,7 @@
 
         <div class="nav-item m-1">
           <button v-if="this.currentUser" type="button" class="nav-item btn btn-light p-3"
-            v-on:click="this.$loginService.logout(this.$pageService.gotoLoginPage.bind(this.$pageService))">
+            v-on:click="this.$loginService.logout((() => { $pageService.gotoLoginPage(); $pageService.refresh() }).bind(this.$pageService));">
             Se déconnecter
           </button>
         </div>
@@ -75,8 +75,12 @@ export default {
     },
 
     checkTokenValidity: function () {
-      // TODO : vérifier que le token fonctionne toujours, si non, unsetToken
-      // TODO : peut etre refresh le token si 
+      this.$axiosLogin.get("whoami").then(u => {
+        if (u.data == "") {
+          // this.$loginService.logout();
+        }
+      });
+      // TODO : peut etre refresh le token si valide
     },
   },
   watch: {

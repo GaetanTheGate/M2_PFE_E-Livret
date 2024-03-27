@@ -15,18 +15,19 @@ export default {
     mounted() {
         this.init();
     },
-    methods:{
-        init: function(){
+    methods: {
+        init: function () {
             this.$loginService.logout(this.checkToken.bind(this));
         },
 
-        checkToken: function(){
+        checkToken: function () {
             let token = this.$route.query.token;
-            if(token){
+            if (token) {
                 this.$loginService.setToken(token);
 
                 this.$axiosLogin.get("whoami").then(() => {
                     this.$pageService.gotoProfilePage();
+                    this.$pageService.refresh();
                 });
             }
         }

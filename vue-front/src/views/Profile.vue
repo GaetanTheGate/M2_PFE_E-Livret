@@ -5,13 +5,17 @@
             <div class="card-header text-center fs-2 fw-bold">Page utilisateur</div>
             <div class="card-body">
                 <div class="container mb-3">
-                    <label for="oldpassword" class="fw-light fs-5">Email : {{ currentUser.email }}</label>
+                    <p class="fw-light fs-5">Email : {{ currentUser.email }}</p>
+                    <p class="fw-light fs-5">Prénom : {{ currentUser.firstName }}</p>
+                    <p class="fw-light fs-5">Nom : {{ currentUser.lastName }}</p>
                 </div>
                 <div class="container mb-3">
-                    <router-link :to="{ name: 'PasswordChanger' }" class="nav-link"><button class="btn btn-primary">Modifier mot de passe</button></router-link>
+                    <router-link :to="{ name: 'PasswordChanger' }" class="nav-link"><button
+                            class="btn btn-primary">Modifier mot de passe</button></router-link>
                 </div>
                 <div class="container">
-                    <router-link v-if="currentUser.permission == 'RESPONSABLE'" :to="{ name: 'CreateUser' }" class="nav-link"><button class="btn btn-primary">Créer un utilisateur</button></router-link>
+                    <router-link v-if="currentUser.permission == 'RESPONSABLE'" :to="{ name: 'CreateUser' }"
+                        class="nav-link"><button class="btn btn-primary">Créer un utilisateur</button></router-link>
                 </div>
             </div>
         </div>
@@ -35,18 +39,19 @@ export default {
     },
     data() {
         return {
-            currentUser:    null,
+            currentUser: null,
         }
     },
     mounted() {
         this.fetchCurrentUser();
     },
-    methods:{
+    methods: {
         fetchCurrentUser: function () {
-        this.currentUser = null;
-        this.$axiosLogin.get("whoami").then(u => {
-            this.currentUser = u.data;
-        });
+            this.currentUser = null;
+            this.$axiosLogin.get("whoami").then(u => {
+                this.currentUser = u.data;
+            })
+                .catch(() => void (0));
         },
     }
 }

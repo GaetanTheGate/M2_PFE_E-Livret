@@ -440,31 +440,6 @@
         {
             "owner": "MASTER",
             "visibility": true,
-            "title": "Observations du maître d’apprentissage du 2ème semestre",
-            "questions": [
-                {
-                    "type": "TEXT",
-                    "title": "Points forts",
-                    "answers": [
-                        {
-                            "proposition": null
-                        }
-                    ]
-                },
-                {
-                    "type": "TEXT",
-                    "title": "Points à améliorer",
-                    "answers": [
-                        {
-                            "proposition": null
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "owner": "MASTER",
-            "visibility": true,
             "title": "Commentaire du maitre d'apprentissage du 1er semestre",
             "questions": [
                 {
@@ -527,7 +502,7 @@
         },
         {
             "owner": "MASTER",
-            "visibility": true,
+            "visibility": false,
             "title": "Fiche de suivi du 2ème semestre",
             "questions": [
                 {
@@ -691,7 +666,7 @@
         },
         {
             "owner": "MASTER",
-            "visibility": true,
+            "visibility": false,
             "title": "Observations du maître d’apprentissage du 2ème semestre",
             "questions": [
                 {
@@ -716,7 +691,7 @@
         },
         {
             "owner": "MASTER",
-            "visibility": true,
+            "visibility": false,
             "title": "Commentaire du maitre d'apprentissage du 2ème semestre",
             "questions": [
                 {
@@ -737,7 +712,7 @@
         },
         {
             "owner": "STUDENT",
-            "visibility": true,
+            "visibility": false,
             "title": "Commentaire de l'apprenti(e) du 2ème semestre",
             "questions": [
                 {
@@ -758,7 +733,7 @@
         },
         {
             "owner": "TUTOR",
-            "visibility": true,
+            "visibility": false,
             "title": "Commentaire du tuteur pédagogique du 2ème semestre",
             "questions": [
                 {
@@ -779,7 +754,7 @@
         },
         {
             "owner": "STUDENT",
-            "visibility": true,
+            "visibility": false,
             "title": "Evaluation de la formation par les apprentis",
             "questions": [
                 {
@@ -897,7 +872,7 @@
         },
         {
             "owner": "MASTER",
-            "visibility": true,
+            "visibility": false,
             "title": "Evaluation de la formation par l'entreprise",
             "questions": [
                 {

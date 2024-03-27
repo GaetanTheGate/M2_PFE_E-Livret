@@ -5,7 +5,7 @@
                 data-bs-toggle="collapse" v-bind:data-bs-target="'#sectionCollapse_' + section.id">
                 <div>
                     <h2>{{ section.title }}</h2>
-                    <p>This section is owned by {{ section.owner }}</p>
+                    <p><i>Cette section doit être remplie par le "{{ section.owner }}" </i></p>
                 </div>
                 <div>
                     <div class="collapse" v-bind:id="'sectionCollapse_' + section.id">
@@ -44,14 +44,16 @@
 
                     <div v-for="question in section.questions" :key="question.id" class="container my-4">
                         <questionDetails :questionId="question.id" :editionMode="editionMode"
-                            @callable="addQuestionChild"/>
+                            @callable="addQuestionChild" />
                     </div>
 
-                    <button type="button" v-if="editionMode" data-bs-toggle="modal" v-bind:data-bs-target="'#modalSave_'+ section.id" class="btn btn-danger" >Sauvegarder</button>
+                    <button type="button" v-if="editionMode" data-bs-toggle="modal"
+                        v-bind:data-bs-target="'#modalSave_' + section.id" class="btn btn-danger">Sauvegarder</button>
                 </div>
             </div>
 
-            <div class="modal" v-bind:id="'modalSave_'+ section.id" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal" v-bind:id="'modalSave_' + section.id" tabindex="-1" aria-labelledby="modalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -63,7 +65,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" v-on:click="saveAnswers">Confirmer</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                v-on:click="saveAnswers">Confirmer</button>
                         </div>
                     </div>
                 </div>
@@ -128,9 +131,9 @@ export default {
                 this.$axiosApi.get("/livrets/" + this.section.livretId).then(l => {
                     let livret = l.data;
 
-                    if (livret.tutor.id === me.id){
+                    if (livret.tutor.id === me.id) {
                         this.displaySection = true;
-                    }else{
+                    } else {
                         this.displaySection = this.section.visibility;
                     }
                 })
@@ -146,10 +149,6 @@ export default {
                 this.$axiosApi.get("/livrets/" + this.section.livretId).then(l => {
                     let livret = l.data;
 
-                    // Todo : Améliorer parce que affreux !
-                    // console.log(livret)
-                    // console.log(this.section)
-                    // console.log(me)
                     switch (this.section.owner) {
                         case 'STUDENT':
                             this.displayEditionButton = me.id == livret.student.id;

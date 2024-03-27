@@ -94,9 +94,9 @@ const axiosLogin = axios.create({
 });
 
 const isPasswordSet = async () => {
-    if(!isLoggedIn())
+    if (!isLoggedIn())
         throw new Error("Cannot check password's state when not authentified")
-    
+
     axiosLogin.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
 
     return axiosLogin.get("whoami").then(u => {
