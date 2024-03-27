@@ -12,13 +12,13 @@
             <div class="fw-bold text-primary fs-5 text-wrap mx-2">{{ livret.name }}</div>
             <hr class="border border-primary" />
             <div class="fw-light text-secondary fs-8 text-wrap mt-3 mx-4">
-                <div>
+                <div v-if="livret.student != null">
                     <u>Etudiant :</u> {{ livret.student.email }}
                 </div>
-                <div>
+                <div v-if="livret.master != null">
                     <u>Maitre d'apprentissage :</u> {{ livret.master.email }}
                 </div>
-                <div>
+                <div v-if="livret.tutor != null">
                     <u>Tuteur :</u> {{ livret.tutor.email }}
                 </div>
             </div>

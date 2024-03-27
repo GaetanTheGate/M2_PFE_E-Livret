@@ -61,7 +61,7 @@ export default {
 
         createEmptyLivret: function() {
             let liv = {
-                name: "test"
+                name: " "
             };
             this.$axiosApi.post("livrets/create", liv).then(l => {
                 this.livret = l.data;
