@@ -101,8 +101,8 @@ export default {
             let l = {
                 id: this.livret.id,
                 studentId: user.id,
-                masterId: this.livret.master.id,
-                tutorId: this.livret.tutor.id,
+                masterId: null,
+                tutorId: null,
             }
             this.livret.student = null;
             this.$axiosApi.put("livrets/set-actors?setStudent=true", l).then(l => {
@@ -113,9 +113,9 @@ export default {
         setMaster: function (user) {
             let l = {
                 id: this.livret.id,
-                studentId: this.livret.student.id,
+                studentId: null,
                 masterId: user.id,
-                tutorId: this.livret.tutor.id,
+                tutorId: null,
             }
 
             this.$axiosApi.put("livrets/set-actors?setMaster=true", l).then(l => {
@@ -126,8 +126,8 @@ export default {
         setTutor: function (user) {
             let l = {
                 id: this.livret.id,
-                studentId: this.livret.student.id,
-                masterId: this.livret.master.id,
+                studentId: null,
+                masterId: null,
                 tutorId: user.id,
             }
 
